@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+        <meta charset=’utf-8′> <!--声明文档使用的字符编码-->
+        <title>瀑布流_左浮动</title>
+    <style type="text/css">
+        *{margin:0;padding:0;}
+        .container {
+            width: 1200px; height: auto; margin: 50px auto;
+            position: relative;
+        }
+        .box{
+            padding: 5px; box-shadow: 0 0 10px purple; border-radius: 5px;
+            float: left; margin: 10px;
+        }
+        .box img { width: 200px; height: auto; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="box"><img src="../img/0.jpg"/></div>
+        <div class="box"><img src="../img/1.jpg"/></div>
+        <div class="box"><img src="../img/2.jpg"/></div>
+        <div class="box"><img src="../img/3.jpg"/></div>
+        <div class="box"><img src="../img/4.jpg"/></div>
+        <div class="box"><img src="../img/5.jpg"/></div>
+        <div class="box"><img src="../img/6.jpg"/></div>
+        <div class="box"><img src="../img/7.jpg"/></div>
+        <div class="box"><img src="../img/8.jpg"/></div>
+        <div class="box"><img src="../img/9.jpg"/></div>
+        <div class="box"><img src="../img/10.jpg"/></div>
+        <div class="box"><img src="../img/11.jpg"/></div>
+        <div class="box"><img src="../img/12.jpg"/></div>
+        <div class="box"><img src="../img/13.jpg"/></div>
+        <div class="box"><img src="../img/14.jpg"/></div>
+        <div class="box"><img src="../img/15.jpg"/></div>
+        <div class="box"><img src="../img/16.jpg"/></div>
+    </div>
+    <script type="text/javascript">
+
+        var boxsHeight = []; //盒子高度存储数组
+        var boxWidth = 230, boxHeight = 230;
+        window.onload = function(){
+
+            var boxs = document.getElementsByClassName('box');
+            var cols = Math.floor(1200.0/boxWidth); //最多几列
+
+            //offsetWidth: 包括元素的内容宽度+padding+border宽度
+            //存储第一行的每个盒子的高度到数组里面
+            for (var i = 0; i < cols; i++){
+                var obj = boxs[i]; //元素节点
+
+                if (i < cols){
+                    boxsHeight.push(obj.offsetHeight);
+                }
+            }
+
+            updateBoxFrame(cols);  //从第二行开始更新元素的位置
+
+            window.onscroll = pageScroll;  //设置页面滚动监听函数
+
+            pageScroll();  //先调用一次
+        }
+
+        //获取数组中最小值的索引
+        function getMinHeightIndex(arr){
+            var minHeight = Math.min.apply(null, arr);
+
+            for (var i = 0; i < arr.length; i++){
+                if (arr[i] == minHeight){
+                    return i;
+                }
+            }
+        }
+
+        //监听页面滚动
+        function pageScroll(){
+
+            var parentEle = document.getElementsByClassName('container')[0];
+            var subEleCount = parentEle.childElementCount; //子元素个数
+            var lastBox = parentEle.lastElementChild; //最后一个元素
+
+            //判断是否滚动到底部
+            var doc = document.documentElement||document.body;
+
+            console.log('滚动监听', doc.scrollTop+",", lastBox.offsetTop+", " + doc.clientHeight);
+
+            if (doc.scrollTop+doc.clientHeight > lastBox.offsetTop){
+                //表示该新添加元素了
+                addBox();
+                //更新新添加元素的位置
+                updateBoxFrame(subEleCount);
+            }
+
+        }
+
+        //新添加子元素
+        function addBox(){
+
+            var parentEle = document.getElementsByClassName('container')[0];
+
+            var arr = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16];
+            for (var i = 0; i < arr.length; i++){
+
+                var index = parseInt(Math.random()*100%arr.length);
+                var imgNum = arr[index];
+                var div = document.createElement('div');
+                div.setAttribute('class', 'box');
+                div.innerHTML = '<img src="../img/' + imgNum + '.jpg"/>'
+                parentEle.appendChild(div);
+
+                arr.splice(index, 1)
+            }
+        }
+
+        //更新新添加元素的位置
+        function updateBoxFrame(startIndex){
+
+            var boxs = document.getElementsByClassName('box');
+
+            for (var i = startIndex; i < boxs.length; i++){
+                var obj = boxs[i];
+                //获取数组中最小高度的索引
+                var minHeightIndex = getMinHeightIndex(boxsHeight);
+//                    console.log(boxsHeight);
+//                    console.log(minHeightIndex + ", " +boxsHeight[minHeightIndex]);
+                var boxTop = boxsHeight[minHeightIndex] + 20;
+                var boxLeft = minHeightIndex * boxWidth;
+
+                console.log(i + ', boxTop: ' + boxTop + ", boxLeft: " + boxLeft);
+
+                //设置元素的定位样式
+                obj.style = 'position: absolute; top:' + boxTop + "px;left:" + boxLeft+"px";
+                boxsHeight[minHeightIndex] = boxTop + obj.offsetHeight;
+            }
+
+        }
+
+    </script>
+</body>
+</html>

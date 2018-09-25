@@ -1,0 +1,33 @@
+/* pages/discover/animation/animation.wxss */
+.ani_one{
+  background-color: #000;
+  color: red;
+  width: 300rpx; height: 200rpx;
+  margin: 20rpx auto; padding: 10rpx;
+  display: flex; align-items: center;
+  border: 5rpx dashed gray;
+}
+
+.ani_two {
+  position: absolute; left: 300rpx; top: 260rpx;
+  width: 200rpx; height: 100rpx; color: purple;
+  background-color: gray; border: 5rpx dashed #000;
+  display: flex; align-items: center; justify-content: center;
+}
+
+/* 旋转 */
+.rotate_view{
+  margin-top: 50rpx;
+  display: flex; flex-wrap: wrap; border: 1rpx dashed black;
+}
+.rotate_view view { 
+  width: 200rpx; height: 150rpx; 
+  background-color: yellow;
+  margin: 20rpx 20rpx; text-align: center;
+  display: flex; justify-content: center; align-items: center;
+}
+.rotate_view view:nth-of-type(1) { border: 1rpx dashed black; }
+.rotate_view view:nth-of-type(2) { border: 3rpx solid red; }
+.rotate_view view:nth-of-type(3) { border: 5rpx dashed green; }
+.rotate_view view:nth-of-type(4) { border: 7rpx solid purple; }
+.rotate_view view:nth-of-type(5) { border: 9rpx dashed #ff973a; }

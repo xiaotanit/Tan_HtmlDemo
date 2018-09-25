@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>多边边框</title>
+		<meta charset='utf-8'/>
+		<style type='text/css'>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body { margin:150px; }
+			.one-box{
+				display: flex;
+				justify-content: center;
+				align-items: center;
+				width: 310px; height:310px;
+			}
+			/*
+				由于使用伪元素和outline制作的边框是脱离文档流的，建议再套一个
+				div并使用水平垂直居中，防止影响其他样式
+			*/
+			.one{
+				width: 150px; height: 150px;
+				position: relative; background-color: #999;
+				border: 10px double #ff0000;
+				outline: 10px solid rgb(255, 136, 0);
+				outline-offset: 0px; /* 控制outline的偏移位置 */
+			}
+			.one::before{
+				content: '';
+				position: absolute;
+				top: -40px; right: -40px; bottom: -40px; left: -40px;
+				z-index: -1; background-color: #f7fc00;
+				background-clip: content-box; /* 当使用伪元素的背景作为边框时需要使用该属性控制背景的区域 */
+				border: 10px dashed rgb(56, 252, 8);
+				outline: 10px inset rgb(3, 194, 252);
+			}
+			.one::after{
+				content: '';
+				position: absolute;
+				top: -70px; right: -70px; bottom: -70px; left: -70px;
+				z-index: -2;
+				background-color: #fc000d;
+				background-clip: content-box; /* 当使用伪元素的背景作为边框时需要使用该属性控制背景的区域 */
+				border: 10px datted rgb(56, 252, 8);
+				outline: 10px outset rgb(252, 3, 177);
+			}
+			
+			
+			/* 第二个例子 */
+			.two{
+				width: 150px; height: 150px; padding: 110px;
+				background-color: #999;
+				box-shadow: inset 0 0 0 10px #ff0000,
+							inset 0 0 0 20px rgb(255, 136, 0),
+							inset 0 0 0 30px rgb(166, 255, 0),
+							inset 0 0 0 40px rgb(0, 102, 255),
+							inset 0 0 0 50px rgb(255, 0, 221),
+							inset 0 0 0 60px rgb(0, 255, 1913),
+							inset 0 0 0 70px rgb(225, 0, 255),
+							inset 0 0 0 80px rgb(81, 255, 0),
+							inset 0 0 0 90px rgb(255, 0, 106),
+							inset 0 0 0 100px rgb(255, 153, 0),
+							inset 0 0 0 110px rgb(30, 255, 0);
+			}
+			/*
+				对象选择器{box-shadow:投影方式 x轴偏移量 y轴偏移量 阴影模糊半径 阴影扩展半径 阴影颜色 }
+			*/
+		</style>
+	</head>
+	<body>
+		<div class='one-box'>
+			<div class='one'>方案一</div>
+		</div>
+		<br/><br/><br/><br/><br/>
+		<p>
+			<div class="two"></div>
+		</p>
+	</body>
+</html>

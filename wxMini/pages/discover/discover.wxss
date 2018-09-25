@@ -1,0 +1,37 @@
+.row{ margin: 10px 30rpx; }
+.title { font-size: 30rpx; font-weight: 500; }
+
+.btn_view { display: flex; }
+.btn_view .btn { 
+  flex: 1; margin: 5rpx 10rpx; border: 1rpx solid gray;  
+  height: 80rpx; line-height: 80rpx; border-radius: 80rpx; text-align: center;
+}
+.numInput{ 
+  width: 630rpx; height: 80rpx; line-height: 80rpx;
+  border-radius: 50rpx; border: 1rpx solid gray;
+  margin: 0 auto; padding: 0 30rpx;
+}
+
+/* 按钮 */
+.btn{
+  width: 400rpx; height: 80rpx; line-height: 80rpx;
+  margin: 50rpx auto; background-color: #000;
+  border: 5rpx solid purple; color: #fff;
+  display: flex; justify-content: center; align-items: center;
+}
+
+    .btn_hover { 
+        animation-name: sixAnim; /* 设置动画名字 */
+        animation-duration: 2s; /* 设置动画时间 */
+        display: flex; justify-content: center; align-items: center;
+    }
+    @keyframes sixAnim {
+        from{
+          width: 400rpx; height: 80rpx;
+          color: #fff; border: 5rpx solid purple;
+        }
+        to{
+          width: 600rpx; height: 120rpx; font-size: 50rpx;
+          colo: #2ecc71; border: 20rpx solid #2ecc71;
+        }
+    }

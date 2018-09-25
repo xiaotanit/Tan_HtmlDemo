@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>3D播放器</title>
+    <style type="text/css">
+        * { margin: 0px; padding: 0px; }
+        /* 设置背景图片根据浏览器大小自动调整 */
+        body {
+            background: url("img/jacky/bg.jpg") no-repeat;
+            background-size:cover;
+        }
+
+        .ulOne {
+            width: 200px; height: 200px;
+            position: absolute;
+            left: 50%; bottom: 120px;
+            margin-left: -100px;
+            list-style:none;
+            transform-style: preserve-3d;
+            transform: rotateX(-30deg);
+            animation: imgScroll 10s 0s linear infinite normal;
+        }
+        .ulOne li {
+            width:200px; height:200px;
+            position:absolute; left:0; top:0;
+            background-color: black;
+        }
+        .ulOne li img {
+            width:200px; height:200px; border: 5px solid skyblue;
+            box-sizing: border-box;
+        }
+        .ulOne:hover { animation-play-state: paused; }
+        .ulOne:hover li img{ opacity:0.3; }
+        .ulOne li:hover img{ opacity: 1; }
+
+        .ulOne li:nth-child(1){ transform: rotateY(0deg) translateZ(200px); }
+        .ulOne li:nth-child(2){ transform: rotateY(60deg) translateZ(200px); }
+        .ulOne li:nth-child(3){ transform: rotateY(120deg) translateZ(200px); }
+        .ulOne li:nth-child(4){ transform: rotateY(180deg) translateZ(200px); }
+        .ulOne li:nth-child(5){ transform: rotateY(240deg) translateZ(200px); }
+        .ulOne li:nth-child(6){ transform: rotateY(300deg) translateZ(200px); }
+
+        @keyframes imgScroll {
+            from { transform: rotateX(-30deg) rotateY(0deg); }
+            to { transform: rotateX(-30deg) rotateY(360deg); }
+        }
+
+
+        /* 图片动画变化 */
+        .imgOne {
+            position: absolute;
+            animation: imgMove 10s 0s linear infinite normal;
+        }
+        @keyframes imgMove {
+            0% { left: 10%; bottom: 20%; opacity: 1; }
+            20% { left: 30%; bottom: 70%; opacity: 0; }
+            40% { left: 60%; bottom: 90%; opacity: 1; }
+            60% { left: 90%; bottom: 60%; opacity: 0; }
+            80% { left: 70%; bottom: 40%; opacity: 1; }
+            100% { left: 40%; bottom: 20%; opacity: 0; }
+        }
+    </style>
+</head>
+<body>
+    <div class="content">
+        <!-- 快捷方式写：ul.ulOne>li{$}*6 按下tab键 -->
+        <ul class="ulOne">
+            <li><img src="img/jacky/1.jpg" /></li>
+            <li><img src="img/jacky/2.jpg" /></li>
+            <li><img src="img/jacky/3.jpg" /></li>
+            <li><img src="img/jacky/4.jpg" /></li>
+            <li><img src="img/jacky/5.jpg" /></li>
+            <li><img src="img/jacky/6.jpg" /></li>
+        </ul>
+        <img src="img/jacky/xin.png" class="imgOne"/>
+        <audio src="img/source/Friendships.mp3" autoplay="autoplay" loop="loop" />
+    </div>
+</body>
+</html>

@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>面向对象</title>
+</head>
+<body>
+    <h3>JS也是面向对象的语言，具有面向对象的三大特性：封装、继承、多态</h3>
+    <script type="text/javascript">
+        //逐步演示js面向对象的三大特性，先演示继承和多态，再演示封装
+        //1、继承
+        //第一步，创建构造函数
+        function Shape(){
+            this.x = 2;
+            this.y = 2;
+            console.log("hello, I'm Shape constructor !");
+        }
+
+        Shape.prototype.move = function(x, y){
+            this.x += x;
+            this.y += y;
+
+            console.log("shape move, this.x=" + this.x + ", this.y=" + this.y);
+        }
+
+
+        //定义子类，继承父类
+        function Rectangle(){
+            Shape.call(this);   //调用父类构造函数
+
+            console.log("哈喽，I'm Rectangle's constructor");
+        }
+
+        //另外一种子类继承父类的写法
+        function RectangleTwo(){
+            this.base = Shape;
+            this.base();
+
+            console.log("hello, I'm RectangleTwo's constructor...");
+        }
+
+        function RectangleThree(){
+            console.log("Hello, I'm RectangleThree's constructor...");
+        }
+
+        //第二步，子类继承父类的原型
+        Rectangle.prototype = Object.create(Shape.prototype);
+        Rectangle.prototype.constructor = Rectangle;
+
+        RectangleTwo.prototype = Object.create(Shape.prototype);
+        RectangleTwo.prototype.constructor = RectangleTwo;
+
+        RectangleThree.prototype = new Shape();
+        RectangleThree.prototype.constructor = RectangleThree;
+
+
+        //测试结果
+        var rect1 = new Rectangle();
+        rect1.move(1, 1);
+
+        console.log(rect1 instanceof Rectangle);
+        console.log(rect1 instanceof Shape);
+        /*
+         hello, I'm Shape constructor !
+         哈喽，I'm Rectangle's constructor
+         shape move, this.x=3, this.y=3
+         true
+         true
+         true
+         */
+
+        var rect2 = new RectangleTwo();
+        rect2.move(2, 2);
+
+        console.log(rect2 instanceof RectangleTwo);
+        console.log(rect2 instanceof Shape);
+        console.log(rect2 instanceof Object);
+        console.log(rect2 instanceof Rectangle);
+        /*
+         hello, I'm Shape constructor !
+         hello, I'm RectangleTwo's constructor...
+         shape move, this.x=4, this.y=4
+         true
+         true
+         true
+         false
+         */
+
+
+        var rect3 = new RectangleThree();
+        rect3.move(3, 3);
+
+        console.log(rect3 instanceof RectangleThree);
+        console.log(rect3 instanceof Shape);
+        console.log(rect3 instanceof Object);
+        console.log(rect3 instanceof Rectangle);
+        console.log(rect3 instanceof RectangleTwo);
+        /*
+         Hello, I'm RectangleThree's constructor...
+         shape move, this.x=5, this.y=5
+         true
+         true
+         true
+         false
+         false
+         */
+
+
+
+        //2、多态的体现
+        Shape.prototype.info = function(){
+            console.log("Shape's x = " + this.x + ", y = " + this.y);
+        }
+        Rectangle.prototype.info = function(){
+            console.log("Rectangle's x = " + this.x + ", y = " + this.y);
+        }
+        RectangleThree.prototype.info = function(){
+            console.log("RectangleThree's x = " + this.x + ", y = " + this.y);
+        }
+
+        //测试: Rectangle和RectangleThree子构造函数重写了原型的info方法，RectangleTwo没有重写，继承自Shape的info方法
+        var shape = new Shape();
+        shape.info();  // Shape's x = 2, y = 2
+        rect1.info();  //Rectangle's x = 3, y = 3
+        rect2.info();  //Shape's x = 4, y = 4
+        rect3.info();  //RectangleThree's x = 5, y = 5
+
+
+
+        //3、对象的封装：隐藏细节，对外暴露需要的属性和方法
+        var person = (function(){
+
+            var obj = new Object();
+            obj.name = "大锤";
+            var perAge = 18;
+
+            var perRun = function(){
+                console.log(this.name + "... 正在run...");
+            }
+
+            var perJump = function(){
+                console.log(this.name + "今年" + perAge + "....正在jump");
+            }
+
+            obj.run = perRun;
+            obj.jump = perJump;
+
+            return obj;
+        })();
+
+        //测试, person对象对外公开的name, run， jump可以访问，其他内部的perAge 和perRun等不能访问
+        console.log( person.name );  //大锤
+        person.run();   //大锤... 正在run...
+        person.jump();  //大锤今年18....正在jump
+        person.name = "大锤三";
+        person.run();   //大锤三... 正在run...
+
+
+    </script>
+</body>
+</html>

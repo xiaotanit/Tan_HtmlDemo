@@ -1,0 +1,271 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>2D转换和阴影</title>
+    <style type="text/css">
+        ul, li{ margin: 0px; padding: 0px; list-style:none; }
+
+        /* 1、演示形变属性：旋转、移动、缩放 */
+        .testUL{
+            float: left;
+            border: 1px solid red;
+            width: 300px;
+            text-align: center;
+        }
+        .testUL li {
+            background-color: red;
+            width: 100px;
+            line-height: 30px;
+            margin: 50px;
+        }
+
+        .testUL li:nth-child(2){
+            /* 顺时针旋转45度，deg是角度 */
+            transform: rotate(45deg);
+        }
+        .testUL li:nth-of-type(3){
+            /* 移动
+            translate(100px, 50px) //第一个参数是水平方向平移，第二个参数是竖直方向平移
+             */
+            transform: translate(100px, -50px);
+        }
+        .testUL li:nth-of-type(4){
+            /* 缩放：scale(2, 0.5) // 水平放大2倍，数值缩小0.5倍
+            scale(2) 表示水平数值都放大2倍
+             */
+            transform: scale(2, 1.5);
+        }
+        .testUL li:nth-child(5){
+            /*
+           注意点:
+           1.如果需要进行多个转换, 那么用空格隔开
+           2.2D的转换模块会修改元素的坐标系, 所以旋转之后再平移就不是水平平移的
+           */
+            transform: rotate(45deg) translate(100px, -50px) scale(2, 1.5);
+        }
+
+        /* 2、演示形变的参考点设置 */
+        /* 旋转形变中心点: 正常旋转是以各自的中心为参照点进行旋转 */
+        .testULTwo, .testULThree{
+            float: left;
+            margin-top: 100px; margin-left: 50px;
+            padding: 10px;
+            position:relative;
+            border: 1px solid black;
+            width: 200px; height: 200px;
+        }
+        .testULTwo li, .testULThree li{
+            width: 200px; height: 200px;
+            position:absolute;
+            left:0px; top: 0px;
+        }
+        .testULThree { margin-left: 200px; }
+        .testULThree li {
+            /*
+            形变中心点设置：transform-origin:
+            第一个参数水平方向，第二个方向竖直方向
+            有三种取值形式：百分比, 具体像素，左右
+            transform-origin: 50% 50%； //默认形变中心店就是50% 50%
+            transform-origin: 100px 100px;
+            transform-origin: center top;
+            */
+            transform-origin: left top;
+        }
+        .testULTwo li:nth-child(1),.testULThree li:nth-child(1){
+            background-color: red;
+            transform: rotate(20deg);
+        }
+        .testULTwo li:nth-child(2),.testULThree li:nth-child(2){
+            background-color: yellow;
+            transform: rotate(40deg);
+        }
+        .testULTwo li:nth-child(3),.testULThree li:nth-child(3){
+            background-color: blue;
+            transform: rotate(60deg);
+        }
+
+
+        /* 3、形变3D翻转：X/Y/Z轴 */
+        /* 形变翻转：x轴、y轴、z轴，默认以z轴翻转： rotateZ */
+        .testULFour li{
+            float: left; margin: 10px;
+            border: 1px dashed red;
+            width: 320px;
+            height: 194px;
+            background-color: yellowgreen;
+
+            /* 透视：近大远小
+            注意点：透视属性必须加在要显示透视效果的元素的父元素上
+             */
+            perspective: 500px;
+        }
+        .testULFour li img { height: 194px; transition: transform 1s; /* 设置过渡元素 */ }
+
+        .testULFour li:nth-child(2) { transform: rotateZ(60deg); /* 默认就是围绕z轴旋转 */ }
+        .testULFour li:nth-child(3) img { transform: rotateX(60deg); /* 设置围绕X轴旋转 */}
+        .testULFour li:nth-of-type(4) img{ transform: rotateY(60deg);/* 设置围绕Y轴旋转 */ }
+
+        .testULFour li:nth-child(3):hover img { transform: rotateX(0deg); }
+        .testULFour li:nth-child(4):hover img { transform: rotateY(0deg); }
+
+        .testULFour li:nth-of-type(5) img { transform-origin: left bottom; }
+        .testULFour li:nth-of-type(5):hover img { transform: rotateX(60deg); }
+        .testULFour li:nth-child(6) img { transform-origin:left top; }
+        .testULFour li:nth-child(6):hover img { transform: rotateY(60deg);  }
+
+        /* 4、照片墙 */
+        .testULFour li:nth-child(7), .testULFour li:nth-child(8) {
+            box-shadow: 0 0 10px;  /* 设置阴影 */
+            border: 10px solid white;
+            transition: transform 1s;
+        }
+        .testULFour li:nth-child(7) { transform: rotate(30deg) scale(0.5);}
+        .testULFour li:nth-child(8) { transform: rotate(-30deg) scale(0.5); }
+        .testULFour li:nth-child(7):hover, .testULFour li:nth-child(8):hover {
+            transform: none;
+        }
+
+
+        /*  5、盒子阴影和文字阴影 */
+        .testDivFive div { margin: 10px 20px; float:left;
+            background-color: red; font-size: 30px;
+            width: 200px;
+            line-height: 100px;
+            text-align:center;
+        }
+        .testDivFive div:nth-child(1) {
+        /*
+        1.如何给盒子添加阴影
+        box-shadow: 水平偏移 垂直偏移 模糊度 阴影扩展 阴影颜色 内外阴影;
+
+        2.注意点
+        2.1盒子的阴影分为内外阴影, 默认情况下就是外阴影
+        2.2快速添加阴影只需要编写三个参数即可
+        box-shadow: 水平偏移 垂直偏移 模糊度;
+        默认情况下阴影的颜色和盒子内容的颜色一致
+
+        3.如何给文字添加阴影
+        text-shadow: 水平偏移 垂直偏移 模糊度 阴影颜色 ;
+        */
+            /*box-shadow: -10px -10px 10px 10px yellow inset;*/
+            box-shadow: -10px -10px 10px yellow
+        }
+        .testDivFive div:nth-child(2){
+            text-shadow: 10px 20px 5px blue;
+        }
+
+
+        /* 6、演示翻转菜单 */
+        .divSix { margin-top: 50px; margin-left: 100px; }
+        .ulSix { width: 420px; text-align:center; height: 36px; background-color:black; padding-left: 20px;
+        }
+        .txtDivSix { width: 440px; background-color:red; height: 200px; }
+        .ulSix > li { float:left; margin-right: 20px; width: 120px;
+            line-height: 36px; height: 36px; background-color: green;
+            position: relative;
+        }
+
+        .ulSix > li span { display: inline-block; cursor: pointer; width: 100%; }
+        .subUL li { background-color: yellow; line-height: 36px; opacity: 0;
+            transform: rotateY(180deg); /* Y轴翻转180度 */
+            transition: all 1s;
+        }
+        .ulSix > li:hover .subUL li { opacity: 1; transform: none; }
+        /* 设置过渡动画延迟 */
+        .ulSix > li:hover li:nth-child(1) { transition-delay: 200ms; }
+        .ulSix > li:hover li:nth-child(2) { transition-delay: 400ms; }
+        .ulSix > li:hover li:nth-child(3) { transition-delay: 600ms; }
+        .ulSix > li:hover li:nth-child(4) { transition-delay: 800ms; }
+        .ulSix > li:hover li:nth-child(5) { transition-delay: 1s; }
+        /* 设置过渡消失动画延时 */
+        .ulSix > li li:nth-child(1) { transition-delay: 1000ms; }
+        .ulSix > li li:nth-child(2) { transition-delay: 800ms; }
+        .ulSix > li li:nth-child(3) { transition-delay: 600ms; }
+        .ulSix > li li:nth-child(4) { transition-delay: 400ms; }
+        .ulSix > li li:nth-child(5) { transition-delay: 200ms; }
+    </style>
+</head>
+<body>
+    <div>
+        <ul class="testUL">
+            <li>正常</li>
+            <li>旋转</li>
+            <li>平移</li>
+            <li>缩放</li>
+            <li>综合</li>
+        </ul>
+        <ul class="testULTwo">
+            <li></li><li></li><li></li>
+        </ul>
+        <ul class="testULThree">
+            <li></li><li></li><li></li>
+        </ul>
+        <div style="clear:both;"></div>
+    </div>
+    <hr/><hr/><hr/>
+    <div>
+        <ul class="testULFour">
+            <li><img src="img/meat.jpg"/></li>
+            <li><img src="img/meat.jpg"/></li>
+            <li><img src="img/meat.jpg"/></li>
+            <li><img src="img/meat.jpg"/></li>
+            <li><img src="img/meat.jpg"/></li>
+            <li><img src="img/meat.jpg"/></li>
+            <!-- 照片墙 -->
+            <li><img src="img/meat.jpg"/></li>
+            <li><img src="img/meat.jpg"/></li>
+        </ul>
+        <div style="clear:both;"></div>
+    </div>
+    <hr/><hr/><hr/>
+    <h3>盒子阴影和文字阴影</h3>
+    <div class="testDivFive">
+        <div>盒子阴影</div>
+        <div>文字阴影</div>
+    </div>
+    <div style="clear:both;"></div>
+    <hr/><hr/><hr/>
+    <h3>翻转菜单练习</h3>
+    <div class="divSix">
+        <ul class="ulSix">
+            <li>
+                <span>一级菜单</span>
+                <ul class="subUL">
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+            <li>
+                <span>一级菜单</span>
+                <ul class="subUL">
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+            <li>
+                <span>一级菜单</span>
+                <ul class="subUL">
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                    <li>二级菜单</li>
+                </ul>
+            </li>
+        </ul>
+        <div class="txtDivSix">惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚；一代天骄，成吉思汗，只识弯弓射大雕；俱往矣，数风流人物，还看今朝！
+            惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚；一代天骄，成吉思汗，只识弯弓射大雕；俱往矣，数风流人物，还看今朝！
+            焚我残躯，熊熊烈火；生亦何欢，死亦何苦？去恶为善，唯光明故；喜乐哀愁，皆归尘土；怜我世人，忧患实多；怜我世人，忧患实多！
+            焚我残躯，熊熊烈火；生亦何欢，死亦何苦？去恶为善，唯光明故；喜乐哀愁，皆归尘土；怜我世人，忧患实多；怜我世人，忧患实多！
+            Hello, World !
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,58 @@
+{
+	"description": "项目配置文件。",
+	"packOptions": {
+		"ignore": []
+	},
+	"setting": {
+		"urlCheck": true,
+		"es6": true,
+		"postcss": true,
+		"minified": true,
+		"newFeature": true
+	},
+	"compileType": "miniprogram",
+	"libVersion": "2.2.4",
+	"appid": "wxfdaa2ccfc70a2738",
+	"projectname": "%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F",
+	"isGameTourist": false,
+	"condition": {
+		"search": {
+			"current": -1,
+			"list": []
+		},
+		"conversation": {
+			"current": -1,
+			"list": []
+		},
+		"plugin": {
+			"current": -1,
+			"list": []
+		},
+		"game": {
+			"currentL": -1,
+			"list": []
+		},
+		"miniprogram": {
+			"current": 2,
+			"list": [
+				{
+					"id": -1,
+					"name": "Discover",
+					"pathName": "pages/discover/discover",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "瀑布流一",
+					"pathName": "pages/discover/waterfall_flow/waterfall_flow",
+					"query": ""
+				},
+				{
+					"id": -1,
+					"name": "动画测试",
+					"pathName": "pages/discover/animation/animation"
+				}
+			]
+		}
+	}
+}

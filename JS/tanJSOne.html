@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>js添加事件和取消事件</title>
+    <style type="text/css">
+        .btn { width: 250px; height: 40px; font-size: 16px; margin-right: 20px; }
+
+        .divOne { width: 80%; height: 100px; margin: 10px auto; background-color: gray; }
+        button { width: 150px; height: 40px; font-size: 20px; }
+
+        .divTwo { width: 300px; height: 300px; border: 8px solid black; background-color: yellow; cursor: pointer; text-align:center; }
+        .divTwoSub { margin: 20px 30px; border: 8px dashed red; background-color: green; }
+        .divTwoSubTwo { margin: 10px 20px; border: 8px solid blue; background-color: skyblue; }
+
+        .eventDiv { padding: 10px 20px; background-color: yellow; width: 300px; height: 120px; }
+    </style>
+</head>
+<body>
+    <div>
+        <h3>添加事件的几种方式：</h3>
+        <button class="btn" onclick="alert('事件直接添加到html标签中');">事件直接添加到html标签中</button>
+        <button class="btn" id="btn2">在js通过onclick属性设置事件</button>
+        <button class="btn" id="btn3">通过addEventListener添加事件</button>
+        <button class="btn" id="btn4">IE专用添加事件测试</button>
+        <button class="btn" id="btn5">时间type/target/</button>
+        <br/><hr/><br/>
+        <h3>事件冒泡，阻止事件冒泡，事件默认</h3>
+        <div class="eventDiv" id="eventDiv1" onclick="alert('大家好我是父级div');">
+            <button class="btn" id="eventBtn1">事件冒泡演示</button>
+            <button class="btn" id="eventBtn2">阻止事件冒泡</button>
+            &nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="http://www.cnblogs.com/tandaxia" target="_blank" id="eventA">事件默认</a>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <a href="http://www.cnblogs.com/tandaxia" target="_blank" id="eventB">阻止默认事件</a>
+        </div>
+
+        <script type="text/javascript">
+            /*
+            1、事件流：描述的是在页面中接受事件的顺序
+            2、事件冒泡：由最具体的元素接收，然后逐级向上传播至最不具体的元素的节点（文档）
+            2、事件捕获：最不具体的节点先接收事件，而最具体的节点应该是最后接收事件
+
+            事件处理方式：
+            1、HTML事件处理：直接将事件添加到HTML结构中
+            2、DOM 0级事件处理：把一个函数赋值给一个事件处理程序属性
+            3、DOM 2级事件处理：addEventListener('事件名', '事件处理函数', '布尔值');
+               最后一个布尔参数：true表示是事件捕获，false表示事件冒泡
+               removeEventListener(); //移除事件
+            4、IE事件处理程序： attachEvent, detachEvent
+             */
+            var btn2 = document.getElementById('btn2');
+            btn2.onclick = function(){
+                alert('通过id属性获取按钮，给按钮onclick属性添加点击事件');
+            }
+            btn2.onclick = function(){
+                alert('通过id属性获取按钮，给按钮onclick属性添加点击事件2222');
+            }
+            //结论：通过给标签的onclick属性重复添加事件，后面的事件会覆盖前面的事件
+
+
+            //3、通过addEventListener函数添加事件
+            var btn3 = document.getElementById('btn3');
+            btn3.addEventListener('click', clickMe);
+            btn3.addEventListener('click', clickMe2);
+            //结论：添加多个事件，会叠加，会将事件依次处理
+            btn3.removeEventListener('click', clickMe); //移除事件1
+
+            function clickMe(){
+                alert("点我111")
+            }
+            function clickMe2(){
+                alert("点我222");
+            }
+
+            //4、ie添加事件专用函数attachEvent
+            var btn4 = document.getElementById('btn4');
+            //判断是否支持ie特有的这个函数
+            if (btn4.attachEvent){ //如果支持attach
+                btn4.attachEvent('onclick', clickMe);
+            }
+            else if (btn4.addEventListener){ //表示支持addEventListener函数
+                btn4.addEventListener('click', clickMe2);
+            }
+            else {
+                btn4.onclick = function(){
+                    alert('竟然只支持onclick属性来添加事件。。。');
+                }
+            }
+
+
+            //5、测试事件的类型和目标：type和target
+            var btn5 = document.getElementById('btn5');
+            btn5.addEventListener('click', testEventProperty);
+
+            //测试事件的类型和目标
+            function testEventProperty(e){
+                alert(e.type);
+                alert(e.target);
+            }
+
+
+            //6、测试事件冒泡和阻止事件冒泡
+
+            var eventBtn1 = document.getElementById('eventBtn1');
+            var eventBtn2 = document.getElementById('eventBtn2');
+            eventBtn1.addEventListener('click', testEventBubbling);
+            eventBtn2.addEventListener('click', testEventBubbling2);
+
+            function testEventBubbling(e){
+                alert('哈喽，我是按钮11');
+            }
+            function testEventBubbling2(e){
+                alert('哈喽，我是按钮22');
+                e.stopPropagation(); //阻止事件冒泡
+            }
+            //7、测试事件默认
+            var eA = document.getElementById('eventA');
+            var eB = document.getElementById('eventB');
+            eA.addEventListener('click', testEventDefault);
+            eB.addEventListener('click', testEventDefault2);
+
+            function testEventDefault(e){
+                alert('哈喽，超链接的点击事件');
+            }
+            function testEventDefault2(e){
+                alert('哈喽，超链接的点击事件2，阻止默认跳转事件');
+                e.preventDefault();  //阻止默认事件
+            }
+
+
+            //演示void的使用场景
+            function testVoid(){
+
+                (document.getElementsByClassName('voidClass')[0]).innerText = '你点击了超链接...';
+                alert("你点击了超链接。。。");
+            }
+        </script>
+
+        <h1>
+            <button onclick="history.back()">返回到上一页</button>
+            <a href="tanTestThree.html">跳转到下一页</a>
+            <button onclick="history.forward()">跳转到下一页</button>
+        </h1>
+
+        <h3>测试void的作用<span class="voidClass" style="color:red; font-size: 30px"></span></h3>
+        <h2>
+            <a href="https://www.baidu.com/" onclick="testVoid(); return false;">百度吧</a>
+            <a href="javascript:void(testVoid())">百度</a>
+            <a href="https://www.baidu.com/">神奇百度</a>
+        </h2>
+</body>
+</html>

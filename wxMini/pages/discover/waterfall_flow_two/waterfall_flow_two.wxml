@@ -1,0 +1,11 @@
+<view style='display: none'>
+  <image wx:for='{{dataList}}' wx:key='item' src='{{item.src}}' bindload='loadImage' data-index='{{index}}'/>
+</view>
+<scroll-view class='main' scroll-y='true' style="height:{{windowHeight}}px" bindscrolltolower='loadMoreImages'>
+    <view class='view_left'>
+      <image wx:for='{{firstList}}' wx:key='item' src='{{item.src}}' style='margin-left: {{imgMargin}}px; width: {{imgWidth}}px; height:{{item.height}}px; margin-top: {{imgMargin}}px;' bindtap='previewImg' data-index='{{index}}' data-type='1'/>
+    </view>
+    <view class='view_right'>
+      <image wx:for='{{secondList}}' wx:key='item' src='{{item.src}}' style='margin-left: {{imgMargin/2}}px; width: {{imgWidth}}px; height:{{item.height}}px; margin-top: {{imgMargin}}px;' bindtap='previewImg' data-index='{{index}}' data-type='2'/>
+    </view>
+</scroll-view>

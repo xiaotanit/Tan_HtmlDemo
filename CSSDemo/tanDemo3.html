@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <style type="text/css">
+    /**
+    1、backgroound:
+      语法：background:bg-color bg-image position/bg-size bg-repeat bg-origin bg-clip bg-attachment initial|inherit;
+        举例：background: #00ff00 url('smiley.gif') no-repeat fixed center;
+        background-attachment: 默认值为scroll： 表示背景图片随页面的其余部分滚动
+                                fixed: 背景图像是固定的
+        background-color: 默认transparent，表示透明，其他可设置颜色
+        background-image: 赋值格式：url('图片地址')
+        background-position: 图片坐标位置，取值有left/right/center、top/bottom/center、具体的px数量、百分比
+                举例：background-position: left center;
+                    background-position: 30% 50%;
+                    background-position: 100px 500px;
+       background-repeat: 图像的平铺格式，取值有repeat、repeat-x、repeat-y、no-repeat, 对应的意思是：
+                            repeat：水平和垂直图像都重复；
+                            repeat-x： 图片水平方向重复;
+                            repeat-y: 图片垂直方向重复；
+                            no-repeat: 图片不重复
+      background-size: 指定背景图片大小，取值有：
+             length: 设置背景图片高度和宽度,第一个值设置宽度,第二个值设置高度。如果只给出一个值，第二个值默认为自动;
+                    举例：background-size: 100px 200px; background-size: 100px; background-size: auto 300px;
+             percentage: 百分比，第一个值设置宽度,第二个值设置高度。如果只给出一个，第二个默认设置为auto(自动），用法和length一样
+             cover: 保持图片的纵横比并将图片缩放成将完全覆盖背景定位区域的最小大小：
+                    关键点：保持纵横比; 完全覆盖; 最小大小,可能背景图片显示不完整
+                    background-size: cover
+             contain: 保持图片的纵横比并将图片缩放成适合背景定位区域的最大大小，
+                    关键点：保持纵横比; 图片全部显示; 适合背景，所以可能不会完全覆盖标签容器
+                    background-size: contain;
+
+    2、border: border-width，border-style和border-color
+           一次性设置：border: 5px solid red;
+           分开设置：border-style: solid; border-color:red; border-width: 5px;
+           border-bottom-color: red; border-bottom-style: solid; border-top-style: dashed;
+           border-top-left-radius: 设置边框圆角，可以是xxem, 也可以是xx%
+           border-style: 样式的值有：none(默认）/dotted / dashed虚线 / solid实线 / double双边框 / groove双线。。。
+           border-width: 值有thin细 / medium默认中等边框 / thick粗 / 具体的数字
+           border-color: 可以设置一到四的颜色 --> border-color: red yellow blue orange;
+           border-top: 5px solid red; border-right: 10px dashed yellow;
+
+    */
+
+        p { width: 80%; height: 50px; line-height: 50px; }
+        .pOne { border: 3px dashed red; }
+        .pTwo { border-top-width: 6px; border-bottom-style: solid; border-bottom-color: blue; }
+        .pThree { border-top-left-radius: 5em; border-bottom-left-radius: 2em; }
+        .pFour { border-width: 10px; border-style: solid dashed; border-color: red yellow blue purple; }
+        .pFive { border-top: 5px solid red; border-right: 3px dashed yellow; width: 30%;}
+    </style>
+</head>
+<body>
+    <div>
+        <p class="pOne">一次性设置边框</p>
+        <p class="pOne pTwo">哈喽，World ! ^_^, 测试边狂border</p>
+        <p class="pOne pTwo pThree">设置圆角，天将降大任于斯人也，必将苦其心志</p>
+        <p class="pFour">&nbsp;&nbsp;&nbsp;p标签标签，劳其筋骨，饿其体肤，空乏其身，行佛乱其所为</p>
+        <p class="pFive">所以动心忍性，增益其所不能！</p>
+    </div>
+</body>
+</html>

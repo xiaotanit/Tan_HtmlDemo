@@ -1,0 +1,38 @@
+{
+  "pages": [
+    "pages/index/index",
+    "pages/logs/logs",
+    "pages/discover/discover",
+    "pages/discover/waterfall_flow/waterfall_flow",
+    "pages/discover/waterfall_flow_two/waterfall_flow_two",
+    "pages/discover/animation/animation",
+    "pages/discover/waterfall_flow_three/waterfall_flow_three"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#fff",
+    "navigationBarTitleText": "WeChat",
+    "navigationBarTextStyle": "black"
+  },
+  "tabBar": {
+    "color": "#666666",
+    "selectedColor": "#fe6519",
+    "borderStyle": "#e6e6e6",
+    "backgroundColor": "#fff",
+    "list": [
+      {
+        "pagePath": "pages/index/index",
+        "iconPath": "image/home_normal.png",
+        "selectedIconPath": "image/home_press.png",
+        "text": "首页"
+      },
+      {
+        "pagePath": "pages/discover/discover",
+        "iconPath": "image/discover_normal.png",
+        "selectedIconPath": "image/discover_press.png",
+        "text": "发现"
+      }
+    ]
+  },
+  "cloud": true
+}

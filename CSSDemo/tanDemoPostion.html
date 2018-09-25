@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS样式之position</title>
+    <style type="text/css">
+        /** 3、position */
+        .divOne { background-color: yellow; height: 200px; }
+        .divOne > div { background-color: yellowgreen; width: 300px; height: 50px; margin-bottom: 5px; }
+        .divOne3 { position: absolute; left:0px; top:0px; }
+        .divOne4 { position: absolute; right:30px; top:30px; }
+        .divOne5 { position: absolute; left:0px; bottom: 0px; }
+
+
+        /** 相对定位里面的子标签绝对定位 */
+        .testDiv { margin-left: 300px; position:relative; height: 500px; width: 60%; background-color:greenyellow; }
+        .testDiv2 { position: absolute; left: 20px; top:50px; color: red; border: 3px solid red; }
+
+
+        /** 子绝对父相对的应用 */
+        .testUL { list-style:none; border: 1px solid red; height: 100%; text-align:center; }
+        .testUL li { float:left; padding: 0px 20px; border: 1px dashed blue; }
+        .testUL li:nth-of-type(4) { background-color: mediumpurple; }
+        /* 相对定位的弊端，会继续在标准流中占用空间 */
+       /* .testUL img { position:relative; left: -48px; top: -16px; } */
+        /** 绝对定位的弊端：以body为参考点，宽高会随着浏览器的宽高而变化 */
+        /*.testUL img { position:absolute; left: 345px; top: 1200px; }*/
+
+        /** 父相对，子绝对结合使用 */
+        .testUL li:nth-of-type(4) { position: relative; }
+        .testUL img { position:absolute; left: 42px; top: 22px; }
+    </style>
+</head>
+<body>
+    <div>
+        <div style="height: 50px; background-color:greenyellow;">divdivdiv高度50px</div>
+        <hr/><br/>
+
+        <h3>position --> absolute</h3>
+        <div class="divOne">
+            <div>div111, 宽300px， 高50px</div>
+            <div>div222，宽300px， 高50px</div>
+            <div class="divOne3">div333, 宽300px高50px, 设置absolute, left0px, top0px</div>
+            <div class="divOne4">div444, 宽300px高50px, 设置absolute, right30px, top30px</div>
+            <div class="divOne5">div555, 宽300px高50px，设置absolute, left0px, bottom0px</div>
+        </div>
+    </div>
+
+    <!--
+    1.规律
+    1.默认情况下所有的绝对定位的元素, 无论有没有祖先元素, 都会以body作为参考点
+
+    2.如果一个绝对定位的元素有祖先元素, 并且祖先元素也是定位流, 那么这个绝对定位的元素就会以定位流的那个祖先元素作为参考点
+    2.1只要是这个绝对定位元素的祖先元素都可以
+    2.2指的定位流是指绝对定位/相对定位/固定定位
+    2.3定位流中只有静态定位不行
+
+    3.如果一个绝对定位的元素有祖先元素, 并且祖先元素也是定位流, 而且祖先元素中有多个元素都是定位流, 那么这个绝对定位的元素会以离它最近的那个定位流的祖先元素为参考点
+    -->
+    <br/><hr/><br/>
+    <h1>测试父标签相对定位，子标签绝对定位</h1>
+    <div style="border:1px solid red;">
+        <div class="testDiv">
+            <h3>我是testDiv里面的h2, testDiv相对定位，width60%， margin-left=300px， height=500px</h3>
+            <div class="testDiv2">testDiv子标签testDiv2,
+                position: absolute; left: 20px; top:50px; color: red; border: 3px solid red;
+            </div>
+        </div>
+    </div>
+
+    <!--
+    相对定位弊端:
+    相对定位不会脱离标准流, 会继续在标准流中占用一份空间, 所以不利于布局界面
+
+    绝对定位弊端:
+    默认情况下绝对定位的元素会以body作为参考点, 所以会随着浏览器的宽度高度的变化而变化
+
+    结合这两种定位的优势，通常一起使用
+    -->
+    <br/><hr/><br/>
+    <h1>子绝对父相对的应用示例</h1>
+    <div style="background-color:yellow; height: 100px;line-height: 100px;">
+        <ul class="testUL">
+            <li>京东商场</li>
+            <li>天猫</li>
+            <li>淘宝</li>
+            <li>苏联易购
+                <img src="img/hot.png"/>
+            </li>
+            <li>国美电器</li>
+            <li>一号店</li>
+            <li>名创优品</li>
+        </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>动画</title>
+    <style type="text/css">
+        /** 第一个动画 */
+        #content {
+            display: inline-block;
+            margin-left: 20px;
+            width:100px;
+            height:100px;
+            background:red;
+            position:relative;
+            animation:moveOne 5s infinite;
+            -webkit-animation:moveOne 5s infinite; /* Safari and Chrome */
+        }
+
+
+        @keyframes moveOne
+        {
+            from {top:0px;}
+            to {top:200px;}
+        }
+
+        @-webkit-keyframes moveOne /* Safari and Chrome */
+        {
+            from {top:0px;}
+            to {top:200px;}
+        }
+
+
+        /** 2、第二个动画 */
+        #divIDTwo{
+            display: inline-block;
+            margin-left: 20px;
+            width:100px;
+            height:100px;
+            background:greenyellow;
+            position:relative;
+            animation:moveTwo 5s infinite;
+            -webkit-animation:moveTwo 5s infinite; /* Safari and Chrome */
+        }
+
+        @keyframes moveTwo
+        {
+            0%   {top:0px;}
+            25%  {top:200px;}
+            75%  {top:50px}
+            100% {top:100px;}
+        }
+
+        @-webkit-keyframes moveTwo /* Safari and Chrome */
+        {
+            0%   {top:0px;}
+            25%  {top:200px;}
+            75%  {top:50px}
+            100% {top:100px;}
+        }
+
+        /* box-sizing样式属性测试
+        1、box-sizing属性用于更改用于计算元素宽度和高度的默认CSS框模型。
+
+        2、content-box是默认值，并为您提供默认的CSS框大小调整行为。
+        如果将元素的宽度设置为100像素，则元素的内容框将为100像素宽，并且任何边框或填充的宽度将添加到最终渲染的宽度。
+
+        3、border-box告诉浏览器为您指定的宽度和高度的值来计算任何边框和填充。
+        如果将元素的宽度设置为100像素，那么100像素将包括您添加的任何边框或填充，
+        并且内容框将缩小以吸收额外的宽度。这通常会使元素的大小更容易。
+
+        测试结果，box-sizing默认值为content-box， 然后元素width = 内容宽度
+        box-sizing属性值设置为border-box, 则元素width = 内容宽度+border宽度
+        */
+        #oneDiv>p { border: 1px solid red; margin: 10px; font-size:30px; }
+        .zeroP { width: 200px; height: 100px; border: 10px dashed red; background-color:yellow; }
+        .oneP { width: 200px; height: 100px; border: 10px dashed red; background-color: yellow; box-sizing: content-box; }
+        .twoP { width: 200px; height: 100px; border: 10px dashed red; background-color: yellow; box-sizing: border-box; }
+        /* 测试结果：box-sizing属性值默认为content-box */
+
+        /** 浮动 */
+        .container { border: 1px dashed red;}
+        .left { float:left; width: 20%; border: 1px solid black; box-sizing: border-box; }
+        .right { float:left; width: 80%; border: 1px dashed blue; box-sizing: border-box; }
+
+
+        .right ul { list-style: none; float:left; width:300px; height: 300px; border: 1px solid red; padding:5px; }
+        .right img { height: 100px; }
+        .right li { float: left; }
+    </style>
+</head>
+<body>
+    <p><strong>注意:</strong>  @keyframes 规则 不兼容 IE 9 以及更早版本的浏览器.</p>
+    <div id="content"></div>&nbsp;<div id="divIDTwo"></div>
+    <hr/>
+    <div id="oneDiv">
+        <p>nihao<span>你知道</span></p>
+        <p>halo<span>哈哈哈</span></p>
+        <p>三台阁<span>滴哈</span></p>
+    </div>
+    <p class="zeroP">哈哈哈</p>
+    <p class="oneP">哈哈哈</p>
+    <p class="twoP">哈哈哈</p>
+    <p class="threeP">哈哈哈</p>
+    <hr/>
+    <div class="container">
+        <div class="left">
+            <h1>演示js的瀑布流哈哈哈哈哈哈哈哈哈哈哈哈</h1>
+        </div>
+        <div class="right">
+            <ul>
+                <li>名字：王大锤</li>
+                <li><img src="" title="图片。。。" /></li>
+                <li>个性签名：金庸封笔古龙逝，世上唯有英雄志！</li>
+            </ul>
+        </div>
+        <div style="clear:both;">清除两边浮动</div>
+        <br/><hr/><br/>
+        <div>
+            <img src="img/img_01.jpg" title="标题" style="float:left;"/>
+            来一段文字：道德
+            子曰：苟志于仁矣，无恶也。
+            君子无终食之间违仁，造次必于是，颠沛必于是。
+            仁远乎哉，我欲仁，斯仁至矣。
+            知者不惑，仁者不忧，勇者不惧。
+            有德者，必有言；有言者，不必有德；仁者，必有勇；勇者，不必有仁。
+            志士仁人，无求生以害仁，有杀身以成仁。
+            当仁不让于师。
+            务民之义，敬鬼神而远之，可谓知矣。
+            君子可欺也，不可罔也。
+            克己复礼为仁。
+            己所不欲，勿施于人。在邦无怨，在家无怨。
+            爱人，知人，举直错诸枉，能使枉者直。
+            居处恭，执事敬；与人忠，虽之夷狄，不可弃也。
+            克、伐、怨、欲不行焉，可以为仁矣。
+            工欲善其事，必先利其器；居是邦也，事其大夫之贤者，友其士之仁者。
+            孔子曰：能行五者于天下，为仁矣。请问之。曰。恭宽信敏惠。恭则不侮。宽则得众。信则人任焉。敏则有功。惠则足以使人。
+            修养
+            君子无所争。
+            内省不疚，夫何忧何惧。
+            子曰：君子成人之美。不成人之恶。小人反是。
+            君子和而不同，小人同而不和。
+            君子泰而不骄，小人骄而不泰。
+            修己以敬，修己以安人，修己以安百姓。
+            君子义以为质，礼以行之，孙以出之，信以成之，君子哉。
+            君子病无能焉，不病人之不己知也。
+            君子谋道不谋食，忧道不忧贫。
+            畏天命，畏大人，畏圣人之言。
+            孔子曰：君子有九思，视思明，听思聪，色思温，貌思恭，言思忠，事思敬，疑思问，忿思难，见得思义。
+            礼乐
+            兴于诗，立于礼，成于乐。
+            不学诗，无以言；不学礼，无以立。
+            子曰：诗三百，一言以蔽之，曰，思无邪。
+            子曰：恭而无礼，则劳；慎而无礼，则葸；勇而无礼，则乱；直而无礼，则绞；君子笃于亲，则民兴于仁；故旧不遗，则民不偷。
+            孔子谓季氏：八佾舞于庭，是可忍也，孰不可忍也。
+            子曰：上好礼，则民易使也。
+            子在齐闻韶，三月不知肉味。曰：“不图为乐之至于斯也。”
+            子曰：人而不仁，如礼何？人而不仁，如乐何？
+            政治
+            子曰：“道千乘之国，敬事而信。节用而爱人。使民以时。”
+            子曰：“为政以德，譬如北辰。居其所，而众星共之。”
+            临之以庄，则敬。孝慈，则忠。举善而教不能，则劝。
+            君使臣以礼。臣事君以忠。
+            民可使由之。不可使知之。
+            自古皆有死。民无信不立。
+            先有司。赦小过。举贤才。
+            名不正。则言不顺。言不顺。则事不成。事不成。则礼乐不兴。礼乐不兴。则刑罚不中。刑罚不中。则民无所措手足。故君子名之必可言也。言之必可行也。君子于其言。无所茍而已矣。
+            子曰：“其身正。不令而行。其身不正。虽令不从。”
+            乐然后笑。人不厌其笑。义然后取。人不厌其取。
+            丘也闻有国有家者。不患寡而患不均。不患贫而患不安。盖均无贫。和无寡。安无倾。夫如是。故远人不服。则修文德以来之。既来之。则安之。远人不服而不能来也。邦分崩离析而不能守也。而谋动干戈于邦内。吾恐季孙之忧。不在颛臾。而在萧墙之内也。
+            敏而好学。不耻下问。
+            人格
+            俎豆之事，则尝闻之矣；军旅之事，未之学也。
+            道之将行也与，命也；道之将废也与，命也。
+            丘也幸，苟有过，人必知之。
+            道不行，乘桴浮于海。
+            君子居之，何陋之有。
+            君子学道则爱人，小人学道则易使也。
+            子曰：富而可求也，虽执鞭之士，吾亦为之，如不可求，从吾所好。
+            子曰：饭疏食饮水，曲肱而枕之，乐亦在其中矣。不义而富且贵，于我如浮云。
+            不怨天，不尤人，下学而上达，知我者其天乎。
+            子之所慎：齐、战、疾。
+            子不语怪。力。乱。神。
+            子罕言利。与命。与仁。
+            唯酒无量。不及乱。
+            食不语。寝不言。
+            温。良。恭。俭。让。
+            天下之无道也久矣。天将以夫子为木铎。
+            知其不可而为之。
+            往者不可谏。来者犹可追。
+            德行。言语。政事。文学。
+            过犹不及。
+            临事而惧。好谋而成。
+            颜回：不迁怒。不贰过。
+            回也，其心三月不违仁。其余则日月至焉而已矣。
+            贤哉回也。一箪食。一瓢饮。在陋巷。人不堪其忧。回也不改其乐。贤哉回也。
+            成事不说。遂事不谏。既往不咎。
+            子曰：始吾于人也，听其言而信其行。今吾于人也，听其言而观其行。
+            有子曰：其为人也孝弟，而好犯上者鲜矣。不好犯上。而好作乱者，未之有也。君子务本，本立而道生。孝弟也者，其为仁之本与。
+            礼之用，和为贵。
+            有子曰：信近于义。言可复也。恭近于礼。远耻辱也。因不失其亲。亦可宗也。
+            曾子曰：吾日三省吾身。为人谋。而不忠乎。与朋友交。而不信乎。传不习乎。
+            慎终追远。民德归厚矣。
+            鸟之将死。其鸣也哀。人之将死。其言也善。
+            以能问于不能。以多问于寡。有若无。实若虚。犯而不校。昔者吾友。尝从事于斯矣。
+            可以托六尺之孤。可以寄百里之命。临大节而不可夺也。君子人与。君子人也。
+            士不可以不弘毅。任重而道远。仁以为己任。不亦重乎。死而后已。不亦远乎。
+            君子以文会友。以友辅仁。
+            君子思不出其位。
+            曾子曰：上失其道。民散久矣。如得其情。则哀矜而勿喜。
+            子夏曰：贤贤易色，事父母。能竭其力。事君。能致其身。与朋友交。言而有信。虽曰未学。吾必谓之学矣。
+            死生有命，富贵在天。君子敬而无失，与人恭而有礼，四海之内皆兄弟也，君子何患乎无兄弟也？
+            子夏曰：仕而优则学，学而优则仕。
+            子游曰：事君数，斯辱矣；朋友数，斯疏矣。
+            子贡曰：“君子之过也，如日月之食焉；过也，人皆见之；更也，人皆仰之。”
+            子张曰：士见危致命，见得思义，祭思敬，丧思哀，其可已矣。
+            君子尊贤而容众，嘉善而矜不能。
+            三军可夺帅也，匹夫不可夺志也。
+
+        </div>
+    </div>
+    <span>。。。。</span>
+<script type="text/javascript">
+    var imgs = ['img/img_01.jpg', 'img/img_02.jpg', 'img/img_03.jpg', 'img/img_04.jpg'];
+    var names = ['王大锤', '李寻欢', '罗小虎', '胡一刀', '侯希白', '令狐冲', '陆小凤', '楚留香'];
+    var signs = [
+            '金庸封笔古龙逝，世上唯有英雄志',
+            '飞雪连天射白鹿，笑书神侠倚碧鸳',
+            '惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚；一代天骄，成吉思汗，只识弯弓射大雕；俱往矣，数风流人物，还看今朝！',
+            '钟鼓馔玉不足贵，但愿长醉不复醒；古来神仙皆寂寞，惟有饮者留其名！',
+            '欲将轻骑逐，大雪满弓刀',
+            '葡萄美酒夜光杯，欲饮琵琶马上催；醉卧沙场君莫笑，古来征战几人回',
+            '作为一个男人，当你面对自己的敌人时，唯一的选择就是面对，这样至少你还有搏斗的机会；狭路相逢勇者胜'
+    ];
+
+    var html = "";
+    for (var i = 0; i < 20; i++){
+
+        var imgUrl = imgs[parseInt(Math.random() * 100)%imgs.length];
+        var name = names[parseInt(Math.random()*100)%names.length];
+        var sign = signs[parseInt(Math.random()*100)%signs.length];
+
+        html += "<ul> \
+                    <li><img src='" + imgUrl + "' title='图片咯' /></li>\
+                    <li>\
+                        <div>名字：" + name + "_" + i + "</div>\
+                        <div>个性签名：" + sign + "</div>\
+                    </li>\
+                </ul>";
+    }
+
+    (document.getElementsByClassName("right")[0]).innerHTML = html;
+</script>
+</body>
+</html>

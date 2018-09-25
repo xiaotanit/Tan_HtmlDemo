@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS之Flex布局</title>
+    <style type="text/css">
+        /* 测试vertical-align:middle; */
+        .divComon { width: 200px; height: 50px; display: inline-block; margin-right: 50px; background-color: yellow; border: 2px dashed red; }
+        .divTwo { text-align:center; vertical-align: middle; }
+        .divThree { text-align:center; vertical-align: middle;  }
+        .divThree img, .divThree span, .divThree input  { display: inline-block; vertical-align: middle;  }
+
+        /* flex布局测试
+        flex-direction: 属性决定主轴的方向（即项目的排列方向）
+                        row（默认值）：主轴为水平方向，起点在左端。
+                        row-reverse：主轴为水平方向，起点在右端。
+                        column：主轴为垂直方向，起点在上沿。
+                        column-reverse：主轴为垂直方向，起点在下沿。
+        flex-wrap: nowrap | wrap | wrap-reverse; 是否换行，默认不换行（nowrap), wrap换行，wrap-reverse反向换行
+        flex-flow属性是flex-direction属性和flex-wrap属性的简写形式，默认值为row nowrap。
+        justify-content：定义在主轴上的对齐方式，flex-start | flex-end | center | space-between | space-around;
+                        flex-start（默认值）：左对齐
+                        flex-end：右对齐
+                        center： 居中
+                        space-between：两端对齐，项目之间的间隔都相等。
+                        space-around：每个项目两侧的间隔相等。所以，项目之间的间隔比项目与边框的间隔大一倍。
+        align-items: 属性定义项目在交叉轴上如何对齐, flex-start | flex-end | center | baseline | stretch;
+                    flex-start：交叉轴的起点对齐。
+                    flex-end：交叉轴的终点对齐。
+                    center：交叉轴的中点对齐。
+                    baseline: 项目的第一行文字的基线对齐。
+                    stretch（默认值）：如果项目未设置高度或设为auto，将占满整个容器的高度。
+
+        align-content: 定义多根轴对齐方式。如果项目中只有一根轴线，该属性不起作用
+                    flex-start：与交叉轴的起点对齐。
+                    flex-end：与交叉轴的终点对齐。
+                    center：与交叉轴的中点对齐。
+                    space-between：与交叉轴两端对齐，轴线之间的间隔平均分布。
+                    space-around：每根轴线两侧的间隔都相等。所以，轴线之间的间隔比轴线与边框的间隔大一倍。
+                    stretch（默认值）：轴线占满整个交叉轴。
+
+
+         项目中的属性：
+         order : 定义项目的排序，默认为0，数字越小，越排在前面
+         flex-grow，定义项目的放大比例，默认为0；如果所有项目设为1，则平分父级空间
+         flex-shrink ：定义项目的收缩比例，默认为1，空间不足时，所有项目等比缩小（感觉没有起作用）
+         flex-basis : 定义主轴的项目占据的位置（感觉也没起作用）
+         flex： flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto
+         align-self: 允许单个项目有与其他项目不一样的对齐方式，可覆盖align-items属性。默认值为auto
+
+        */
+        .flexSup{ display: -webkit-flex; display: flex; border: 5px dashed black; background-color: yellow; padding: 5px 10px; margin-bottom: 20px; width: 60%; }
+        .flexItem { height: 50px; border: 2px dashed red; background-color: green; margin: 10px; padding: 10px 20px; }
+
+        .flexSup2 { flex-direction: row-reverse; }
+        .flexSup3 { flex-direction: column; }
+        .flexSup4 { flex-direction: column-reverse; }
+
+        .flexSup5 { flex-wrap: wrap; }
+        .flexSup6 { flex-wrap: wrap-reverse; }
+
+        .flexSup7 { flex-flow: column wrap-reverse; height: 500px; } /* flex-flow属性是flex-direction和flex-wrap属性的合并, flex-flow: flex-direction flex-wrap */
+
+        .flexSupH { height: 120px; }
+        .flexSup8 { justify-content: center; }  /* 主轴对齐方式 */
+        .flexSup9 { justify-content: space-between; }  /* 主轴对齐方式 */
+        .flexSup10 { justify-content: space-around; }  /* 主轴对齐方式 */
+
+        .flexSup11 { align-items: flex-start; } /* 交叉轴上对齐方式 */
+        .flexSup12 { align-items: flex-end; }
+        .flexSup13, .flexSup14 { align-items: center; }
+        .flexSup14 .flexItem { display: flex;  width: 300px; }
+        .flexSup14 .flexItem:nth-child(1) { align-items: center; justify-content: center; }
+        .flexSup14 .flexItem:last-child { align-items: center; justify-content: center; }
+
+        /* align-content 多根轴对齐方式测试
+         align-content 感觉没有起作用， flex-grow要设置在子控件上
+
+         项目中属性flex-grow: 设置项目的放大倍数，默认为0. 如果都为1，则平分父级空间
+         */
+        .flexSup15 .flexItem { align-content:center; flex-direction: row; flex-grow: 1; }
+        .flexSup15 .flexItem:nth-child(2) { flex-grow: 2; }
+        .flexSup16 .flexItem { flex-grow:1; }
+
+        /* 项目中属性order: 默认为0，数字越小，越排在前面 */
+        .flexSup17 .flexItem:nth-child(5) { order: 3; }
+        .flexSup17 .flexItem:nth-child(4) { order: 2; }
+        .flexSup17 .flexItem:nth-child(3) { order: 1; }
+        .flexSup17 .flexItem:nth-child(2) { order: 4; }
+        .flexSup17 .flexItem:nth-child(1) { order: 5; }
+
+        /* 项目中属性flex-shrink: 收缩，默认为1，如果空间不足，该项目将会收缩 (感觉该属性也没有有起作用) */
+        .flexSup18 { width: 500px; }
+        .flexSup18 .flexItem { width: 200px; }
+
+        /* 项目中属性flex-basis: 设置主项目占据的空间(发现自定义宽度的子控件根据父控件宽度的缩放自动缩放) */
+        .flexSup19 { width: 800px; }
+        .flexSup19 .flexItem:nth-child(1) { width: 300px; }
+        .flexSup19 .flexItem:nth-child(2) { flex-basis: auto; }
+        .flexSup19 .flexItem:nth-child(3) { flex-basis: 300px; }
+
+        /* flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto */
+        .flexSup21 .flexItem { flex: 1 1 auto; } /* 平分父级空间 */
+
+        /* 项目中属性align-self: 设置子标签和其他子标签不一样的对齐方式 */
+        .flexSup22 { height: 300px; }
+        .flexSup22 .flexItem:nth-child(2) { align-self: flex-end; }
+        .flexSup22 .flexItem:nth-child(3) { align-self: center; }
+
+
+        /*  练习题：flex布局 */
+        .testTopic { display: flex; flex-wrap: wrap;  margin-top: 10px; }
+        .box { display: flex; border: 5px solid gray; width: 112px; height: 112px; padding: 5px; margin: 10px; }
+        .item { background-color: black; width: 30px; height: 30px; border-radius: 15px; }
+
+        /* 单项目 */
+        .box1 { justify-content: center; } /* 水平居中 */
+        .box2 { justify-content: flex-end; } /* 水平靠右 */
+        .box3 { align-items: center; } /* 竖直居中 */
+        .box4 { align-items: center; justify-content: center; }  /* 竖直居中，水平居中 */
+        .box5 { justify-content: flex-end; align-items: center; } /* 水平靠右，竖直居中 */
+        .box6 { align-items: flex-end; } /* 竖直靠底 */
+        .box7 { justify-content: center; align-items: flex-end; } /* 水平居中，竖直靠底 */
+        .box8 { justify-content: flex-end; align-items: flex-end; } /* 水平靠右，竖直靠底 */
+
+        /* 双项目 */
+        .box9 { justify-content: space-between; }
+        .box10 { justify-content: space-between; align-items: center; }
+        .box11 { justify-content: space-between; align-items: flex-end;}
+        .box12 { flex-direction: column; justify-content: space-between; }
+        .box13 { flex-direction: column; justify-content: space-between; align-items: center; }
+        .box14 { flex-direction: column; justify-content: space-between; align-items: flex-end; }
+
+        .box15 .item:nth-child(2) { align-self: center; }
+        .box16 { justify-content: space-between; }
+        .box16 .item:nth-child(2) { align-self: flex-end; }
+
+        /* 多项目 */
+        .box18 { justify-content: space-between; }
+        .box19 { justify-content: space-around; }
+        .box20 { justify-content: space-around; }
+        .box20 .item:nth-child(2) { align-self: center; }
+        .box20 .item:nth-child(3) { align-self: flex-end; }
+        /* align-content属性终于起作用了: align-content只有在定义多根轴对齐方式时才起作用。如果项目中只有一根轴线，该属性不起作用 */
+        .box22 { flex-wrap: wrap; justify-content: flex-end; align-content: space-between; }
+
+        .box23,.box24 { flex-wrap: wrap; align-content: space-between; }
+        .box23 .box-column { flex-basis: 100%; justify-content: space-between; display: flex; }
+        .box24 .box-column { flex-basis: 100%; justify-content: space-around; display: flex;}
+
+        .box25 .box-column:nth-child(2) { justify-content: center; }
+        .box26 { flex-wrap: wrap; justify-content: space-around; align-content: space-around; }
+
+
+        /* 网格布局: 最简单的网格布局，就是平均分布。在容器里面平均分配空间 */
+        .net-table { display: flex; margin-top: 10px; width: 1200px; }
+        .net-table div { flex:1; display: flex; justify-content: center; align-items: center; background-color: yellow; margin: 0 10px; height: 50px;  }
+        .net-table2 div { height: 160px; justify-content: flex-start; align-items: flex-start; }
+        /* 网格布局：百分比布局：某个网格的宽度为固定的百分比，其余网格平均分配剩余的空间。 */
+        .table1 div:nth-child(1) { flex: 0 1 50%; }
+        .table2 div:nth-child(2) { flex: 0 1 70%; }
+
+        /* 圣杯布局：指的是一种最常见的网站布局。页面从上到下，分成三个部分：头部（header），躯干（body），尾部（footer）。其中躯干又水平分成三栏，从左到右为：导航、主栏、副栏 */
+        .all-table { display: flex; flex-direction: column; width: 1200px; border: 1px solid black; }
+        .all-header, .all-footer { flex:1; background-color: darkgray; display: flex; justify-content: center; align-items: center;  height: 30px; }
+        .all-body { display: flex; flex:1; border: 1px dashed red; height: 100px; }
+        .all-body div { height: 100%; display: flex; justify-content: center; align-items: center; }
+        .all-left, .all-right { flex: 0 1 20%; background-color: yellowgreen;  }
+        .all-middle { flex: 0 1 80%; }
+    </style>
+</head>
+<body>
+    <div class="testOneContent">
+        <h3>传统默认哪些可以实现垂直居中</h3>
+        <div style="border: 1px dashed black; margin: 20px;">
+            <div class="divComon divOne"><img src="img/hot.png"/></image></div>
+            <div class="divComon divTwo"><img src="img/hot.png"/></image></div>
+            <div class="divComon divThree"><img src="img/hot.png"/></image></div>
+        </div>
+        <div style="border: 1px dashed black; margin: 20px;">
+            <div class="divComon divOne"><span>Hello</span></div>
+            <div class="divComon divTwo"><span>Hello</span></div>
+            <div class="divComon divThree"><span>Hello</span></div>
+        </div>
+        <div style="border: 1px dashed black; margin: 20px;">
+            <div class="divComon divOne"><input type="button" value="点我" /></div>
+            <div class="divComon divTwo"><input type="button" value="点我" /></div>
+            <div class="divComon divThree"><input type="button" value="点我" /></div>
+        </div>
+
+        <br/>
+        <h3>1、Flex布局方向测试</h3>
+        <div class="flexSup">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+        </div>
+        <div class="flexSup flexSup2">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+        </div>
+        <div class="flexSup flexSup3">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+        </div>
+        <div class="flexSup flexSup4">
+            <span class="flexItem">flexItem1</span>
+            <span class="flexItem">flexItem2</span>
+            <span class="flexItem">flexItem3</span>
+        </div>
+        <br/>
+        <h3>2、Flex换行测试</h3>
+        <div class="flexSup">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+            <div class="flexItem">flexItem4</div>
+            <div class="flexItem">flexItem5</div>
+            <div class="flexItem">flexItem6</div>
+            <div class="flexItem">flexItem7</div>
+            <div class="flexItem">flexItem8</div>
+            <div class="flexItem">flexItem9</div>
+            <div class="flexItem">flexItem10</div>
+            <div class="flexItem">flexItem11</div>
+            <div class="flexItem">flexItem12</div>
+        </div>
+        <div class="flexSup flexSup5">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+            <div class="flexItem">flexItem4</div>
+            <div class="flexItem">flexItem5</div>
+            <div class="flexItem">flexItem6</div>
+            <div class="flexItem">flexItem7</div>
+            <div class="flexItem">flexItem8</div>
+            <div class="flexItem">flexItem9</div>
+            <div class="flexItem">flexItem10</div>
+            <div class="flexItem">flexItem11</div>
+            <div class="flexItem">flexItem12</div>
+        </div>
+        <div class="flexSup flexSup6">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+            <div class="flexItem">flexItem4</div>
+            <div class="flexItem">flexItem5</div>
+            <div class="flexItem">flexItem6</div>
+            <div class="flexItem">flexItem7</div>
+            <div class="flexItem">flexItem8</div>
+            <div class="flexItem">flexItem9</div>
+            <div class="flexItem">flexItem10</div>
+            <div class="flexItem">flexItem11</div>
+            <div class="flexItem">flexItem12</div>
+        </div>
+        <div class="flexSup flexSup3 flexSup5" style="height: 500px;">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+            <div class="flexItem">flexItem4</div>
+            <div class="flexItem">flexItem5</div>
+            <div class="flexItem">flexItem6</div>
+            <div class="flexItem">flexItem7</div>
+            <div class="flexItem">flexItem8</div>
+            <div class="flexItem">flexItem9</div>
+            <div class="flexItem">flexItem10</div>
+            <div class="flexItem">flexItem11</div>
+            <div class="flexItem">flexItem12</div>
+        </div>
+
+        <br/>
+        <h3>3、flex-flow属性，是flex-direction和flex-wrap属性的合并</h3>
+        <div class="flexSup flexSup7">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+            <div class="flexItem">flexItem4</div>
+            <div class="flexItem">flexItem5</div>
+            <div class="flexItem">flexItem6</div>
+            <div class="flexItem">flexItem7</div>
+            <div class="flexItem">flexItem8</div>
+            <div class="flexItem">flexItem9</div>
+            <div class="flexItem">flexItem10</div>
+            <div class="flexItem">flexItem11</div>
+            <div class="flexItem">flexItem12</div>
+        </div>
+
+        <br/>
+        <h3>4、justify-content属性定义了项目在主轴上的对齐方式</h3>
+        <div class="flexSup flexSupH flexSup8">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+        </div>
+        <div class="flexSup flexSupH flexSup9">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+        </div>
+        <div class="flexSup flexSupH flexSup10">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+        </div>
+
+        <br/>
+        <h3>5、align-items属性定义了项目在叫交叉轴上的对齐方式</h3>
+        <div class="flexSup flexSupH flexSup11">1111SW
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+        </div>
+        <div class="flexSup flexSupH flexSup12">111111
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+        </div>
+        <div class="flexSup flexSupH flexSup13">1111111111
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+        </div>
+        <br/>
+        <h3>6、设置子div中的文字竖直水平对齐方式</h3>
+        <div class="flexSup flexSupH flexSup14">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+        </div>
+
+        <br/>
+        <h3>7、项目中的属性：flex-grow: 定义项目的放大比例，默认为0不放大</h3>
+        <div class="flexSup flexSupH flexSup15">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+        </div>
+        <div class="flexSup flexSupH flexSup16">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+        </div>
+        <br/>
+
+        <br/>
+        <h3>8、项目中的属性：order: 项目中的排序，默认为0，数字越小，越排在前面</h3>
+        <div class="flexSup flexSupH flexSup16">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">flexItem3</div>
+            <div class="flexItem">flexItem4</div>
+            <div class="flexItem">flexItem5</div>
+        </div>
+
+        <br/>
+        <h3>9、项目中的属性：flex-shrink: 定义项目收缩属性，默认为1， 如果空间不足，该项目将缩小</h3>
+        <div class="flexSup flexSup18">
+            <div class="flexItem">flexItem1</div>
+            <div class="flexItem">flexItem2</div>
+            <div class="flexItem">3</div>
+            <div class="flexItem">flexItem4</div>
+            <div class="flexItem">flexItem5</div>
+            <div class="flexItem">flexItem6</div>
+            <div class="flexItem">flexItem7</div>
+            <div class="flexItem">flexItem8</div>
+            <div class="flexItem">flexItem9</div>
+            <div class="flexItem">10</div>
+            <div class="flexItem">flexItem11</div>
+            <div class="flexItem">flexItem12</div>
+        </div>
+
+        <br/>
+        <h3>10、项目中的属性: flex-basis: 定义项目中主轴的宽高</h3>
+        <div class="flexSup flexSup19">
+            <div class="flexItem">item1</div>
+            <div class="flexItem">item2</div>
+            <div class="flexItem">item3</div>
+            <div class="flexItem">item4</div>
+            <div class="flexItem">item5</div>
+        </div>
+
+        <br/>
+        <h3>11、项目中的属性: flex属性是flex-grow, flex-shrink 和 flex-basis的简写，默认值为0 1 auto</h3>
+        <div class="flexSup flexSup20">
+            <div class="flexItem">item1</div>
+            <div class="flexItem">item2</div>
+            <div class="flexItem">item3</div>
+            <div class="flexItem">item4</div>
+            <div class="flexItem">item5</div>
+        </div>
+        <div class="flexSup flexSup21">
+            <div class="flexItem">item1</div>
+            <div class="flexItem">item2</div>
+            <div class="flexItem">item3</div>
+            <div class="flexItem">item4</div>
+            <div class="flexItem">item5</div>
+        </div>
+
+        <br/>
+        <h3>12、项目中的属性:align-self: 允许单个项目和其他项目又不一样的对齐方式</h3>
+        <div class="flexSup flexSup22">
+            <div class="flexItem">item1</div>
+            <div class="flexItem">item2</div>
+            <div class="flexItem">item3</div>
+            <div class="flexItem">item4</div>
+            <div class="flexItem">item5</div>
+        </div>
+    </div>
+
+    <div class="testTwoContent">
+        <br/><hr/><hr/><hr/><br/>
+        <h3>练习一下：</h3>
+        <div class="testTopic">
+            <h3>单项目：</h3>
+            <div class="box"><span class="item"></span></div>
+            <div class="box box1"><span class="item"></span></div>
+            <div class="box box2"><span class="item"></span></div>
+            <div class="box box3"><span class="item"></span></div>
+            <div class="box box4"><span class="item"></span></div>
+            <div class="box box5"><span class="item"></span></div>
+            <div class="box box6"><span class="item"></span></div>
+            <div class="box box7"><span class="item"></span></div>
+            <div class="box box8"><span class="item"></span></div>
+        </div>
+        <div class="testTopic">
+            <h3>双项目：</h3>
+            <div class="box box9"><span class="item"></span><span class="item"></span></div>
+            <div class="box box10"><span class="item"></span><span class="item"></span></div>
+            <div class="box box11"><span class="item"></span><span class="item"></span></div>
+            <div class="box box12"><span class="item"></span><span class="item"></span></div>
+            <div class="box box13"><span class="item"></span><span class="item"></span></div>
+            <div class="box box14"><span class="item"></span><span class="item"></span></div>
+            <div class="box box15"><span class="item"></span><span class="item"></span></div>
+            <div class="box box16"><span class="item"></span><span class="item"></span></div>
+        </div>
+        <div class="testTopic">
+            <h3>多项目：</h3>
+            <div class="box box17"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+            <div class="box box18"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+            <div class="box box19"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+            <div class="box box20"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+            <div class="box box21"><span class="item"></span><span class="item"></span><span class="item"></span><span class="item"></span></div>
+            <div class="box box22"><span class="item"></span><span class="item"></span><span class="item"></span><span class="item"></span></div>
+            <div class="box box23">
+                <div class="box-column"><span class="item"></span><span class="item"></span></div>
+                <div class="box-column"><span class="item"></span><span class="item"></span></div>
+            </div>
+            <div class="box box24">
+                <div class="box-column"><span class="item"></span><span class="item"></span></div>
+                <div class="box-column"><span class="item"></span><span class="item"></span></div>
+            </div>
+            <div class="box box23">
+                <div class="box-column"><span class="item"></span><span class="item"></span></div>
+                <div class="box-column"><span class="item"></span><span class="item"></span></div>
+                <div class="box-column"><span class="item"></span><span class="item"></span></div>
+            </div>
+            <div class="box box24">
+                <div class="box-column"><span class="item"></span><span class="item"></span></div>
+                <div class="box-column"><span class="item"></span><span class="item"></span></div>
+                <div class="box-column"><span class="item"></span><span class="item"></span></div>
+            </div>
+            <div class="box box23">
+                <div class="box-column"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+                <div class="box-column"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+                <div class="box-column"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+            </div>
+            <div class="box box24">
+                <div class="box-column"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+                <div class="box-column"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+                <div class="box-column"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+            </div>
+            <div class="box box23 box25">
+                <div class="box-column"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+                <div class="box-column"></span><span class="item"></span></div>
+                <div class="box-column"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+            </div>
+            <div class="box box24">
+                <div class="box-column"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+                <div class="box-column"></span><span class="item"></span></div>
+                <div class="box-column"><span class="item"></span><span class="item"></span><span class="item"></span></div>
+            </div>
+            <div class="box box26">
+                <span class="item"></span><span class="item"></span><span class="item"></span>
+                <span class="item"></span><span class="item"></span><span class="item"></span>
+                <span class="item"></span><span class="item"></span><span class="item"></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="testThreeTopic">
+        <br/><h3>练习一下：网格布局</h3>
+        <div>
+            <div class="net-table"><div>1/3</div><div>1/3</div><div>1/3</div></div>
+            <div class="net-table"><div>1/4</div><div>1/4</div><div>1/4</div><div>1/4</div></div>
+            <div class="net-table"><div>1/2</div><div>1/2</div></div>
+            <div class="net-table net-table2">
+                <div>飞雪连天射白鹿，笑书神侠倚碧鸳！金庸封闭古龙逝，世上唯有英雄志。恰似猛虎卧荒丘，潜伏抓牙忍受。昆仑剑出血汪洋，千里直驱黄河黄</div>
+                <div>
+                    I can’t stand my poor English! I want to improve my situation! I want to change my life. I don’t want to let parents down!
+                    I don’t ever want to let my country down! Most importantly, I don’t want to let myself down!
+                    I want to speak perfect English! I want to understand all kinds of accents!
+                    I want to read thousands of books! I want to translate freely between Chinese and English.
+                    I want to be the master of the world’s two most important languages: Chinese and English.
+                </div>
+            </div>
+        </div>
+        <h3>网格布局之百分比布局</h3>
+        <div class="net-table table1"><div>50%</div><div>auto</div><div>auto</div></div>
+        <div class="net-table table2"><div>auto</div><div>70%</div><div>auto</div></div>
+
+        <h3>圣杯布局：指的是一种最常见的网站布局。页面从上到下，分成三个部分：头部（header），躯干（body），尾部（footer）。其中躯干又水平分成三栏，从左到右为：导航、主栏、副栏。</h3>
+        <div class="all-table">
+            <div class="all-header">header头部</div>
+            <div class="all-body">
+                <div class="all-left">left左边</div>
+                <div class="all-middle">middle中间内容</div>
+                <div class="all-right">right右边</div>
+            </div>
+            <div class="all-footer">footer底部</div>
+        </div>
+    </div>
+</body>
+</html>

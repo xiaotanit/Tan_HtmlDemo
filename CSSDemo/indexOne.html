@@ -1,0 +1,113 @@
+<!-- 网页翻译用的 -->
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>常见的HTML的标签</title>
+    <style type="text/css">
+        .classOne{color:blue;}
+        .classTwo{color:red;}
+
+        /* a标签的四种伪状态的演示 */
+        .twoHref { font-size: 30px; color: green; text-decoration: none; border: 1px dashed gray; }
+        .twoHref:link { color: red; } /* :link 未访问前的颜色 */
+        .twoHref:hover { color: black; }  /* :hover 悬浮时的颜色 */
+        .twoHref:active { color: blue; }  /* active: 点击前的颜色 */
+        .twoHref:visited { color: yellow; } /* visited: 点击之后的颜色 */
+
+        .oneHref:link { font-size: 50px; font-style: italic; color: purple; text-decoration:none; }
+        .oneHref:hover { color: green; }
+        .oneHref:active { color: gray; }
+        .oneHref:visited { color: red; }
+
+        .threeSpan { color: red; font-size: 50px; cursor: pointer; }
+        .threeSpan:hover { color: blue; }
+        .threeSpan:active { color: black; }
+        .threeSpan:visited { color: green; }
+
+        .fourHref:link { text-decoration: none; font-size: 30px; color: black; }
+        .fourHref:hover { color: yellow; }
+        .fourHref:active { color: blue; }
+        .fourHref:visited { color: green; }
+
+        /* 总结：a标签有效果的伪状态有：link, hover, active;
+         span标签有效果的伪状态有：hover、active
+         */
+    </style>
+</head>
+    <body style="margin:50px;padding:20px;border:1px solid red;">
+        <!--标题标签:总共有6级-->
+        <h1 style="border: 10px solid yellow;">我是H1</h1>
+        <h2 style="border: 5px double purple;">我是H2</h2>
+        <h3 style="border: 5px dashed gray;">我是H3</h3>
+        <h4 class="classOne">我是H4</h4>
+        <h5 class="classTwo">我是H5</h5>
+        <h6 class="classOne">我是H6</h6>
+        <hr>
+        <!--单标签-->
+        <input placeholder="我是占位文字"><br>
+        <input value="默认值">&nbsp;&nbsp;<input type="date"><br>
+        <input type="file">&nbsp;&nbsp;&nbsp;<input type="color"><br>
+        <input type="radio">&nbsp;&nbsp;<input type="checkbox"><br>
+
+        <!--段落标签-->
+        <p>我是段落我是段落我是段落我是段落我是段落我是段落</p>
+
+
+        <!--图像标签-->
+        <!--
+            src 资源路径   alt:占位文字
+            相对路径:  XX/ XXX/ X/X/
+            绝对路径:  http:// file:///
+        -->
+        <!--关于图片尺寸的设置,如果设置一个宽度,高度不设置默认帮你设置成为 auto 自动缩放-->
+        <img src="img/ad1.jpg" alt="这是一张图片" width="150" >
+        <hr>
+        <!-- 百分比是相对于父标签!!! -->
+        <img src="img/ad2.jpg" width="50%">
+
+        <!--列表标签-->
+        <!-- 无序标签 -->
+        <ul>
+            <li>我是无序列表</li>
+            <li>我是无序列表</li>
+            <li>我是无序列表</li>
+        </ul>
+        <!-- 有序 -->
+        <ol>
+            <li>我是有序列表</li>
+            <li>我是有序列表</li>
+        </ol>
+
+        <hr>
+        <!--超链接标签 target : 打开网页的方式-->
+        <!--
+        _blank : 空白窗口
+        _self: 当前窗口跳转(压栈的操作)
+        _top : 点击我就回到顶部
+        _parent: 父标签,父窗口
+        -->
+        <a target="_top" href="#">超链接回到顶部</a>&nbsp;&nbsp;
+        <!-- 相当于push  压栈的操作!!  默认target属性是:self  -->
+        <a href="http://tmall.com" target="_self">本页打开天猫</a>&nbsp;&nbsp;
+        <a class="oneHref" href="http://www.cnblogs.com/" target="_blank">博客园</a>
+        &nbsp;&nbsp;
+        <a class="twoHref" href="http://baidu.com" target="_blank">百度</a>
+        &nbsp;&nbsp;
+        <span class="threeSpan" onclick="alert('你点我了');">点我点我</span>&nbsp;&nbsp;
+        <a href="javascript:" class="fourHref">点我点我</a>
+        <hr>
+
+        <a href="http://www.baidu.com" target="_blank">
+            <img src="img/ad2.jpg" width="20%" >
+        </a>
+
+        <!--div标签!!!  理解为!!iOS中的View-->
+        <div>我是div我是div我是div我是div我是div我是div</div>
+        <!--div专门用来做容器的!!-->
+        <div>
+            <div>
+                <p>我是段落</p>
+            </div>
+        </div>
+    </body>
+</html>

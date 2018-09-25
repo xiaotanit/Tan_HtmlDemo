@@ -1,0 +1,53 @@
+<!-- 演示透明度和背景颜色 -->
+<view class='ani_one' animation='{{animationOne}}' catchtap='clickOne' catchlongpress='longPressOne'>透明度和背景颜色</view>
+
+<!-- 2、演示宽高位置 -->
+<view class='ani_two' animation='{{animationTwo}}' catchtap='clickTwo' catchlongpress='longPressTwo'>宽高位置</view>
+
+<!-- 3、旋转 -->
+<view class='rotate_view' style='margin-top: 150rpx;'>
+    <view class='rotate_x' animation='{{animationRotateX}}' catchtap='clickRotateX'>rotateX</view>
+
+    <view class='rotate_y' animation='{{animationRotateY}}' catchtap='clickRotateY'>rotateY</view>
+
+    <view class='rotate_z' animation='{{animationRotateZ}}' catchtap='clickRotateZ'>rotateZ</view>
+
+    <view class='rotate_3d' animation='{{animationRotate3d}}' catchtap='clickRotate3d'>rotate3d</view>
+
+    <view class='rotate_all' animation='{{animationRotateAll}}' catchtap='clickRotateAll'>rotate</view>
+</view>
+
+<!-- 4、缩放 -->
+<view class='rotate_view'>
+    <view class='rotate_x' animation='{{animationScaleX}}' catchtap='clickScaleX'>scaleX</view>
+
+    <view class='rotate_y' animation='{{animationScaleY}}' catchtap='clickScaleY'>scaleY</view>
+
+    <view class='rotate_z' animation='{{animationScaleZ}}' catchtap='clickScaleZ'>scaleZ</view>
+
+    <view class='rotate_3d' animation='{{animationScale3d}}' catchtap='clickScale3d'>scale3d</view>
+
+    <view class='rotate_all' animation='{{animationScaleAll}}' catchtap='clickScaleAll'>scale</view>
+</view>
+
+<!-- 5、偏移 -->
+<view class='rotate_view'>
+    <view class='rotate_x' animation='{{animationTranslateX}}' catchtap='clickTranslateX'>translateX</view>
+
+    <view class='rotate_y' animation='{{animationTranslateY}}' catchtap='clickTranslateY'>translateY</view>
+
+    <view class='rotate_z' animation='{{animationTranslateZ}}' catchtap='clickTranslateZ'>translateZ</view>
+
+    <view class='rotate_3d' animation='{{animationTranslate3d}}' catchtap='clickTranslate3d'>translate3d</view>
+
+    <view class='rotate_all' animation='{{animationTranslateAll}}' catchtap='clickTranslateAll'>translate</view>
+</view>
+
+<!-- 6、倾斜 -->
+<view class='rotate_view'>
+    <view class='rotate_x' animation='{{animationSkewX}}' catchtap='clickSkewX'>skewX</view>
+
+    <view class='rotate_y' animation='{{animationSkewY}}' catchtap='clickSkewY'>skewY</view>
+
+    <view class='rotate_z' animation='{{animationSkew}}' catchtap='clickSkew'>skew</view>
+</view>

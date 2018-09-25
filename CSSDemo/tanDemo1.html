@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+
+    <meta http-equiv=”X-UA-Compatible” content=”IE=edge,chrome=1″/>   <!-- 优先使用 IE 最新版本和 Chrome-->
+    <meta name=”description” content=”不超过150个字符”/>       <!-- 页面描述-->
+    <meta name=”keywords” content=””/>      <!-- 页面关键词-->
+    <meta name=”author” content=”name, email@gmail.com”/>    <!-- 网页作者-->
+    <meta name=”robots” content=”index,follow”/>      <!-- 搜索引擎抓取-->
+    <meta name=”viewport” content=”initial-scale=1, maximum-scale=3, minimum-scale=1, user-scalable=no”> <!-- 为移动设备添加 viewport-->
+    <meta name=”apple-mobile-web-app-title” content=”标题”> <!-- iOS 设备 begin-->
+    <meta name=”apple-mobile-web-app-capable” content=”yes”/>  <!-- 添加到主屏后的标题（iOS 6 新增）-->
+    <!-- 是否启用 WebApp 全屏模式，删除苹果默认的工具栏和菜单栏-->
+    <meta name=”apple-itunes-app” content=”app-id=myAppStoreID, affiliate-data=myAffiliateData, app-argument=myURL”>
+    <!-- 添加智能 App 广告条 Smart App Banner（iOS 6+ Safari）-->
+    <meta name=”apple-mobile-web-app-status-bar-style” content=”black”/>
+    <meta name=”format-detection” content=”telphone=no, email=no”/>  <!-- 设置苹果工具栏颜色-->
+    <meta name=”renderer” content=”webkit”>  <!-- 启用360浏览器的极速模式(webkit)-->
+    <meta http-equiv=”X-UA-Compatible” content=”IE=edge”>     <!-- 避免IE使用兼容模式-->
+    <meta http-equiv=”Cache-Control” content=”no-siteapp” />    <!-- 不让百度转码-->
+    <meta name=”HandheldFriendly” content=”true”>     <!-- 针对手持设备优化，主要是针对一些老的不识别viewport的浏览器，比如黑莓-->
+    <meta name=”MobileOptimized” content=”320″>   <!-- 微软的老式浏览器-->
+    <meta name=”screen-orientation” content=”portrait”>   <!-- uc强制竖屏-->
+    <meta name=”x5-orientation” content=”portrait”>    <!-- QQ强制竖屏-->
+    <meta name=”full-screen” content=”yes”>              <!-- UC强制全屏-->
+    <meta name=”x5-fullscreen” content=”true”>       <!-- QQ强制全屏-->
+    <meta name=”browsermode” content=”application”>   <!-- UC应用模式-->
+    <meta name=”x5-page-mode” content=”app”>    <!-- QQ应用模式-->
+    <meta name=”msapplication-tap-highlight” content=”no”>    <!-- windows phone 点击无高光-->
+    <!-- 设置页面不缓存-->
+    <meta http-equiv=”pragma” content=”no-cache”>
+    <meta http-equiv=”cache-control” content=”no-cache”>
+    <meta http-equiv=”expires” content=”0″>
+
+    <title>HTML块级标签和行级标签</title>
+    <style type="text/css">
+        /*
+        HTML标签主要可以分为3大类：
+        1、块级标签：
+            a、独占一行； b、能随时设置宽度和高度；
+            c、代表标签有div、p、h1-h6、ul、li
+        2、行内标签（内联标签）
+            a、多个行内标签能同时显示在一行
+            b、宽度和高度取决于内容的尺寸
+            c、代表标签有span、a、label
+        3、行内-块级标签（内联-块级标签）：具有块级标签和行内标签的特点
+            a、多个行内-块级标签可以显示在同一行
+            b、能随时设置宽度和高度，代表标签有：input、button
+
+
+       CSS中有个display属性，能够修改标签的显示类型：
+       none: 隐藏标签
+       block: 让标签变成块级标签
+       inline: 让标签变成行内标签
+       inline-block: 让标签变成行内-块级标签（内联-块级标签）
+        */
+
+        /** 1、块级标签：默认独占一行，宽高可设置 */
+        .divOne { background-color:yellow; margin-bottom: 5px; }
+        #divIDOne { width: 600px; height: 100px;}
+        #divIDTwo { width: 60%; height: 50px; }
+
+        /** 2、行内标签：默认多个行内标签显示在一行； 宽高取决于内容的尺寸，不可设置 */
+        .spanOne { background-color: greenyellow; margin-right: 10px; }
+        #spanIDOne { width: 600px; height: 100px; } /* 发现行内标签设置宽高没有作用 */
+
+        /** 3、行内-块级标签：默认多个标签显示在一行；可以设置宽高 */
+        .block-inlineOne {border: 5px solid red; margin-right: 10px; }
+        #block-inlineIDOne, #block-inlineIDTwo { width: 300px; height: 50px; }
+
+        /** 4、块级标签设置display=inline后，特性就变成了行内标签一样 */
+        .divFour { display: inline; background-color: red; font-size: 20px; margin-right: 20px; }
+        #divIDFour { width: 500px; height: 200px; }
+        #divIDFour2 { width: 300px; height: 200px; }
+
+        /** 5、行内标签设置display=block后，样式特性就和块级标签一样 */
+        .spanFive { display: block; background-color: yellow; margin-bottom: 5px; }
+        #spanIDFive { width:600px; height: 100px; }
+        #spanIDFive2 { width: 60%; heigh: 100px; }
+
+        /** 6、块级标签设置display=inline-block: 效果和设置=inline一样，默认多个标签一行，宽高不可设置 */
+        .divSix { display: inline-block; background-color: greenyellow; margin-right: 10px; }
+        #dividsix { width: 500px; height: 200px; }
+        #dividsix2 { width: 300px; height: 100px; }
+
+
+        /** 7、行内标签设置display=inline-block：效果和行内标签一样：不独占一行，宽高可设置 */
+        .spanSeven { display:inline-block; background-color: yellow; margin-right: 10px; margin-bottom: 5px;}
+        #spanIDSeven { width:600px; height: 100px; }
+        #spanIDSeven2 { width: 60%; heigh: 100px; }
+
+        .inputEight { border: 1px solid red; display: block; background-color:yellow; width: 50%; }
+    </style>
+</head>
+<body>
+    <div style="padding:50px;">
+        <!-- 1、块级标签演示 -->
+        <h3>块级标签：默认独占一行，宽高可设置</h3>
+        <div class="divOne">div标签111, 默认宽高</div>
+        <div class="divOne" id="divIDOne">div标签222， 宽600px, 高100px</div>
+        <div class="divOne" id="divIDTwo">div标签333, 宽60%, 高50px</div>
+        <hr/><br/>
+
+        <!-- 2、行内标签演示 -->
+        <h3>行内标签：默认多个行内标签显示在一行； 宽高取决于内容的尺寸，自定义设置无效</h3>
+        <span class="spanOne">span11111, 默认宽高</span>
+        <span class="spanOne" id="spanIDOne">span标签222, 设置宽600px, 高100px</span>
+        <hr/><br/>
+
+        <!-- 3、行内-块级标签 -->
+        <h3>行内-块级标签：默认多个标签显示在一行；可设置宽高</h3>
+        <input class="block-inlineOne" value="文本框111，默认宽高"/>
+        <input class="block-inlineOne" id="block-inlineIDOne" value="文本框222, 宽300px, 高50px"/>
+        <button class="block-inlineOne" id="block-inlineIDTwo">按钮222, 宽300px, 高50px</button>
+        <hr/><br/>
+
+        <!-- 4、块级标签样式像行内标签一样 -->
+        <h3>块级标签设置display=inline后，样式效果和行内标签一样：<br/>每个标签不再独占一行，且宽高设置不再有效！</h3>
+        <div class="divFour" id="divIDFour">divdiv宽500px 高200px</div>
+        <div class="divFour" id="divIDFour2">divdiv宽300px 高100px</div>
+        <hr/><br/>
+
+        <!-- 5、行内标签样式特性像块级标签一样 -->
+        <h3>行内标签设置display=block后，样式效果和块级标签一样：<br/>每个标签独占一行，可设置宽高</h3>
+        <span class="spanFive">span标签display属性=block，默认宽高</span>
+        <span class="spanFive" id="spanIDFive">span标签display=block, 宽=600px, 高=100px;</span>
+        <span class="spanFive" id="spanIDFive2">span标签display=block, 宽=60%，高=100px</span>
+        <hr/><br/>
+
+        <!-- 6、块级标签特性像行内-块级标签一样：不换行可设宽高 -->
+        <h3>块级标签设置display=inline-block，效果和设置inline一样: <br/>每个标签不再独占一行，且宽高设置不再有效</h3>
+        <div class="divSix" id="divIDSix">div宽500px高200px</div>
+        <div class="divSix" id="divIDSix2">div宽300px, 高100px</div>
+        <hr/><br/>
+
+        <!-- 7、行内标签设置display=inline-block -->
+        <h3>行内标签设置display=inline-block, 效果和行内-块级标签一样：<br/>每个标签不独占一行，但是宽高可自定义设置</h3>
+        <span class="spanSeven">span标签display属性=inline-block，默认宽高</span>
+        <span class="spanSeven" id="spanIDSeven">span标签display=inline-block, 宽=600px, 高=100px;</span>
+        <span class="spanSeven" id="spanIDSeven2">span标签display=inline-block, 宽=60%，高=100px</span>
+        <hr/><br/>
+
+        <h3>行内标签设置block</h3>
+        <input class="inputEight" />&nbsp;
+        <input class="inputEight" />
+    </div>
+</body>
+</html>

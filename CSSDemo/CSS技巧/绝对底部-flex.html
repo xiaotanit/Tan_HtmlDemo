@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>绝对底部flex</title>
+		<meta charset='utf-8'/>
+		<style type='text/css'>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			#wrap{
+				display: flex;
+				flex-flow: column;
+				min-height: 100vh;
+				border: 3px dashed red;
+			}
+			#main {flex: 1; border: 5px dashed gray; }
+			#footer {
+				height: 150px; background: #0c8ed9; 
+				border: 7px solid purple;
+			} 
+
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">正文</div>
+			<div id="footer">底部</div>
+		</div>
+		
+	</body>
+</html>

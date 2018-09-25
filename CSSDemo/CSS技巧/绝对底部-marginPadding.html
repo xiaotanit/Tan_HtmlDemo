@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>绝对底部margin-padding</title>
+		<meta charset='utf-8'/>
+		<style type='text/css'>
+			* {
+				margin: 0;
+				padding: 0;
+			}
+			body {
+				height: 100vh;
+			}
+			#wrap {
+				height: auto; 
+				min-height: 100%; border: 2px dashed red;
+			}
+			#main {
+				padding-bottom: 150px; /* 和footer相同的高度 */
+				border: 5px solid blue;
+			}  
+			#footer {
+				margin-top: -150px; /* footer高度的负值 */
+				height: 150px;
+				background: #0c8ed9; 
+				border: 7px dashed gray;
+			}
+
+		</style>
+	</head>
+	<body>
+		<div id="wrap">
+			<div id="main">正文</div>
+		</div>
+		<div id="footer">底部</div> <!--底部和外层同级-->
+	</body>
+</html>

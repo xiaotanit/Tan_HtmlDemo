@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS的常见的选择器</title>
+
+    <style>
+        /* 标签选择器 */
+        /*div{*/
+            /*color: red;*/
+        /*}*/
+        p{
+            color: blue;
+        }
+        /* 类选择器 */
+        .test1{
+            color: yellow;
+        }
+        /* id选择器 */
+        #main{
+            /*background-color: red;*/
+        }
+        /* 并列选择器 */
+        #main,.test1{
+            border: 1px solid rebeccapurple;
+        }
+        /* 符合选择器: 同时满足多个条件 */
+        p.test1{ /* 既是p标签，也是类标签test1*/
+            background-color: blue;
+        }
+        /*后代选择器*/
+        .test1 .test2{
+            color: red;
+        }
+        /* 直接后代选择器: 紧挨着的选择器才起到作用，不是挨着的不起作用 */
+        .test1>a{
+            color: red;;
+        }
+
+
+        /* 瀑布流效果 */
+        .container { columns: 250px; column-gap: 5px; }
+        .container div { width: 250px; }
+    </style>
+
+</head>
+<body>
+    <!---->
+    <div class="test1">我是div</div>
+    <div class="test1">
+        我是div
+        <div class="test2">
+            我是test1里面的test2
+            <a href="#">我是超链接</a>
+            <span>我是test1里面的span类标签为test2</span>
+        </div>
+        <div class="test2">hahah， 我是test1里面的第二个test2</div>
+    </div>
+    <div>
+        我是div
+        <a href="#">我是超链接</a>
+    </div>
+    <div>我是div</div>
+    <div>我是div</div>
+    <div>我是div</div>
+    <p  class="test1">我是段落p.test1</p>
+    <p id="main">我是段落</p>
+    <p>我是段落</p>
+    <p>我是段落</p>
+    <p>我是段落</p>
+
+
+    <br><br><br><br><br>
+    <div class="test1">
+        我是div
+        <a href="#">我是超链接在test1里面</a>
+        <div>
+            <a href="#">我是二级连接</a>
+        </div>
+    </div>
+    <br/><br/><hr/><hr/><hr/><br/>
+    <h1>瀑布流效果</h1>
+    <div class="container">
+        <div><img src="img/ad1.jpg"/><p>点我编辑标签</p></div><div><img src="img/ad2.jpg"/></div>
+        <div><img src="img/meat.jpg"/><p>点我编辑标签</p></div><div><img src="img/jacky/1.jpg"/></div>
+        <div><img src="img/ad3.jpg"/></div><div><img src="img/ad4.jpg"/><p>点我编辑标签</p></div>
+        <div><img src="img/jacky/3.jpg"/></div><div><img src="img/jacky/6.jpg"/></div>
+        <div><img src="img/jacky/xin.png"/><p>点我编辑标签</p></div><div><img src="img/ad5.jpg"/></div>
+        <div><img src="img/ad1.jpg"/></div><div><img src="img/ad2.jpg"/><p>点我编辑标签</p></div>
+        <div><img src="img/meat.jpg"/></div><div><img src="img/jacky/1.jpg"/></div>
+        <div><img src="img/ad3.jpg"/><p>点我编辑标签</p></div><div><img src="img/ad4.jpg"/></div>
+        <div><img src="img/jacky/3.jpg"/></div><div><img src="img/jacky/6.jpg"/></div>
+        <div><img src="img/jacky/xin.png"/></div><div><img src="img/ad5.jpg"/></div>
+        <div><img src="img/ad1.jpg"/></div><div><img src="img/ad2.jpg"/></div>
+        <div><img src="img/meat.jpg"/></div><div><img src="img/jacky/1.jpg"/></div>
+        <div><img src="img/ad3.jpg"/></div><div><img src="img/ad4.jpg"/></div>
+        <div><img src="img/jacky/3.jpg"/></div><div><img src="img/jacky/6.jpg"/></div>
+        <div><img src="img/jacky/xin.png"/></div><div><img src="img/ad6.jpg"/><p>点我编辑标签</p></div>
+    </div>
+</body>
+</html>

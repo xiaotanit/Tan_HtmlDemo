@@ -1,0 +1,195 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>瀑布流演示</title>
+    <style type="text/css">
+        /* 1、瀑布流 */
+        .container { margin: 20px auto; }
+        .box { float: left; padding: 5px; }
+        .box_img {
+            padding: 5px; border: 1px solid gray;
+            box-shadow: 0 0 10px green; bor-radius: 5px;
+        }
+        .box img { width: 200px; height: auto; }
+
+        .container2 {
+            position: relative; height: auto; min-height: 300px;
+        }
+    </style>
+    <script type="text/javascript">
+
+//        window.onload = function(){
+//            console.log('.444...加载完毕');
+//            console.log('44443box盒子个数：' + document.getElementsByClassName('box').length);
+//        }
+
+
+        var box = document.getElementsByClassName('box');
+        console.log("box盒子的个数：" + box.length);
+    </script>
+</head>
+<body>
+    <h1>js设置瀑布流</h1>
+    <div class="container2">
+        <div class="box"><div class="box_img"><img src="../img/0.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/1.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/2.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/3.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/4.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/5.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/6.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/7.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/8.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/9.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/10.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/11.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/12.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/13.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/14.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/15.jpg"/></div></div>
+        <div class="box"><div class="box_img"><img src="../img/16.jpg"/></div></div>
+    </div>
+    <script type="text/javascript">
+
+        var colsHeight = []; //设置全局变量 记录每列的顶部高度
+
+        //初始化页面加载js： window.onload会在页面加载完成后调用
+        window.onload = function(){
+            console.log('....加载完毕');
+
+            //实现效果：固定盒子宽度，和图片宽度。图片高度等比缩放。换行时，图片紧挨着上一行最短那张图片下面
+            //1、获取父级标签，和父级标签里的所有盒子标签
+            var parentEle = document.getElementsByClassName('container2')[0];
+            var boxs = parentEle.getElementsByClassName('box');
+            var boxWidth = boxs[0].offsetWidth; //获取每个盒子的宽度
+            //获取第一行有多少张图片
+            var colsCount = parseInt(document.documentElement.offsetWidth / boxWidth);
+
+            var doc = document.documentElement;
+//            console.log('print document.documentElement start')
+//            console.log(doc);
+//            console.log(doc.offsetLeft+", "+doc.offsetTop+", "+doc.offsetWidth+", "+doc.offsetHeight);
+//            console.log(doc.clientLeft + ", "+doc.offsetTop+", "+doc.offsetWidth+", "+doc.offsetHeight);
+//            console.log('...print end. ...')
+
+            //2、记录第一行的所有列的高度
+            for (var i = 0; i < colsCount; i++){
+                colsHeight[i] = boxs[i].offsetHeight;
+            }
+
+            //3、设置父级标签的宽度
+            parentEle.cssText = 'position: relative;width:' + colsCount * boxWidth + ';margin: 10 auto;';
+
+            //4、从第二行开始设置其他盒子的位置
+            updateBoxFrame(colsCount, boxs);
+
+            //5、模拟不断加载更多效果
+            //模拟不断加载，需要监听滚动条的变化
+            window.onscroll = monitorScroll;
+        }
+
+
+        //获取数组中最小高度的索引
+        function getMinHeightIndex(arr){
+
+            var minHeight = Math.min.apply(null, arr);
+
+            for (var i = 0; i < arr.length; i++){
+                if (arr[i] == minHeight) return i;
+            }
+            return -1;
+        }
+
+        //调整每个盒子的位置
+        function updateBoxFrame(startIndex, boxs){
+            for (var i = startIndex; i < boxs.length; i++){
+
+                var tmpBox = boxs[i];
+                var minIndex = getMinHeightIndex(colsHeight);
+                var minHeight = colsHeight[minIndex];
+
+                tmpBox.style.position = 'absolute';
+                tmpBox.style.left = boxs[minIndex].offsetLeft + 'px';
+                tmpBox.style.top = minHeight + 'px';
+                colsHeight[minIndex] += tmpBox.offsetHeight;
+            }
+        }
+
+        //监听滚动条滚动
+        function monitorScroll(){
+            var parentEle = document.getElementsByClassName('container2')[0];
+            var boxs = parentEle.getElementsByClassName('box');
+            //获取最后一个盒子的坐标
+            var tmpBox = boxs[boxs.length-1];
+            var doc = document.documentElement||document.body;
+
+            console.log(doc.scrollTop+","+doc.clientTop+","+
+                    doc.offsetTop+","+doc.clientHeight+","+doc.offsetHeight);
+
+//            console.log(tmpBox.scrollTop +","+tmpBox.clientTop +","+
+//                    tmpBox.offsetTop+","+tmpBox.clientHeight+","+tmpBox.offsetHeight);
+//
+//            console.log(".........\n")
+            /*
+             * 打印结果：tmpBox.offsetTop: 元素举例顶部的距离；doc.scrollTop: 元素滚动的距离；
+             * doc.clientHeight: 文档可见高度; doc.offsetHeight: 文档实际内容高度
+             * 所以判断当 tmpBox.offsetTop < doc.scrollTop + doc.clientHeight 时，差不多见底了
+
+             506,0,0,289,3739
+             0,0,975,185,185
+             .........
+
+             511,0,0,289,3739
+             .........
+
+             513,0,0,289,3739
+             0,0,975,185,185
+             .........
+
+             514,0,0,289,3739
+             0,0,975,185,185
+             .........
+
+             515,0,0,289,3739
+             0,0,975,185,185
+             * */
+
+            //判断当滚动到底部时，加载更多图片
+            if (tmpBox.offsetTop < doc.scrollTop+doc.clientHeight){
+                addBox(); //增加盒子
+
+                console.log('现有盒子个数：'+parentEle.getElementsByClassName('box').length);
+            }
+        }
+
+        //新添加盒子
+        function addBox(){
+
+            var parentEle = document.getElementsByClassName('container2')[0];
+            var imgs = ['0.jpg', '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg',
+                '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg'
+                , '14.jpg', '15.jpg', '16.jpg'];
+
+            for (var i = 0; i < imgs.length;i++){
+                var box = document.createElement("div");
+                box.setAttribute('class', 'box');
+
+                box.innerHTML = "<div class=\"box_img\">\
+                        <img src=\"../img/"+ imgs[i] +"\" />\
+                        </div>";
+                parentEle.appendChild(box);
+            }
+
+            //加载的盒子位置散乱，需要重新调整
+            var boxs = parentEle.getElementsByClassName('box');
+            updateBoxFrame(boxs.length - imgs.length, boxs);
+        }
+
+        var box2 = document.getElementsByClassName('box');
+        console.log("2222box盒子的个数：" + box2.length);
+
+
+    </script>
+</body>
+</html>

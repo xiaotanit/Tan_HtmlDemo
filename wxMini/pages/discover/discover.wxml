@@ -1,0 +1,24 @@
+<view>
+    <view class='row'>
+        <view class="title">瀑布流</view>
+        <view class="btn_view">
+            <view class='btn' catchtap='showWaterfall' data-index='1'>瀑布流一</view>
+            <view class='btn' catchtap='showWaterfall' data-index='2'>瀑布流二</view>
+            <view class='btn' catchtap='showWaterfall' data-index='3'>瀑布流三</view>
+        </view>
+    </view>
+    <view class='row'>
+        <view class="title">动画效果</view>
+        <view class="btn_view">
+            <view class='btn' catchtap='testAnimation'>动画测试</view>
+        </view>
+    </view>
+
+    <view class='row'>
+        <view class="title">文本输入限制输入数字，且最多带2位小数</view>
+        <input type='digit' placeholder='请输入有效数字' bindinput='inputNum' class='numInput'/>
+    </view>
+    <view>
+      <button class='btn' hover-class='btn_hover'>Click Me</button>
+    </view>
+</view>
