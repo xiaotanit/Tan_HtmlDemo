@@ -4,7 +4,30 @@
         <title>音频/视频</title>
         <style type="text/css">
             body{ padding: 20px 50px; }
-            table td{ padding: 5px 10px;}
+            table td, table th{
+                padding: 5px 10px; text-align: center;
+            }
+            table th { color: blue; font-size: 20px; }
+            table tr td:nth-of-type(1) { color: purple; font-size: 20px; font-weight:bold;; }
+            .first-th { font-size: 12px; color:black;position: relative; }
+            .th-div1 {
+                position: absolute;
+            }
+            .th-div2 {
+
+                position: absolute; left: 50%; margin-left: -40px; width: 100%;
+                line-height: 1px; border-top: 1px solid black;
+                transform: rotate(30deg);
+
+            }
+            .th-div3 {
+                position: absolute; top: 6px; right: 4px;
+            }
+            tbody tr:nth-of-type(1) { background-color: #ffffcc; }
+            tbody tr:nth-of-type(2) { background-color: #ccffcc; }
+            tbody tr:nth-of-type(3) { background-color: #ccccff; }
+            tbody tr:nth-of-type(4) { background-color: #FFF0F5; }
+
 
             .testOne{
                 margin: 20px 5px; padding: 10px;
@@ -19,87 +42,100 @@
     </head>
 
     <body>
-        <ol>
-            <li>由于各大浏览器对于音频格式的支持不一样，比如mp3格式能被Chrome支持，不被Firefox支持；<br/>
-                而wav格式不能被Chrome支持，却能被FireFox支持；
-            </li>
-            <li>所以为了能够让各大主流浏览器能够兼容，需要对音频进行转码播放</li>
-            <li>ffmpeg是一个开源的编解码工具，很多播放器都内置了它，下载地址为：www.ffmpeg.org</li>
-            <li>转码步骤：
-                <ul>
-                    <li>假如ffmpeg的安装目录为(Mac电脑）：/Applications/ffmpeg</li>
-                    <li>首先打开终端，cd进入要转换的文件目录，假如要转换的文件是friendship.mp3, <br/>
-                        现在要转换成一个friendship.wav文件
-                    </li>
-                    <li>输入命令：<br/>
-                        /Applications/ffmpeg -i friendship.mp3 -acodec libvorbis friendship.wav
-                    </li>
-                    <li>然后你会看到当前文件夹目录内多了一个friendship.wav文件</li>
-                </ul>
-            </li>
-        </ol>
         <table border="1" cellspacing="0">
             <thead>
                 <tr>
-                    <th>音频格式</th><th>Chrome</th><th>Firefox</th>
-                    <th>IE9</th><th>Opera</th><th>Safari</th>
+                    <th class="first-th">
+                        <div class="th-div1">格式</div>
+                        <div class="th-div2"></div>
+                        <div class="th-div3">浏览器</div>
+                    </th>
+                    <th>Chrome</th>
+                    <th>Firefox</th>
+                    <th>Opera</th>
+                    <th>Safari</th>
+                    <th>IE11</th>
+                    <th>Edge</th>
                 </tr>
             </thead>
             <tbody>
                 <tr>
                     <td>OGG</td>
-                    <td>支持</td>
-                    <td>支持</td>
-                    <td>支持</td>
-                    <td>支持</td>
-                    <td>不支持</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>NO</td>
+                    <td>NO</td>
+                    <td>YES</td>
                 </tr>
                 <tr>
                     <td>MP3</td>
-                    <td>支持</td>
-                    <td>支持</td>
-                    <td>支持</td>
-                    <td>不支持</td>
-                    <td>支持</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>YES</td>
                 </tr>
                 <tr>
                     <td>WAV</td>
-                    <td>不支持</td>
-                    <td>支持</td>
-                    <td>不支持</td>
-                    <td>支持</td>
-                    <td>不支持</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>NO</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>MP4</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                </tr>
+                <tr>
+                    <td>WebM</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>YES</td>
+                    <td>NO</td>
+                    <td>NO</td>
+                    <td>YES</td>
                 </tr>
             </tbody>
         </table>
+        <ul>注意：
+            <li>Safari浏览器对于wav音频格式和mp4视频格式的支持，需要把页面部署到web服务器里面。<br/>
+                如果只是单纯的用Safari浏览器打开磁盘的一个静态页面，会发现不支持这两种格式
+            </li>
+            <li>
+                同上Opera浏览器对于ogg视频格式的支持，也需要把页面部署到web服务器上。
+            </li>
+        </ul>
         <p></p>
 
         <div class="testOne">
-            <h3>1、测试一下，不兼容写法, 三个audio标签，src依次为ogg、mp3、wav格式文件</h3>
-            <audio controls="controls" src="../img/file/friendship.ogg">不支持该格式播放</audio>
-            <audio controls="controls" src="../img/file/friendship.mp3">不支持该格式播放</audio>
-            <audio controls="controls" src="../img/file/friendship.wav">不支持该格式播放</audio>
-            <p>
-                测试了chrome、firefox、safari三个浏览器，结果为：<br/>
-                Chrome和Firefox支持ogg和mp3, 不支持wav<br/>
-                Safari支持mp3, 不支持ogg和wav
-            </p>
+            <h3>1、测试一下，三个audio标签，src依次为ogg、mp3、wav格式文件</h3>
+            <audio controls="controls" src="../img/file/Friendships.ogg">不支持该格式播放</audio>
+            <audio controls="controls" src="../img/file/Friendships.mp3">不支持该格式播放</audio>
+            <audio controls="controls" src="../img/file/Friendships.wav">不支持该格式播放</audio>
         </div>
 
-        <p>
-            由于浏览器对音频格式的支持不一样，有时候为了需要对音频进行转码播放<br/>
-            比如mp4格式在chrome浏览器上是支持的，在saferi浏览器上不支持<br/>
-            ffmpeg是一个开源的编解码工具，很多播放器都内置了ta，下载地址为：www.ffmpeg.org<br/>
-            编译转码命令，比如转码一个mp4格式文件为ogg: <br/>
-            cd进入要转换的文件目录，输入转换命令<br/>
-            <span style="color:red;">/路径/ffmpeg -i 1.mp4 -acodec libvorbis 1.ogg</span>
-        </p>
-        <audio id="audio" controls="controls" src="../img/file/jia.mp4">不支持该格式播放</audio>
-        <button onclick="clickMe()" class="playBtn">播放/暂停</button>
+        <div class="testOne">
+            <h3>2、audio标签兼容写法，一个audio标签，里面设置多个source标签</h3>
+            <audio controls="controls" id="audio">
+                <source src="../img/file/Friendships.ogg" />
+                <source src="../img/file/Friendships.mp3" />
+                <source src="../img/file/Friendships.wav" />
+            </audio>
+            <button onclick="audioManage()" class="playBtn">播放/暂停</button>
+        </div>
         <script type="text/javascript">
 
             //手动控制音频的播放
-            function clickMe(){
+            function audioManage(){
 
                 var obj = document.getElementById('audio');
                 if (obj.paused){
@@ -113,16 +149,87 @@
             }
         </script>
 
-        <hr/><hr/><hr/>
-        <h2>
-            由于浏览器对音频格式的支持不一样，有时候为了需要对音频进行转码播放<br/>
-            比如mp4格式在chrome浏览器上是支持的，在saferi浏览器上不支持<br/>
-            ffmpeg是一个开源的编解码工具，很多播放器都内置了ta，下载地址为：www.ffmpeg.org<br/>
-            编译转码命令，比如转码一个mp4格式文件为ogg: <br/>
-            cd进入要转换的文件目录，输入转换命令<br/>
-            <span style="color:red;">/路径/ffmpeg -i 1.mp4 -acodec libvorbis 1.ogg</span>
-        </h2>
+        <br/>
+        <div class="testOne">
+            <h3>3、测试一下，三个video标签，src依次为mp4、ogg、WebM格式文件</h3>
+            <video controls="controls" src="../img/file/jia.mp4"></video>
+            <video controls="controls" src="../img/file/jia.ogg"></video>
+            <video controls="controls" src="../img/file/jia.WebM"></video>
+        </div>
+        <div class="testOne">
+            <h3>4、测试一下，兼容写法, 一个video标签，三个souce依次引用mp4、ogg、WebM</h3>
+            <video controls="controls" id="video" width="300" height="150">
+                <source src="../img/file/jia.mp4"/>
+                <source src="../img/file/jia.ogg"/>
+                <source src="../img/file/jia.WebM"/>
+            </video>
+            <button onclick="videoManage()" class="playBtn">播放/暂停</button>
+            <button onclick="changeBigVideo()" class="playBtn">宽高增大</button>
+            <button onclick="changeSmallVideo()" class="playBtn">宽高减小</button>
+            <script type="text/javascript">
+                var video = document.getElementById('video');
+                var videoBigInterval = null, videoSmallInterval = null;
 
-        <audio id="audioTwo" controls="controls" src="../img/file/1.wav">不支持该格式播放</audio>
+                //视频暂停和继续播放
+                function videoManage(){
+
+                    if (videoBigInterval){
+                        clearInterval(videoBigInterval);
+                    }
+
+                    if (videoSmallInterval){
+                        clearInterval(videoSmallInterval)
+                    }
+
+                    if (video.paused){
+                        video.play();
+                    }
+                    else{
+                        video.pause();
+                    }
+                }
+
+                //video标签宽高变大
+                function changeBigVideo(){
+                    console.log('...start....big....')
+                    if (videoBigInterval){
+                        clearInterval(videoBigInterval);
+                    }
+
+                    if (videoSmallInterval){
+                        clearInterval(videoSmallInterval)
+                    }
+
+                    videoBigInterval = setInterval(function(){
+                        var oldW = video.width, oldH = video.height;
+
+                        console.log('big --> width: ', oldW, ', height: ', oldH)
+                        video.width = oldW*1.05;
+                        video.height = oldH*1.05;
+                    }, 1000)
+                }
+
+                //video标签宽高变小
+                function changeSmallVideo(){
+
+                    console.log(".....start ..small...")
+                    if (videoBigInterval){
+                        clearInterval(videoBigInterval);
+                    }
+
+                    if (videoSmallInterval){
+                        clearInterval(videoSmallInterval)
+                    }
+
+                    videoSmallInterval = setInterval(function(){
+                        var oldW = video.width, oldH = video.height;
+                        console.log('small --> width: ', oldW, ', height: ', oldH)
+                        video.width = oldW*0.95;
+                        video.height = oldH*0.95;
+                    }, 1000)
+                }
+            </script>
+        </div>
+
     </body>
 </html>

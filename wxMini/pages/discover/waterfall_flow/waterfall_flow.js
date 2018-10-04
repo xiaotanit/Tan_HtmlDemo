@@ -18,6 +18,9 @@ Page({
    */
   onLoad: function (options) {
 
+    wx.showLoading({
+      title: '加载中...',
+    })
     var that = this;
     //获取页面宽高度
     wx.getSystemInfo({
@@ -121,7 +124,9 @@ Page({
     }
 
     var dataList = this.data.dataList.concat(tmpArr)
-    this.setData({ dataList: dataList });
+    this.setData({ dataList: dataList }, function(){
+      wx.hideLoading()
+    });
   },
   /**预览图片 */
   previewImg: function (e) {
