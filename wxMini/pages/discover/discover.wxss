@@ -20,18 +20,18 @@
   display: flex; justify-content: center; align-items: center;
 }
 
-    .btn_hover { 
-        animation-name: sixAnim; /* 设置动画名字 */
-        animation-duration: 2s; /* 设置动画时间 */
-        display: flex; justify-content: center; align-items: center;
+.btn_hover { 
+    animation-name: sixAnim; /* 设置动画名字 */
+    animation-duration: 2s; /* 设置动画时间 */
+    display: flex; justify-content: center; align-items: center;
+}
+@keyframes sixAnim {
+    from{
+      width: 400rpx; height: 80rpx;
+      color: #fff; border: 5rpx solid purple;
     }
-    @keyframes sixAnim {
-        from{
-          width: 400rpx; height: 80rpx;
-          color: #fff; border: 5rpx solid purple;
-        }
-        to{
-          width: 600rpx; height: 120rpx; font-size: 50rpx;
-          colo: #2ecc71; border: 20rpx solid #2ecc71;
-        }
+    to{
+      width: 600rpx; height: 120rpx; font-size: 50rpx;
+      colo: #2ecc71; border: 20rpx solid #2ecc71;
     }
+}

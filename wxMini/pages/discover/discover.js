@@ -1,3 +1,5 @@
+var app = getApp();
+
 // pages/discover/discover.js
 Page({
 
@@ -52,6 +54,77 @@ Page({
     }
 
     return text; //返回符合要求的文本（为数字且最多有带2位小数）
+  },
+  //测试mock
+  testMock: function(){
+
+      var host = 'http://127.0.0.1:7654/'
+      //testOne : 测试数据模板属性值为字符串和数值
+      wx.request({
+        url: host + 'testOne',
+        success: function(data){
+          console.log("..testOne...")
+          console.log(data)
+        }
+      })
+
+    //testTwo: 测试数据模板属性值为对象
+    wx.request({
+      url: host + 'testTwo',
+      success: function (data) {
+        console.log("..testTwo...")
+        console.log(data)
+      }
+    })
+
+    //testThree : 测试数据模板属性值为数组
+    wx.request({
+      url: host + 'testThree',
+      success: function (data) {
+        console.log("..testTwo...")
+        console.log(data)
+      }
+    })
+
+    //testFour ： 测试模板数据属性值为function和正则Reg
+    wx.request({
+      url: host + 'testFour',
+      success: function (data) {
+        console.log("..testFour...")
+        console.log(data)
+      }
+    })
+
+    wx.request({
+      url: host + 'userInfo',
+      success: function (data) {
+        console.log("...success...")
+        console.log(data)
+
+      },
+      fail: function (err) {
+        console.log(".....fail...")
+        console.log(err)
+      },
+      complete: function (data) {
+        console.log("....complte...")
+        console.log(data);
+      }
+    })
+
+    //第二个请求
+    wx.request({
+      url: host + 'storeInfo',
+      success: function (data) {
+        console.log("....success....")
+        console.log(data)
+      },
+      fail: function (err) {
+        console.log(".....fail...")
+        console.log(err)
+      }
+    })
+
   },
 
   /**

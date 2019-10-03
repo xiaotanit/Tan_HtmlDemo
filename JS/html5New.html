@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>html5新特性</title>
+    <style type="text/css">
+        .main{
+            width: 500px; height: 300px; background-color: #999;
+            float: left;
+        }
+        .main:nth-of-type(2) { background-color: yellow; }
+        .main:nth-last-of-type(1) {
+            background-color: #fff; border: 2px dashed black;
+            width: 1024px;
+        }
+        #span {
+            display: flex; width: 100px; height: 100px;
+            justify-content: center; align-items: center;
+            background-color: black; color: #fff; font-size: 30px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <div>
+        <h3>1、html5新特性，拖放本地数据（类似图片之类的数据）拖放事件监听（拖动和放下）</h3>
+        <div class="main" id="main1"></div><div id="main2" class="main"></div>
+        <div style="clear: both;">
+            <img src="../img/star/8.jpg" width="300px" id="img"/>
+            <span id="span">不一样的烟火</span>
+        </div>
+
+        <script type="text/javascript">
+            var main1 = document.getElementById('main1');
+            var main2 = document.getElementById('main2');
+            var img = document.getElementById('img');
+            //结果验证：span标签拖动不了，只能拖动图片
+            var span = document.getElementById('span');
+
+            //1、拖动开始 设置数据setData
+            img.ondragstart = dragStartObj;
+            span.ondragstart = dragStartObj;
+
+            //2、设置拖放过程中阻止系统事件
+            main1.ondragover = function(e){
+                e.preventDefault(); //阻止系统事件
+            }
+            main2.ondragover = function(e){
+                e.preventDefault();
+            }
+
+            //3、设置放置回调函数，监听在自己地盘内是否有对象进入
+            main1.ondrop = dropObj;
+            main2.ondrop = dropObj;
+
+
+            //被拖动的目标对象监听
+            function dragStartObj(e){
+                console.log("....拖动开始...")
+                console.log(e)
+                console.log(e.target)
+                console.log(e.target.id);
+
+                //设置数据, 设置图片的id, 通过setData设置关键数据
+                e.dataTransfer.setData('dragObjId', e.target.id);
+            }
+
+            //放置图片对象
+            function dropObj(e){
+
+                e.preventDefault();
+                var tmpObj = document.getElementById(e.dataTransfer.getData('dragObjId'));
+                console.log(tmpObj);
+                e.target.appendChild(tmpObj);
+
+                showObjAttribute(e.dataTransfer);
+            }
+
+            //打印对象所有属性
+            function showObjAttribute(obj){
+                var html = '';
+                for (var key in obj){
+                    html += key + ': ' + obj[key] + "<br/>"
+                }
+
+                console.log(html);
+                document.getElementById('info').innerHTML = html;
+            }
+        </script>
+    </div>
+
+    <div>
+        <h3 style="clear:both;">2、从本地磁盘拖放图片放置</h3>
+        <div id="main3" class="main" style="height: 500px;width: 1024px;"></div>
+
+        <script type="text/javascript">
+            var main3 = document.getElementById('main3')
+
+            //设置拖拽过程监听事件
+            main3.ondragover = objDragOver;
+            //设置放置事件
+            main3.ondrop = objDrop;
+
+
+            function objDragOver(e){
+                e.preventDefault();
+            }
+            function objDrop(e){
+
+                e.preventDefault();
+
+//            showObjAttribute(e.dataTransfer.files);
+
+                var files = e.dataTransfer.files; //获取拖拽的所有图片文件流
+
+                console.log(e.dataTransfer);
+                console.log(e.dataTransfer.files)
+
+                for (let i = 0; i < files.length; i++){
+                    var fileReader = new FileReader();
+                    fileReader.onload = function(e){
+
+                        console.log("...加载完成》。。")
+                        showObjAttribute(e.target);
+
+                        console.log("................(*****>>>**")
+                        console.log(e.target.result)
+
+                        var img = document.createElement('img');
+                        img.setAttribute('src', e.target.result);
+                        img.setAttribute('width', '200px');
+                        main3.appendChild(img);
+
+                        console.log(img)
+                    }
+                    fileReader.readAsDataURL(files[i]); //读取数据
+                }
+
+            }
+        </script>
+    </div>
+
+    <!-- canvas演示 -->
+    <div style="clear:both;">
+        <br/>
+        <h3>3、canvas绘制</h3>
+        <div>
+            <canvas width="100px" height="100px" style="background-color: yellow;"></canvas>
+            <canvas id="canvasOne" style="width: 300px; height: 300px; border: 1px dashed red;"></canvas>
+            <div>
+                <button onclick="canvasRotate()">旋转</button>
+                <button onclick="canvasScaleSmall()">缩小</button>
+                <button onclick="canvasScaleBig()">放大</button>
+            </div>
+
+            <script type="text/javascript">
+                var canvas = document.getElementById('canvasOne');
+                var ctx = canvas.getContext('2d');
+                ctx.fillStyle = 'green'; //填充颜色
+                ctx.fillRect(200, 10, 20, 20); //绘制x、y、w、h
+
+                var rotateI = 1, scale = 1;
+                function canvasRotate(){
+                    rotateI++;
+                    ctx=canvas.getContext("2d");
+                    ctx.rotate(20*Math.PI/180);
+                    ctx.fillRect(200, 10, 30, 30);
+                    console.log("..旋转...")
+                }
+                function canvasScaleSmall(){
+
+                    ctx=canvas.getContext("2d");
+                    ctx.scale(scale*0.9, scale*0.9);
+                    ctx.fillRect(200, 10, 30, 30);
+                }
+                function canvasScaleBig(){
+                    ctx=canvas.getContext("2d");
+                    ctx.scale(scale*1.1, scale*1.1);
+                    ctx.fillRect(200, 10, 30, 30);
+                }
+            </script>
+        </div>
+    </div>
+
+    <h3>location和localSessiong存储</h3>
+    <div>
+        <input type="text" id="localText"/><button onclick="localSave()">localStorage存储</button>
+        <br/>
+        <input type="text" id="sessionText"/><button onclick="sessionSave()">sessionStorage存储</button>
+        <script type="text/javascript">
+
+            //localStorage存储： 永远存储，没有时间限制
+            function localSave(){
+                localStorage['localText'] = document.getElementById('localText').value;
+            }
+            //sessionStorage存储
+            function sessionSave(){
+                sessionStorage['sessionText'] = document.getElementById('sessionText').value;
+            }
+
+            //初始化数据
+            window.onload = function(){
+
+                var localText = localStorage['localText'];
+
+                if (localText){
+                    document.getElementById('localText').value = localText;
+                }
+
+                var sessionText = sessionStorage['sessionText'];
+                if (sessionText){
+                    document.getElementById('sessionText').value = sessionText;
+                }
+            }
+        </script>
+    </div>
+
+</div>
+<div id="info" style="clear:both;"></div>
+</body>
+</html>

@@ -21,4 +21,9 @@
     <view>
       <button class='btn' hover-class='btn_hover'>Click Me</button>
     </view>
+
+    <view class='row'>
+      <button catchtap='testMock'>mock获取数据</button>
+    </view>
+
 </view>

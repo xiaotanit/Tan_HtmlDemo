@@ -2,7 +2,33 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>面向对象</title>
+    <title>面向对象和楼层特效</title>
+    <style type="text/css">
+        *{ margin:0; padding:0; }
+        .layerBox { position: relative; }
+        html, body, .layerBox, #layerMain { width: 100%; height: 100%;}
+        #layerMain li { list-style: none; width: 100%;height: 100%;
+            text-align: center; cursor:pointer; }
+        #layerMain li:nth-of-type(1) { background-color: red; }
+        #layerMain li:nth-of-type(2) { background-color: orange; }
+        #layerMain li:nth-of-type(3) { background-color: yellow; }
+        #layerMain li:nth-of-type(4) { background-color: green; }
+        #layerMain li:nth-of-type(5) { background-color: cyan; }
+        #layerMain li:nth-of-type(6) { background-color: blue; }
+        #layerMain li:nth-of-type(7) { background-color: purple; }
+
+        #layerIndex {
+            position: fixed; left: 50px; top: 100px; width: 100px; height: auto;
+            border: 1px solid gray; border-radius: 4px; background-color: #fff;
+        }
+        #layerIndex li {
+            list-style: none; width: 100%; height: 36px; line-height: 36px;
+            text-align: center; border-bottom: 1px solid black; cursor: pointer;
+        }
+        #layerIndex li:nth-last-of-type(1){ border-bottom: none; }
+        #layerIndex li.current { background-color: gold; }
+    </style>
+    <script type="text/javascript" src="js/index.js"></script>
 </head>
 <body>
     <h3>JS也是面向对象的语言，具有面向对象的三大特性：封装、继承、多态</h3>
@@ -157,5 +183,60 @@
 
 
     </script>
+
+    <h3>楼层特效</h3>
+    <div class="layerBox">
+        <ul id="layerMain">
+            <li>第一层: 今日推荐</li>
+            <li>第二层：探索生活</li>
+            <li>第三层：运动户外</li>
+            <li>第四层：手机频道</li>
+            <li>第五层：家居超市</li>
+            <li>第六层：母婴玩具</li>
+            <li>第七层：数码达人</li>
+        </ul>
+        <ul id="layerIndex">
+            <li class="current">今日推荐</li>
+            <li>探索生活</li>
+            <li>运动户外</li>
+            <li>手机频道</li>
+            <li>家居超市</li>
+            <li>母婴玩具</li>
+            <li>数码达人</li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+        var layerMain = document.getElementById('layerMain');
+        var layerIndex = document.getElementById('layerIndex');
+        var indexArr = layerIndex.children;
+        var layerTop = layerMain.offsetTop || layerMain.offsetParent.offsetTop;
+
+        for (var i = 0; i < indexArr.length; i++){
+            indexArr[i].index = i;
+            indexArr[i].onclick = function(){
+                var index = parseInt(this.index);
+
+                var top = layerTop + boxClient().height * index;
+
+                console.log("layerTop:" + layerTop +', scrollTop: ',
+                        top, ', index: ', index + ", clientH: ", boxClient().height);
+
+                //1、第一种变化方法
+                window.scrollTo(0, top);
+
+                //2、第二种变化方法
+//                changeStyle(document.documentElement, {scrollTop: top}, function(){
+//
+//                })
+
+                for (var j = 0;j < indexArr.length; j++){
+                    indexArr[j].className = '';
+                }
+                this.className = 'current';
+            }
+        }
+
+    </script>
+
 </body>
 </html>

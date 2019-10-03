@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>花瓣网</title>
+    <meta name="viewport" content="width=320, initial-scale=1.0, maxinum-scale=1.0">
+    <link rel="stylesheet" href="./css/home.css" type="text/css"/>
+</head>
+<body>
+    <div class="box">
+        <!-- 头部导航菜单 -->
+        <div class="header">
+            <ul class="head">
+                <li class="logo"><img src="../img/hua/huaban_logo.png"/></li>
+                <li><a href="https://www.cnblogs.com/" target="_blank">博客园</a></li>
+                <li><a href="https://www.csdn.net/" target="_blank">CSDN</a></li>
+                <li><a href="https://juejin.im/" target="_blank">掘金</a></li>
+                <li><a href="http://www.jobbole.com/" target="_blank">伯乐在线</a></li>
+                <li><a href="https://open.163.com/" target="_blank">网易公开课</a></li>
+                <li class="more"><a href="#"><span class="a_span">...</span></a></li>
+                <li class="search"><input type="text" placeholder="搜索你喜欢的"/></li>
+                <li class="reg"><a href="javascript:" id="btn_reg">注册</a></li>
+                <li class="login"><a href="javascript:" id="btn_login">登录</a></li>
+            </ul>
+        </div>
+
+        <!-- 主体内容 -->
+        <div class="main">
+            <!-- 1、吸顶效果 -->
+            <div class="top_nav">
+                <div class="nav_title">
+                    <div>国内最优质图片灵感库</div>
+                    <div>已有数百万出众网友，用花瓣来保存图片。</div>
+                </div>
+                <ul class="nav_login">
+                    <li>用社交号直接登录</li>
+                    <li><a href="https://im.qq.com/" title="QQ" target="_blank"></a></li>
+                    <li><a href="https://wx.qq.com/" title="微信" target="_blank"></a></li>
+                    <li><a href="https://accounts.douban.com/passport/login" title="豆瓣" target="_blank"></a></li>
+                    <li><a href="http://www.renren.com/" title="人人" target="_blank"></a></li>
+                </ul>
+            </div>
+
+            <!-- 2、轮播banner -->
+            <ul class="slider_banner">
+                <li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li>
+                <li><a href="#"></a></li><li><a href="#"></a></li><li><a href="#"></a></li>
+                <li><a href="#"></a></li>
+            </ul>
+
+            <!-- 3、介绍和登录方式banner -->
+            <div class="login_banner">
+                <div class="nav_title">
+                    <div>国内最优质图片灵感库</div>
+                    <div>已有数百万出众网友，用花瓣来保存图片。</div>
+                </div>
+                <div class="login_login">
+                    <ul class="login_ul">
+                        <li><a href="https://weibo.com/login.php" title="新浪微博" target="_blank"></a></li>
+                        <li><a href="http://www.renren.com/" title="人人" target="_blank"></a></li>
+                        <li><a href="https://accounts.douban.com/passport/login" title="豆瓣" target="_blank"></a></li>
+                        <li><a href="https://im.qq.com/" title="QQ" target="_blank"></a></li>
+                    </ul>
+                    <div class="login_tip">用以上社交账号直接登录</div>
+                </div>
+            </div>
+
+            <!-- 美图标题 -->
+            <div class="main_name"><div class="title">美图</div></div>
+
+            <!-- tab -->
+            <div class="main_tab">
+                <div class="tab_active">采集</div>
+                <div>推荐画板</div>
+                <div>推荐用户</div>
+            </div>
+
+            <!-- 瀑布流 -->
+            <div class="waterfall">
+                <!-- 分类导航 -->
+                <ul class="fall_top">
+                    <li><a href=""></a></li>
+                    <li><a href=""></a></li>
+                    <li><a href=""></a></li>
+                    <li><a href=""></a></li>
+                </ul>
+
+                <!-- 瀑布流图片列表 -->
+                <div class="fall_main" id="fall_main"></div>
+
+                <!-- 瀑布流图片列表2 -->
+                <div class="dom_pull" id="dom_pull"></div>
+
+            </div>
+        </div>
+
+        <!-- 登录弹窗 -->
+        <div class="login_layer" style="display: none;">
+            <div class="login_bg"></div>
+            <div class="login_main">
+                <div class="login_logo"><img src="../img/hua/huaban_logo.png"/></div>
+                <div class="login_tip">使用第三方帐号登录</div>
+                <div class="login_list">
+                    <a href="https://weibo.com/login.php" class="wb" title="新浪微博登录" target="_blank"></a>
+                    <a href="https://im.qq.com/" class="qq" title="QQ登录" target="_blank"></a>
+                    <a href="https://wx.qq.com/" class="wx" title="微信登录" target="_blank"></a>
+                    <a href="https://accounts.douban.com/passport/login" class="db" title="豆瓣登录" target="_blank"></a>
+                    <a href="http://www.renren.com/" class="rr" title="人人网登录" target="_blank"></a>
+                </div>
+                <div class="login_tip">使用手机号/邮箱登录</div>
+                <div class="login_input">
+                    <div class="login_account"><input type="text" placeholder="请输入手机号或邮箱号"/></div>
+                    <div class="login_pwd"><input type="password" placeholder="请输入密码"/></div>
+                    <div class="login_btn">登录</div>
+                    <div class="login_other">
+                        <a href="#" class="login_forget">忘记密码>></a>
+                        <span>还没有花瓣账号？</span>
+                        <a href="#" class="login_reg">点击注册>></a>
+                    </div>
+                </div>
+                <div class="login_close" id="login_close"></div>
+            </div>
+        </div>
+
+        <!-- 返回顶部按钮 -->
+        <div class="to_top">
+            <div class="arrow"></div>
+            <div class="add"></div>
+        </div>
+    </div>
+    <script type="module" src="./js/home.js"></script>
+    <script type="text/javascript">
+        alert(window.devicePixelRatio);
+    </script>
+</body>
+</html>

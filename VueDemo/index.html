@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="cn">
+    <head>
+        <meta charset="utf-8"/>
+        <title>Vue - Helloworld</title>
+        <script type="text/javascript" src="js/vue.js"></script>
+        <style type="text/css">
+            .red { color: red; font-size: 30px; }
+            .blue { background-color: blue; font-size: 22px; font-weight: bold; }
+        </style>
+    </head>
+    <body>
+        <div id="app">
+            <p><input type="text" placeholder="请输入内容" v-model="message" /></p>
+            <div>{{message}}</div>
+            <p v-bind:title="changeText">鼠标悬停几秒钟查看此处动态绑定的提示信息！</p>
+            <p v-if="showInfo">这是一个条件判断，当showInfo==true信息</p>
+            <p v-else>额，showInfo变成false了</p>
+            <div>
+                <button v-on:click="testOnOff">{{btnText}}</button>
+                <button v-on:click="myCount+=1">监听事件：{{myCount}}</button>
+                <button v-on:click="clickMe('王大锤')">内联处理器中的方法</button>
+                <button v-on:click="clickMeTwo('王大锤', $event)">内联处理器中访问原始的DOM事件</button>
+            </div>
+            <ul>
+                <li>演示for循环数据加载</li>
+                <li v-for="item in arr">{{item.id}}, &nbsp;&nbsp;作者：{{item.name}}, &nbsp;&nbsp;代表作：{{item.book}}</li>
+            </ul>
+            <div><button v-on:click="reverseArr">演示绑定事件：数组逆转</button></div>
+            <ul>
+                <li v-for="(item, index) in arr">索引：{{index}} -->  代表作：{{item.book}} --> 作者：{{item.name}}</li>
+            </ul>
+            <ul>
+                对象属性遍历：
+                <li v-for="val in mySelf">{{val}}</li>
+            </ul>
+            <ul><li v-for="(val, key, index) in mySelf">{{key}} --> {{val}} --> {{index}}</li></ul>
+            <br/>
+            <div style="border: 3px dashed purple;">
+                <h3>组件化应用构建测试</h3>
+                <my-first-com></my-first-com>
+                <tan-second-component></tan-second-component>
+                <ul>
+                    <!-- 从父级作用域传值给子组件 -->
+                    <tan-third-component v-for="item in arr" v-bind:superitem="item" v-bind:key="item.id"></tan-third-component>
+                </ul>
+            </div>
+            <ul>
+                由于JavaScript的限制，Vue不能检测以下变动的数组：
+                <li>当你利用索引直接设置一个选项时，例如：vm.items[indexOfItem]=newValue</li>
+                <li>当你修改数组的长度时，例如：vm.items.length=newLength</li>
+            </ul>
+            <div style="border: 3px dashed black;">
+                <h3>如果想把文本插值转成html标签， 使用v-html属性</h3>
+                <div>{{htmlText}}</div>
+                <div v-html="htmlText"></div>
+            </div>
+            <div v-bind:style="customStyle">
+                <input type="checkbox" checked="true" value="11111"/>
+                <input type="checkbox" checked="false" value="222"/>
+                <input type="checkbox" checked />
+                <input type="checkbox" disabled="true"/><input type="checkbox" disabled="false"/>
+                <input disabled="true" value="hhhh"/><input disabled="false" value="输入点啥？">
+                <input type="button" disabled value="点我1111"/>
+                <input type="button" disabled="true" value="点我222"/>
+                <input type="button" disabled="false" value="点我3333"/>
+                <input type="checkbox" v-bind:checked="false"/>
+                <input type="checkbox" v-bind:checked="true"/>
+                <input type="button" value="点我4444" v-bind:disabled="true"/>
+                <input type="button" value="点我555" v-bind:disabled="false"/>
+            </div>
+
+        </div>
+
+    <script type="text/javascript">
+
+        var mySubCom = {
+            template: "<h4>子组件中的子组件</h4>"
+        }
+        var myFirstComponent = { //引用子组件时，可以用-连接字母，也可以用定义的key名
+            template: "<div style='border:1px dashed red;'>组件中的组件：<sub-com>111</sub-com><sub-com2>333</sub-com2><subCom2>444</subCom2></div>",
+            components:{
+                "sub-com": mySubCom,  //-连接的单词，在引用组件时，不能去掉"-"用驼峰式引用
+                subCom2: {
+                    template: "<div style='border: 2px dashed gray; margin: 3px; padding: 5px; display:inline-block;'>subCom2组件</div>"
+                }
+            }
+        }
+
+        //注册可在当前页面的组件
+        Vue.component('tan-second-component', { //key也可以写成tanSecondComponent, 但是在html标签引用该组件的时候，只能用-连接各单词，不能使用驼峰式
+            template: '<div>可在当前页面使用的组件</div>'
+        });
+        //注册当前页面使用的组件，从父级作用域获取数据
+        Vue.component('tan-third-component',{
+            props: ['superitem'], //这里注意，不能用驼峰式key, 驼峰式报错
+            template: '<li>{{superitem.name}} --- {{superitem.book}}</li>'
+        });
+
+        //创建一个vue实例
+        var vueApp = new Vue({
+            el: "#app",
+            data:{
+                message: "Hello world !",
+                changeText: "页面加载" + new Date().toLocaleDateString(),
+                showInfo: true, myCount: 1,
+                btnText: '关闭showInfo',
+                arr:[
+                    {id:1, name: '吴军', book: '浪潮之巅'},
+                    {id:2, name: '司徒正美', book: '司徒正美Code之美'},
+                    {id:3, name: '阮一峰', book: 'ES6标准规范'},
+                    {id:4, name: '吴晓波', book: '腾讯传'},
+                    {id:5, name: '程杰', book:'大话数据结构'}
+                ],
+                mySelf: {
+                    name: '王大锤', age: 18, sign: '千锤百炼出深山，烈火焚烧若等闲；粉身碎骨浑不怕，要留清白在人间！', email: 'dachui@sina.com'
+                },
+                vmNames: ['尤雨溪', '李兴华', '乔布斯', 'aaa', true],
+                htmlText: '<div style="color:red; font-weight:bold;font-size: 30px;text-decoration: underline;">我是div标签</div><h2>我是h2标签</h2>',
+                customStyle: 'display: inline-block; border: 3px dashed red; padding: 5px 10px; color: blue; margin-top: 10px;',
+            },
+            methods: {
+                testOnOff: function(){
+                  if (this.showInfo){
+                      this.showInfo = false;
+                      this.btnText = '打开showInfo';
+                  }
+                  else{
+                      this.showInfo = true;
+                      this.btnText = '关闭showInfo';
+                  }
+                },
+                reverseArr: function(){ //数组倒叙
+                    this.arr.reverse();
+                },
+                clickMe: function(msg){ //传入参数
+                    alert('你点我了：'+ msg);
+                },
+                clickMeTwo: function(msg, event){
+
+                    //现在我们可以访问原声事件对象
+                    if (event) {
+
+                        console.log(event);
+                        console.log(event.target.tagName);
+                        event.preventDefault();
+                    }
+                    alert(msg);
+                }
+            },
+            components: { //key名字不能大写字母
+                "my-first-com": myFirstComponent,  //可以写成：myFirstCom: myFirstComponent
+            }
+        })
+
+
+
+        /*
+        由于 JavaScript 的限制，Vue 不能检测以下变动的数组：
+    当你利用索引直接设置一个项时，例如：vm.items[indexOfItem] = newValue
+    当你修改数组的长度时，例如：vm.items.length = newLength
+
+    举个例子：
+    var vm = new Vue({
+      data: {
+        items: ['a', 'b', 'c']
+      }
+    })
+    vm.items[1] = 'x' // 不是响应性的 （虽然更改了，但是不能马上呈现）
+    vm.items.length = 2 // 不是响应性的
+
+    为了解决第一类问题，以下两种方式都可以实现vm.items[indexOfItem]=newValue相同的效果，同时也将触发状态更新：
+    Vue.set(vm.items, indexOfItem, newValue);
+    vm.items.splice(indexOfItem, 1, newValue);\
+    vm.$set(vm.items, indexOfItem, newValue);
+         */
+        console.log('111', vueApp.vmNames);
+        Vue.set(vueApp.vmNames, 1, '比尔盖茨');
+        console.log('222', vueApp.vmNames);
+        vueApp.vmNames.splice(1,1, '李大霄');
+        console.log('333', vueApp.vmNames);
+        vueApp.$set(vueApp.vmNames, 1, '辛弃疾');
+        console.log('444', vueApp.vmNames);
+
+    </script>
+
+    <div id="app2">
+        <h3>第二个vue实例</h3>
+        <p>
+            <input type="text" v-model="input" placeholder="请输入文本" v-on:input="changeInput"/>&nbsp;&nbsp;
+            <input type="text" v-model="firstName" placeholder="属性变化侦听" v-on:input="changeFirstName" title="侦听属性firstName值变化"/>
+        </p>
+        <p>{{input}}<span v-once>&nbsp;&nbsp;-->v-once不变化：{{input}}</span></p>
+        <p>计算属性：{{reverseInput}}&nbsp;&nbsp; 方法调用：{{reverseInputMethod()}}</p>
+        <p><button v-on:click="clickMe">点我变化</button></p>
+        <ul>
+            <li>每个Vue实例创建初始化过程</li>
+            <li>1、设置数据监听</li>
+            <li>2、编译模板</li>
+            <li>3、将实例挂载打到DOM</li>
+            <li>4、数据变化更新DOM</li>
+            <li>生命周期钩子中的this上下文指向调用它的Vue实例</li>
+            <li>不要在选项属性或回调上使用箭头 函数，比如created:()=>console.log(this)或vm.$watch('a',newVal=>this.myMethod())。因为箭头函数适合父级上下文绑定在一起的，this不会是如你所预期的Vue的实例</li>
+        </ul>
+        <div>
+            <h3>双括号解释html代码</h3>
+            <p class="p1">{{htmlMsg}}</p><p v-html="htmlMsg" class="p2"></p>
+            <p v-bind:id="dynamicId" v-bind:class="dynamicClass + ' tan' + dynamicId" v-bind:disabled="dynamicDis">
+                v-bind:disabled="isBtnDis"; 如果isBtnDis的值是null, undefined或false, 则disabled特性甚至不会被包含在渲染出来的标签中
+            </p>
+        </div>
+        <!--<div>{{str + ',,' + new Date().toLocaleString()}}: 用户定义的全局变量访问不了</div>-->
+        <p><button v-on:click="changeColor" v-bind:class="{red: showRed, blue: showBlue}">点我颜色变化</button></p>
+        <p v-bind:class="[redClass, blueClass]">class和style绑定：数组语法</p>
+        <p v-bind:style="{color:myColor, fontSize: '26px', fontWeight: 500 }">内联样式style写法</p>
+        <p v-bind:style="styleObject">绑定样式对象</p>
+        <p v-bind:style="[styleObject, styleObj2]">绑定多个样式对象（样式合并）</p>
+        <div>
+            <h3>v-if / v-else / v-else-if / v-key / v-show</h3>
+            <p>
+                <button v-on:click="login">切换登录方式保存之前输入内容</button>
+                <input type="text" placeholder="请输入用户名登录" v-if="nameLogin"/>
+                <input type="text" placeholder="请输入邮箱登录" v-else/>
+            </p>
+            <p>
+                <button v-on:click="loginTwo">切换登录方式不保存之前输入内容</button>
+                <input type="text" placeholder="请输入用户名登录" v-if="nameLoginTwo" key="name"/>
+                <input type="text" placeholder="请输入邮箱登录" v-else key="email"/>
+                <span v-show="showOK">v-show = "true"</span><span v-show="showNO">v-show = "false"</span>
+            </p>
+        </div>
+        <ul>
+            测试v-for中使用方法和计算属性
+            <li>v-for中调用方法（结果显示不能这样用）：<span v-for="item in numArrMethod"> {{item}}&nbsp;&&nbsp;</span></li>
+            <li>v-for中调用计算属性(结果显示ok)<span v-for="item in numArrComputed">{{item}}&nbsp;&&nbsp;</span></li>
+        </ul>
+    </div>
+    <script type="text/javascript">
+
+        var str = '这究竟是啥？';
+        var arr1 = ['王大锤', '罗斯福'];
+        var arr2 = ['倚天剑', '屠龙刀']
+        var obj = {
+            input: 'basketball', arr1: arr1, arr2: arr2,
+            htmlMsg: '<span style="color:red; font-size: 30px;">天下武功，唯快不破</span>',
+            dynamicId: 'telId', dynamicClass: 'telClass', dynamicDis: null,
+            firstName: '王', lastName: '大锤', fullName: '王 大锤',
+            showRed: false, showBlue: false, myColor: 'red', redClass: 'red', blueClass: 'blue',
+            styleObject: { color: 'blue', fontSize: '30px', border: '1px dashed gray'},
+            styleObj2: { width: '500px', borderRadius: '6px', boxShadow: '0 0 5px black', padding: '10px' },
+            nameLogin: true, nameLoginTwo: true, showOK: true, showNO: false,
+            numArr: [99, 98, 97, 96, 95, 94, 93, 92, 91, 90],
+        }
+
+        Object.freeze(arr1); //设置阻止修改现有的属性，响应系统无法再追踪变化
+
+        var vm2 = new Vue({
+            el:'#app2',
+            data: obj,
+            methods:{ //方法
+                //文本输入
+                changeInput: function(e){
+                    console.log(e.target);
+                    console.log(this.input);
+
+                    //this.$el 就是document.getElementById('app2'))标签
+                    console.log("this.$el == document.getElementById('#app2') --> ", this.$el==document.getElementById('app2'))
+                    //this === vm2
+                    console.log("this == vm2 --> ", this==vm2)
+                },
+                changeFirstName: function(e){
+                    //在下面的watch中有对firstName属性进行侦听，当firstName变化后，watch中的fistName也会发生变化
+                  this.fistName = e.target.value;
+                },
+                clickMe: function(e){
+                    console.log(e);
+                    this.arr1[0] = '日出东方，唯我不败';
+                    this.arr2[0] = '见花生佛，落叶花开';
+
+                    console.log(this);
+                    console.log(this.$data, this.$el);
+                    console.log('arr1:', arr1);
+                    console.log('arr2: ', arr2);
+                    console.log('obj: ', obj);
+
+                     //日志结果展示：arr1没有变化，arr2有变化。表示arr1被冻结，不能自由修改
+                },
+                //点我颜色变化
+                changeColor: function(){
+                    if (!this.showRed){
+                        this.showRed = true;
+                    }
+                    else if (!this.showBlue){
+                        this.showBlue = true;
+                    }
+                    else{
+                        this.showRed = this.showBlue = false;
+                    }
+                },
+                reverseInputMethod: function(e){
+                    return this.input.split('').reverse().join('')
+                },
+                login: function(){
+                    this.nameLogin = !this.nameLogin;
+                },
+                loginTwo: function(){
+                    this.nameLoginTwo = !this.nameLoginTwo;
+                },
+                numArrMethod: function(){ //测试v-for中使用方法
+
+                    console.log("...v-for中来调用方法了numArrMethod...")
+                    return this.numArr.filter((num)=>{
+
+                        console.log("...num...", num)
+
+                        return num % 2 == 1;
+                    });
+                }
+            },
+            computed: { //计算属性
+                reverseInput: function(){
+                    return this.input.split('').reverse().join('')
+                },
+                fullNameOne: function(){
+                    return this.firstName + ' ' + this.lastName;
+                },
+                //计算属性的getter、setter写法
+                fullNameTwo:{
+                    get: function(){
+                        return this.firstName + ' ' + this.lastName;
+                    },
+                    set: function(newVal){
+                        var names = newVal.split(' ');
+                        this.firstName = names[0];
+                        this.lastName = names[names.length-1];
+                    }
+                    //再次运行vm2.fullNameTwo = '罗 斯福'时，setter会被调用，vm2.firstName 和 vm2.lastName也会相应的被更新
+                },
+                numArrComputed: function(){ //测试v-for中使用计算属性
+                    return this.numArr.filter((num)=>{
+                        return num % 2 == 0;
+                    });
+                }
+            },
+            watch: { //侦听属性
+                firstName: function(newValue, oldValue){
+                    this.fullName = newValue + ' ' + this.lastName;
+                    console.log("oldValue: ", oldValue, ", newValue: ", newValue);
+                },
+                lastName: function(val){
+                    this.fullName + ' ' + val;
+                }
+            }
+        })
+
+        console.log(vm2);
+    </script>
+
+    <div id="app3">
+        <h3>模板语法</h3>
+        <ul>插值
+            <li>文本: 数据绑定最常见的形式就是使用"Mustache"语法(双大括号)的文本插值<br/>
+                v-once指令可以执行一次性地插值，当数据改变时，插值处的内容不会更新
+            </li>
+            <li>原始HTML: 双大括号会将数据解释为普通文本，而非HTML代码。为了输出真正的HTML，需要使用v-html指令</li>
+            <li>
+                特性: Mustache语法不能作用在HTML特性上，遇到这种情况应该使用v-bind指令。<br/>
+                在布尔特性的情况下，他们的存在即暗示为true；如果是disabled特性，当值为null、undefined、false，则disabled特性甚至不会被包含在渲染出来的元素中
+            </li>
+            <li>
+                使用JavaScript表达式: 每个绑定都只能包含单个表达式；模板表达式都被放在沙盒中，只能访问全局变量的一个白名单，如Math和Date。不能访问用户定义的全局变量
+            </li>
+        </ul>
+        <ul>
+            <p>指令: 指令(Directives)是带有v-前缀的特殊特性。指令特性的值预期是单个JavaScript表达式(v-for例外)。<br/>
+            指令的职责是，当表达式的值改变时，将其产生的连带影响，响应式地作用于DOM.
+            </p>
+            <li>
+                <p>
+                    参数: 一些指令能够接收一个“参数”，在指令名称之后以冒号表示。比如，v-bind指令可以用于响应式地更新HTML特性<br/>
+                    另一个例子是v-on指令，它用于监听DOM事件
+                </p>
+            </li>
+            <li>
+                <p>
+                    修饰符: 修饰符(Modifiers)是以半角句号 . 指明的特殊后缀，用于指出一个指令该以特殊方式绑定。<br/>
+                    例如，.prevent修饰符告诉v-on指令 对于触发的事件调用event.preventDefault()<br/>
+                     v-on:submit.prevent="OnSubmit"
+                </p>
+            </li>
+        </ul>
+        <ul>
+            <p>缩写：v-前缀作为一种视觉提示，用来识别模板中Vue特定的特性。对于一些频繁使用到指令，提供了特定简写</p>
+            <li>v-bind简写成: 比如v-bind:href="url" --> :href="url"</li>
+            <li>v-on简写成：比如v-on:click="clickMe" --> @click="clickMe"</li>
+        </ul>
+
+        <br/>
+        <h3>计算属性和侦听器</h3>
+        <ul>计算属性vs方法
+            <li>
+                <p>
+                    计算属性和方法都可以实现同一个结果，然而不同的是计算属性是基于他们的依赖进行缓存的。<br/>
+                    只有相关依赖发生改变时他们才会重新求值。<br/>
+                    相比之下，每当触发重新渲染时，调用方法将总会再次执行函数。<br/>
+                    我们为什么需要缓存？假设我们有一个性能开销比较大的计算属性A，它需要便利一个巨大的数组并做大量的计算。然后我们可能有其他的计算属性依赖于A。<br/>
+                    如果没有缓存，我们将不可避免的多次执行A的getter！ 如果你不希望有缓存，请用方法来替代。
+                </p>
+            </li>
+        </ul>
+        <ul>计算属性vs侦听属性
+            <li>ue提供了一种更通用的方式来观察和响应Vue实例上的数据变动：侦听属性。<br/>
+                当你有一些数据需要随着其他数据变动而变动时，很容易滥用watch。然而通常更好的做法是使用计算属性而不是命令式的
+            </li>
+            <li>
+                <p>
+                    计算属性默认只有getter, 不过在需要时可以提供一个setter
+                </p>
+            </li>
+            <li>
+                <p>
+                    虽然计算属性在大多数情况下更合适，但有时也需要一个自定义的侦听器。这就是为什么Vue通过watch选项提供了一个更通用的方法，来响应数据的变化。<br/>
+                    当数据变化时执行异步或开销较大的操作时，这个方式是最有用的
+                </p>
+            </li>
+        </ul>
+        <ul>v-if vs v-show
+            <li>
+                <p>
+                    v-if是真正的条件渲染，因为它确保在切换过程中条件块内的事件监听和子组件适当地被销毁和重建;<br/>
+                    v-if也是惰性的，如果在初始渲染时条件为假，则什么也不做，直到条件第一次变为真时，才会开始渲染条件。<br/>
+                    相比之下，v-show不管初始条件是什么，元素总是会被渲染，并且只是简单地基于CSS进行切换<br/>
+                    一般来说，v-if有更高的切换开销，而v-show有更高的初始渲染开销。因此，如果需要非常频繁地切换，则使用v-show较好；如果在运行时条件很少改变，则使用v-if好
+                </p>
+            </li>
+        </ul>
+    </div>
+
+    </body>
+</html>

@@ -97,7 +97,7 @@
         .ulFour li:nth-of-type(6) { background-color: blue; transform: rotateY(90deg) translateZ(150px); }
 
 
-        /* 5、设置背景图片 */
+        /* 5、设置背景图片 3D旋转模型 */
         .divFive { perspective: 500px; }
         .ulFive {
             margin: 100px auto; box-sizing: border-box;
@@ -111,11 +111,19 @@
             left: 0; top:0; line-height: 200px;
             text-align: center;
         }
-        .ulFive li img { width: 200px; height: 200px; }
-        .ulFive li:nth-of-type(1) { transform: translateZ(100px) scale(2, 1); }
-        .ulFive li:nth-of-type(2) { transform: rotateX(-180deg) translateZ(100px) scale(2, 1); }
-        .ulFive li:nth-of-type(3) { transform: rotateX(90deg) translateZ(100px) scale(2, 1);}
-        .ulFive li:nth-of-type(4) { transform: rotateX(-90deg) translateZ(100px) scale(2, 1); }
+        .ulFive li:nth-of-type(1) {
+            background: url('../img/star/0.jpg') no-repeat left top / cover;
+            transform: translateZ(100px) scale(2, 1);
+        }
+        .ulFive li:nth-of-type(2) {
+            background: url('../img/star/1.jpg') no-repeat left top / cover;
+            transform: rotateX(-180deg) translateZ(100px) scale(2, 1); }
+        .ulFive li:nth-of-type(3) {
+            background: url('../img/star/2.jpg') no-repeat left top / cover;
+            transform: rotateX(90deg) translateZ(100px) scale(2, 1);}
+        .ulFive li:nth-of-type(4) {
+            background: url('../img/star/3.jpg') no-repeat left top / cover;
+            transform: rotateX(-90deg) translateZ(100px) scale(2, 1); }
 
         @keyframes sport {
             from { transform: rotateX(0deg); }
@@ -131,12 +139,12 @@
         <ul class="ulThree"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul>
         <ul class="ulFour"><li>1</li><li>2</li><li>3</li><li>4</li><li>5</li><li>6</li></ul>
         <div style="clear:both;"></div>
-        <div class="divFive">
+        <div class="divFive">3D旋转
             <ul class="ulFive">
-                <li><img src="img/ad1.jpg"/></li>
-                <li><img src="img/ad2.jpg"/></li>
-                <li><img src="img/ad3.jpg"/></li>
-                <li><img src="img/ad4.jpg"/></li>
+                <li></li>
+                <li></li>
+                <li></li>
+                <li></li>
             </ul>
         </div>
     </div>

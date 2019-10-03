@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>过渡动画 </title>
+    <style type="text/css">
+
+        /** 过渡效果 */
+        .durationClass {
+            height: 50px;
+            width: 100px;
+            background-color: red;
+            /* 设置需要过渡的元素, 多个过度元素用逗号隔开 */
+            transition-property: width, background-color;
+            /* 设置过渡元素的时间 */
+            transition-duration: 3s, 3s;
+            /* 延迟动画时间 */
+            /*transition-delay: 2s;*/
+        }
+        .durationClass:hover{
+            width: 300px;
+            background-color: purple;
+        }
+
+        /* 过渡动画其他元素 */
+        .testUL {
+            padding: 10px 0px;
+            background-color:yellow;
+            width:760px;
+            height: 200px;
+        }
+        .testUL li {
+            width: 60px;
+            height: 30px;
+            background-color: blue;
+            margin: 10px 0px;
+            list-style: none;
+            transition-property: margin-left;
+            transition-duration: 5s;
+        }
+        .testUL:hover li { margin-left: 700px; }
+        .testUL li:nth-child(1) { transition-timing-function: linear; }
+        .testUL li:nth-child(2) { transition-timing-function: ease; }
+        .testUL li:nth-child(3) { transition-timing-function: ease-in;}
+        .testUL li:nth-of-type(4) { transition-timing-function: ease-out; }
+        .testUL li:nth-child(5) { transition-timing-function: ease-in-out; }
+
+        /* 元素动画变大 */
+        .divToBig {
+            float:left;
+            background-color: red;
+            width: 100px; height: 50px;
+            transition-property: width, height, background-color;
+            transition-duration: 5s, 5s, 10s;
+        }
+        .divToBig:hover { width: 500px; height: 300px; background-color:green;}
+
+        /* 元素过渡的简写: transition: 过渡属性 过渡时长 运动速度 延迟时间; */
+        .divFour {
+            float: left; margin-left: 10px;
+            background-color: black;
+            width: 100px; height: 50px;
+            transition: width 5s linear 0s, height 5s linear 0s, background-color 10s linear 0s;
+        }
+        .divFour:hover { width: 500px; height: 300px; background-color:green; }
+
+        /* 元素过渡的另一种简写方法 */
+        .divFive {
+            float:left; margin-left: 10px;
+            background-color: gray;
+            width: 100px; height: 50px;
+            transition: all 5s;
+        }
+        .divFive:hover { width: 500px; height: 300px; background-color:orangered; }
+
+
+        /* 字体变大，高度变高 */
+        .divSix {
+            background-color:orange;
+            width: 880px;
+            text-align: center;
+            margin: 10px;
+            padding: 10px;
+            cursor:pointer;
+        }
+        .divSix span { transition: all 10s; }
+        .divSix:hover span { margin: 0 12px; font-size: 80px; color:blue; }
+
+
+        /* 手风琴效果 */
+        .imgUL{
+            width: 960px;
+            height: 300px;
+            border: 1px solid black;
+            margin: 20px 0px;
+            list-style: none;
+            padding:0px;
+            overflow: hidden;
+        }
+        .imgUL li { float:left; height: 300px; width: 160px; padding:0px; transition: all 0.5s; }
+        .imgUL:hover li{ width: 60px; }
+        .imgUL li:hover { width: 660px; }
+    </style>
+</head>
+<body>
+
+    <h2>过渡元素三要素：</h2>
+    <p>
+        1、过渡效果一定要有属性发生变化，哪个属性需要过渡；<br/>
+        2、过渡效果一定要有过渡时间;<br/>
+    </p>
+    <div class="durationClass"></div>
+    <br/><hr/><br/>
+    <ul class="testUL">
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+        <li></li>
+    </ul>
+    <br/><hr/><br/>
+
+    <!--
+1.过渡连写格式
+transition: 过渡属性 过渡时长 运动速度 延迟时间;
+
+2.过渡连写注意点
+2.1和分开写一样, 如果想给多个属性添加过渡效果也是用逗号隔开即可
+2.2连写的时可以省略后面的两个参数, 因为只要编写了前面的两个参数就已经满足了过渡的三要素
+2.3如果多个属性运动的速度/延迟的时间/持续时间都一样, 那么可以简写为
+transition:all 0s;
+-->
+    <div>
+        <div class="divToBig">div</div>
+        <div class="divFour"></div>
+        <div class="divFive"></div>
+        <div style="clear:both;"></div>
+        <div class="divSix">
+            <span>H</span>
+            <span>e</span>
+            <span>l</span>
+            <span>l</span>
+            <span>o</span>
+            <span>, </span>
+            <span>w</span>
+            <span>o</span>
+            <span>r</span>
+            <span>l</span>
+            <span>d</span>
+        </div>
+        <br/><hr/><br/>
+    </div>
+
+    <div>
+        <h1>手风琴效果</h1>
+        <ul class="imgUL">
+            <li><img src="../img/star/0.jpg" /></li>
+            <li><img src="../img/star/2.jpg" /></li>
+            <li><img src="../img/star/3.jpg" /></li>
+            <li><img src="../img/star/4.jpg" /></li>
+            <li><img src="../img/star/5.jpg" /></li>
+            <li><img src="../img/star/6.jpg" /></li>
+        </ul>
+    </div>
+
+    <div style="width:100%;height:200px;"></div>
+</body>
+</html>

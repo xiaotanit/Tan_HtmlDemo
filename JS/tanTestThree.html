@@ -2,11 +2,262 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>CSS3实现瀑布流</title>
+    <style>
+
+        /* 1、顶部吸顶效果 */
+        #topMenu {
+            width: 1000px; height: 50px; display: flex; align-items: center; background-color: yellowgreen; margin:0;padding:0;
+        }
+        #topMenu li { flex: 1; list-style: none; cursor: pointer; margin:0;padding:0; height: 100%; display: flex; align-items: center; justify-content: center;  }
+        #topMenu li:hover { background-color: #000; color: #fff; font-size: 20px; font-weight: bold; }
+
+
+        /* 2、瀑布流样式 */
+        .main{
+            margin: 50px auto; width: 1080px; min-height: 1024px;
+            box-shadow: 0 0 5px #ccc;
+            padding: 0 20px;
+
+            /*多栏布局 达到瀑布流的效果!!!*/
+            -webkit-column-width: 200px;
+            -moz-column-width: 200px;
+            column-width: 200px;
+        }
+        .main img { width: 200px; margin-top: 10px; }
+
+
+        /* 3、左边菜单吸附效果 */
+        .leftMenu {
+            position: absolute; left: 0; top: 50%; transform: translate(0, -50%);
+            width: 200px; height: 200px;
+        }
+        .leftMenu img { max-width: 100%; max-height: 100%; }
+
+        /* 4、回到顶部 */
+        .backTop {
+            position: fixed; right: 20px; bottom: 20px;  width: 60px; height: 60px; align-items: center; justify-content: center;
+            cursor: pointer; border: 1px solid gray; border-radius: 6px; background-color: #999; display: none;
+        }
+    </style>
 </head>
 <body>
     <div>
         <h1><button onclick="history.go(-2)">返回到第一页</button></h1>
+
+        <div style="width: 1000px; margin: 0 auto;">
+            <h3>1、顶部吸顶效果实现</h3>
+            <div id="atTop" style="width: 100%;">
+                <div id="topImg" style="height: 50px; width: 100%; background: url('../img/star/0.jpg') center/contain;"></div>
+                <ul id="topMenu">
+                    <li>百度</li><li>阿里巴巴</li><li>腾讯</li><li>京东</li><li>苏联电器</li><li>国美电器</li><li>顺丰</li><li>大疆</li>
+                </ul>
+            </div>
+        </div>
+
+        <h3>2、通过CSS3多栏布局来实现瀑布流效果</h3>
+        <div class="main">
+            <img src="../img/star/0.jpg"/><img src="../img/star/1.jpg"/>
+            <img src="../img/star/2.jpg"/><img src="../img/star/3.jpg"/>
+            <img src="../img/star/4.jpg"/><img src="../img/star/5.jpg"/>
+            <img src="../img/star/6.jpg"/><img src="../img/star/7.jpg"/>
+            <img src="../img/star/8.jpg"/><img src="../img/star/9.jpg"/>
+            <img src="../img/star/10.jpg"/><img src="../img/star/11.jpg"/>
+            <img src="../img/star/12.jpg"/><img src="../img/star/13.jpg"/>
+            <img src="../img/star/14.jpg"/><img src="../img/star/15.jpg"/>
+            <img src="../img/star/0.jpg"/><img src="../img/star/1.jpg"/>
+            <img src="../img/star/2.jpg"/><img src="../img/star/3.jpg"/>
+            <img src="../img/star/4.jpg"/><img src="../img/star/5.jpg"/>
+            <img src="../img/star/6.jpg"/><img src="../img/star/7.jpg"/>
+            <img src="../img/star/8.jpg"/><img src="../img/star/9.jpg"/>
+            <img src="../img/star/10.jpg"/><img src="../img/star/11.jpg"/>
+            <img src="../img/star/12.jpg"/><img src="../img/star/13.jpg"/>
+            <img src="../img/star/14.jpg"/><img src="../img/star/15.jpg"/>
+            <img src="../img/star/0.jpg"/><img src="../img/star/1.jpg"/>
+            <img src="../img/star/2.jpg"/><img src="../img/star/3.jpg"/>
+            <img src="../img/star/4.jpg"/><img src="../img/star/5.jpg"/>
+            <img src="../img/star/6.jpg"/><img src="../img/star/7.jpg"/>
+            <img src="../img/star/8.jpg"/><img src="../img/star/9.jpg"/>
+            <img src="../img/star/10.jpg"/><img src="../img/star/11.jpg"/>
+            <img src="../img/star/12.jpg"/><img src="../img/star/13.jpg"/>
+            <img src="../img/star/14.jpg"/><img src="../img/star/15.jpg"/>
+            <img src="../img/star/0.jpg"/><img src="../img/star/1.jpg"/>
+            <img src="../img/star/2.jpg"/><img src="../img/star/3.jpg"/>
+            <img src="../img/star/4.jpg"/><img src="../img/star/5.jpg"/>
+            <img src="../img/star/6.jpg"/><img src="../img/star/7.jpg"/>
+            <img src="../img/star/8.jpg"/><img src="../img/star/9.jpg"/>
+            <img src="../img/star/10.jpg"/><img src="../img/star/11.jpg"/>
+            <img src="../img/star/12.jpg"/><img src="../img/star/13.jpg"/>
+            <img src="../img/star/14.jpg"/><img src="../img/star/15.jpg"/>
+        </div>
+        <script type="text/javascript">
+            window.onload = function(){
+//                window.onscroll = monitorScroll; //监听滚动条
+            }
+
+            //监听滚动条滚动
+            function monitorScroll(){
+                var parentEle = document.getElementsByClassName('main')[0];
+                var boxs = parentEle.getElementsByTagName('img');
+                //获取最后一个盒子的坐标
+                var tmpBox = boxs[boxs.length-1];
+                var doc = document.documentElement||document.body;
+
+                console.log(doc.scrollTop+","+doc.clientTop+","+
+                        doc.offsetTop+","+doc.clientHeight+","+doc.offsetHeight);
+
+                //判断当滚动到底部时，加载更多图片
+                if (tmpBox.offsetTop < doc.scrollTop+doc.clientHeight){
+                    addBox(); //增加盒子
+                }
+            }
+
+            //新添加盒子
+            function addBox(){
+
+                var parentEle = document.getElementsByClassName('main')[0];
+                var imgs = ['0.jpg', '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg',
+                    '6.jpg', '7.jpg', '8.jpg', '9.jpg', '10.jpg', '11.jpg', '12.jpg', '13.jpg'
+                    , '14.jpg', '15.jpg', '16.jpg'];
+
+                for (var i = 0; i < imgs.length;i++){
+                    var box = document.createElement("img");
+                    box.setAttribute('src', '../img/star/' + imgs[i]);
+                    parentEle.appendChild(box);
+                }
+            }
+        </script>
+
+        <!-- 左边吸附标签 -->
+        <div class="leftMenu"><img src="../img/star/0.jpg"/></div>
+        <!-- 4、回到顶部 -->
+        <div class="backTop">回到<br/>顶部</div>
+        <script type="text/javascript">
+            //1、顶部标签
+            var topMenu = document.getElementById('topMenu');
+            var menuOffsetTop = topMenu.offsetTop;
+
+            //2、左边标签
+            var leftMenu = document.getElementsByClassName('leftMenu')[0];
+            var leftMenuTop = leftMenu.offsetTop;
+            var leftBegin = 0, leftEnd = 0, leftTimer = null;
+
+            //3、回到顶部
+            var backTop = document.getElementsByClassName('backTop')[0];
+            var backTopBegin = 0, backTopEnd = 0, backTopTimer = null;
+
+            window.onscroll = function(e){
+
+                //1、顶部吸附效果
+                var scrollY = window.pageYOffset || document.documentElement.scrollTop;
+
+                //表示滚动位置到了菜单栏
+                if (scrollY >= menuOffsetTop){
+                    topMenu.style.position = 'fixed';
+                    topMenu.style.top = '0';
+                }
+                else{
+                    topMenu.style.position = 'static';
+                }
+
+                //2、左边吸附效果
+                clearInterval(leftTimer);
+                leftEnd = leftMenuTop + scrollY;
+                leftTimer = setInterval(function(){
+                    leftBegin += (leftEnd - leftBegin)*0.2;
+                    leftMenu.style.top = leftBegin + 'px';
+
+                    console.log('scrollY: ' + scrollY+ ", leftBegin: " + leftBegin + ", leftEnd: " + leftEnd + ", leftMeTop: ", leftMenuTop);
+
+                    if (Math.round(leftBegin) ==  leftEnd){
+                        clearInterval(leftTimer);
+                    }
+                }, 20)
+
+
+                //3、回到顶部
+                if (scrollY > 100){
+                    backTop.style.display = 'flex';
+                }
+                else{
+                    backTop.style.display = 'none';
+                }
+                backTopBegin = scrollY;
+            }
+
+            //设置backTop的点击事件
+            backTop.onclick = function(){
+
+                clearInterval(backTopTimer);
+
+                backTopTimer = setInterval(function(){
+                    backTopBegin += (backTopEnd - backTopBegin)/20;
+
+                    window.scrollTo(0,backTopBegin); //慢慢移动
+
+                    if (Math.round(backTopBegin) == backTopEnd){
+                        clearInterval(backTopTimer)
+                    }
+                }, 20)
+
+            }
+
+
+            //5、resize的调用
+            var docWidth = client().width; //最开始的值
+            window.onresize = function(e){
+
+                var newW = client().width; //新的值
+
+                if (newW > docWidth*3){
+                    document.body.style.backgroundColor = 'yellow';
+                }
+                else if (newW > docWidth*2){
+                    document.body.style.backgroundColor = 'red';
+                }
+                else if (newW > docWidth*1.5){
+                    document.body.style.backgroundColor = 'blue';
+                }
+                else if (newW > docWidth*0.6){
+                    document.body.style.backgroundColor = 'white';
+                }
+                else if (newW > docWidth * 0.3){
+                    document.body.style.backgroundColor = 'green';
+                }
+                else{
+                    document.body.style.backgroundColor = 'orange';
+                }
+
+                console.log("newW: ", newW + ", ", docWidth)
+            }
+
+
+
+            /**
+             * 获取屏幕的宽度和高度
+             * @returns {*}
+             */
+            function client() {
+                if(window.innerWidth){ // ie9+ 最新的浏览器
+                    return {
+                        width: window.innerWidth,
+                        height: window.innerHeight
+                    }
+                }else if(document.compatMode === "CSS1Compat"){ // W3C
+                    return {
+                        width: document.documentElement.clientWidth,
+                        height: document.documentElement.clientHeight
+                    }
+                }
+
+                return {
+                    width: document.body.clientWidth,
+                    height: document.body.clientHeight
+                }
+            }
+
+        </script>
     </div>
+
 </body>
 </html>

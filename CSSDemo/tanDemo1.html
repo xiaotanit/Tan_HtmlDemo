@@ -33,7 +33,7 @@
     <meta http-equiv=”cache-control” content=”no-cache”>
     <meta http-equiv=”expires” content=”0″>
 
-    <title>HTML块级标签和行级标签</title>
+    <title>HTML块级标签和行级标签和浮动布局定位</title>
     <style type="text/css">
         /*
         HTML标签主要可以分为3大类：
@@ -91,6 +91,39 @@
         #spanIDSeven2 { width: 60%; heigh: 100px; }
 
         .inputEight { border: 1px solid red; display: block; background-color:yellow; width: 50%; }
+
+
+        /**
+        1、默认情况下，所有的网页标签都在标准流布局中，遵循规则：
+            标签排列从上到下，从左到右
+        2、脱离标准流的方法有：
+           1)、浮动：float属性，取值有left和right，即脱离标准流，浮动在父标签的最左边和最右边
+           2)、定位：position属性和left、right、top、bottom属性，position取值有：
+              static: 默认值，没有定位，元素出现在正常的流中
+              absolute: 生成绝对定位的元素，相对于static定位以外的第一个元素进行定位;
+                        元素的位置通过left、top、right、bottom属性进行规定
+              fixed: 生成绝对定位的元素，相对于浏览器窗口进行定位。
+                    元素的位置通过left、top、right、bottom属性进行规定
+              relative: 生成相对定位的元素, 相对于其正常位置进行定位.
+              inherit: 规定应该从父元素继承position属性的值
+        */
+
+        h3 { margin: 0px; }
+
+        /** 1、标签的标准流布局 */
+        .divOne { background-color: yellow; height: 80px; }
+        .divOne div { background-color: orange; }
+        .divOne span { background-color: red; }
+
+
+        /** 2、标签的浮动float */
+        .divTwo { background-color: yellow; height: 260px; }
+        .divTwoLeft { float:left; background-color: orange; }
+        .divTwoNormal { background-color: yellowgreen; }
+        .divTwoClear { clear: both; background-color: lightgray; } /** 清除浮动 */
+        .divTwo span { background-color: red; margin: 10px; }
+        .spanTwoRight { float: right; }
+
     </style>
 </head>
 <body>
@@ -144,6 +177,36 @@
         <h3>行内标签设置block</h3>
         <input class="inputEight" />&nbsp;
         <input class="inputEight" />
+    </div>
+
+
+    <div class="content">
+        <h3>1、标签的标准流布局</h3>
+        <div class="divOne">
+            <div>div111</div>
+            <div>div222</div>
+            <span>span111</span>
+            <span>span222</span>
+        </div>
+        <hr/><br/>
+
+        <h3>2、float浮动：任何类型标签浮动后都变成了行内-块级标签</h3>
+        <div class="divTwo">
+            <div class="divTwoLeft">div111左浮动后变成了行内块级标签</div>
+            <div class="divTwoNormal">div222不浮动</div>
+            <div class="divTwoClear">div333清除浮动</div>
+            <div class="divTwoLeft" style="width: 40%;">div444左浮动，设置宽40%</div>
+            <div class="divTwoNormal">div555不浮动</div>
+            <div class="divTwoClear">div666清除浮动</div>
+            <div class="divTwoLeft" style="width: 40%;">div777左浮动，设置宽40%</div>
+            <div class="divTwoNormal" style="width: 30%;">div888不浮动，设置宽度30%</div>
+            <div class="divTwoClear">div999清除浮动</div>
+            <span class="spanTwoRight" style="width: 30%; height: 80px;">span111右浮动,变成了行内块级标签， 宽30%, 高80px;</span>
+            <span class="spanTwoRight">span222右浮动</span>
+            <span>span不浮动333</span>
+            <span>span不浮动444</span>
+        </div>
+        <hr/><br/>
     </div>
 </body>
 </html>

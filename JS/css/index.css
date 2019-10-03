@@ -1,0 +1,318 @@
+.pEle { display: inline-block; margin-right: 20px; padding:0;margin-top:0;margin-bottom:0; }
+.nav_div { line-height: 30px; }
+
+/* tab切换样式 */
+.tab-main{ margin: 20px auto; width: 800px; height: 160px; border: 1px solid #999; }
+.tab-menu{
+    display: flex; align-items: center; background-color: #999; height: 40px;
+    cursor: pointer;
+}
+.tab-menu span {
+    flex: 1; height: 40px;
+    display: flex; justify-content: center; align-items: center;
+}
+.span-hover { background-color: #fff; color: goldenrod; font-size: 24px; }
+.tab-list { height: 120px; width: 100%; display: flex; justify-content: center; align-items: center; }
+.tab-list .tab-item { display: none; }
+.tab-list .tab-item:nth-child(1) { display: block; }
+
+/* 时钟样式 */
+.clock-main{
+    width: 300px; height: 300px; margin: 20px auto;
+    background: url('../../img/other/clock.jpg') no-repeat center center / 300px 300px;
+    position: relative;
+}
+.clock-main img {
+    width: 15px; height: 300px;
+    position: absolute; top: 50%; left: 50%; margin-top: -150px; margin-left: -7.5px;
+}
+
+/* 十、演示长图移动 */
+.interval-main{
+    width:750px; height: 300px; border: 1px dashed gray;
+    overflow: hidden; margin: 20px auto; position: relative;
+}
+.interval-main img { position:absolute; left: 0; top: 0; }
+
+/* 十一、淘宝轮播 */
+.auto-move { width: 800px; margin: 10px auto; }
+.auto-move ul{
+    display: flex; width: 120px; height: 300px; margin: 0; padding:0;
+    list-style: none; border: 1px solid gray;
+    flex-direction: column; float: left;
+}
+.auto-move ul li {
+    flex: 1; margin: 0;
+    display: flex; align-items: center; justify-content: center;
+}
+.selected-li { background-color: black; color: #fff; font-size: 20px; font-weight: bold; cursor: pointer; }
+.auto-move .move-mid {
+    display: flex; width: 360px; height: 300px; float: left;
+    align-items: center; justify-content: center;
+}
+.move-mid img { max-height: 100%; max-width: 100%; }
+
+
+/* 十二、监听鼠标变化样式  */
+.super12{ width: 2000px; height: 360px; display: flex; border: 2px dashed red; padding: 10px;  }
+.super12 > div {
+    width: 560px; height: 300px; padding: 20px; display: flex; flex-direction: column; justify-content: center; border: 10px dashed black;
+}
+.super12 > div:nth-last-child(1) { background-color: yellow; }
+.super12 > div:nth-of-type(2) { background-color: #a6e1ec; border-color: red; }
+.super12 > div:nth-last-child(3) { background-color: #ffffcc; border-color: blue; }
+.super12 .super12_three { overflow: scroll; }
+.super12 .super12_three img { width: 900px; margin:0;padding:0; }
+#showInfo{
+    position: fixed; top: 20px; right: 20px; width: 600px; height: 200px; display: none; align-items: center; padding-left: 30px;
+    background-color: #fff; z-index: 99; border: 5px dashed gray; color: #666;
+}
+#showInfo #showInfoClose {
+    position: absolute; left: 0; top: 0; width: 30px; height: 30px; border-radius: 30px;
+    background-color: black; color: #fff; line-height: 30px; cursor: pointer; text-align: center; font-size: 20px;
+}
+
+
+/* 放大镜样式 */
+.magnifyGlass { margin-top: 20px; margin-left: 20px; width: 1200px; height: 600px; position: relative; }
+.glassCurrent {
+    width: 300px; height: 300px; border: 1px solid gray; box-sizing: border-box; position: relative;
+    display: flex; justify-content: center; align-items: center; cursor: move;
+}
+.glassCurrent img { max-width: 100%; max-height: 100%; }
+.glassCurrent .mask {
+    position: absolute; left: 0; top: 0; display: none; width: 50px; height: 50px;
+    background-color: yellow; opacity: 0.6;
+}
+.mask .cur_icon {
+    display: inline-block; width: 5px; height: 5px;
+    background-color: red; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); border-radius: 5px;
+}
+.glassList { width: 100%; height: 70px; margin-top: 10px; }
+.glassList img { max-width: 70px; max-height: 70px; cursor: pointer; }
+/* 右边大图 */
+.glassBig {
+    display: none; width: 600px; height: 600px;
+    position: absolute; left: 320px; top: 0; border: 1px solid gray; box-sizing: border-box; overflow: hidden;
+}
+/* 设置图片水平竖直居中 */
+.glassBig img { position: absolute; border: 1px dashed red; }
+.glassBig .big_icon {
+    display: inline-block; width: 10px; height: 10px; background-color: red;
+    border-radius: 10px; position: absolute; left: 50%;top:50%; transform: translate(-50%,-50%);
+}
+
+
+/* 放大镜第二套环境 */
+.glassContainer { position: relative; width: 1200px; height: 600px; }
+#glassCur {
+    width: 300px; height: 300px; border: 1px solid gray; box-sizing: border-box;
+    position: relative; cursor: move;
+    background: url('../../img/star/4.jpg') no-repeat center/contain;
+}
+#glassCur #glassMask {
+    display: inline-block; width: 50px; height: 50px;
+    position: absolute; background-color: yellow; opacity:0.6;
+}
+#glassMask span {
+    display: inline-block; width: 5px; height: 5px; border-radius: 5px; background-color: red;
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+}
+#glassSmallList { width: 100%; height: 70px; margin-top: 10px; }
+#glassSmallList img { max-width: 70px; max-height: 70px; cursor: pointer; }
+#glassBigEle {
+    display:none; width: 600px; height: 600px; position: absolute;
+    left: 320px; top: 0; border: 1px solid gray; box-sizing: border-box; overflow: hidden;
+}
+#glassBigEle img { position: absolute; border: 1px dashed red; }
+#glassBigEle #glassBigIcon { display: inline-block; width: 10px; height: 10px; background-color: red;
+    border-radius: 10px; position: absolute; left: 50%;top:50%; transform: translate(-50%,-50%);
+}
+#glassHide { position: absolute; top: -9999px; left: -9999px; width: 300px; height: 300px; }
+#glassHide img { max-width: 100%; max-height: 100%; }
+
+
+/* 放大镜第三套样式 */
+.rectContainer { position: relative; width: 1200px; height: 600px; }
+.rectCur {
+    width: 300px; height: 300px; border: 1px solid gray; box-sizing: border-box;
+    position: relative; cursor: move; background: url('../../img/temp/1.jpg') no-repeat center/cover;
+}
+.rectCur .rectMask { display: inline-block; width: 50px; height: 50px; position: absolute; background-color: yellow; opacity:0.6;}
+.rectMask span {
+    display: inline-block; width: 5px; height: 5px; border-radius: 5px; background-color: red;
+    position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%);
+}
+.rectList { width: 100%; height: 70px; margin-top: 10px; }
+.rectList img { max-width: 70px; max-height: 70px; cursor: pointer; }
+.rectBig {
+    display:none; width: 600px; height: 600px; position: absolute;
+    left: 320px; top: 0; border: 1px solid gray; box-sizing: border-box; overflow: hidden;
+}
+.rectBig img { position: absolute; border: 1px dashed red; }
+.rectBig .rectBigIcon { display: inline-block; width: 10px; height: 10px; background-color: red;
+    border-radius: 10px; position: absolute; left: 50%;top:50%; transform: translate(-50%,-50%);
+}
+
+/* 鼠标移动红点跟随移动样式 */
+.redCircle{
+    width: 300px; height: 300px; border: 1px dashed red; cursor: move;position: absolute; top: 0; left: 960px;
+    background: url('../../img/star/1.jpg') no-repeat center center / contain;
+}
+.redCircle img { max-width: 100%; max-height: 100%; position: absolute; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.redCircle .redCircleMask {
+    display: inline-block; width: 50px; height: 50px; background-color: red; border-radius: 50px; position: absolute;
+}
+
+
+/* 十六、进度条 */
+.progressBar { width: 1000px; height: 30px; line-height: 30px; position: relative; margin-left: 30px; }
+.progressMain { display: inline-block; position: relative; width: 800px; height: 100%; background-color: #ccc; border-radius: 8px; }
+.progressMain .progressItem {
+    position: relative; width: 0px; height: 100%; background-color: orange; border-radius: 8px;
+}
+.progressMain .progressMask {
+    position: absolute; top: -10px; left: 0; width: 30px; height: 50px; border-radius: 8px; background-color: orange; cursor: pointer;
+}
+.progressNum { display: inline-block; margin-left: 20px; line-height: 30px; }
+
+
+/* 十七、商品进度条特效展示 */
+.progressGoodsMain {
+    width: 800px; height: 200px; border: 1px solid gray; box-sizing: border-box; background-color: #f9f9f9; overflow: hidden; position: relative;
+}
+.proGoodsList { position: relative; height: 150px; white-space:nowrap; margin: 10px auto; }
+.proGoodsList img { width: auto; height: 100%; margin: 0 10px; padding:0; }
+.proGoodsBottom { width: 100%; height: 30px; background-color: #666; position: relative; }
+.proGoodsMask {
+    width: 200px; height: 100%; background-color: orange; border-radius: 30px; cursor: pointer; position: absolute; top: 0; left: 0;
+}
+
+/* 滚动条属性滚动展示 */
+.goodsListTwo { width: 800px; height: 150px; white-space: nowrap; overflow: scroll; }
+.goodsListTwo img { width: auto; height: 150px; margin: 0 10px; padding:0; }
+
+/* 十八、导航菜单吸顶效果 */
+#webMenu {
+    diplay: flex; align-items: center; border: 1px solid gray; background-color: #000;
+}
+#webMenu li {
+    list-style: none; height: 100%; flex:1; margin:0; padding: 0; display: flex; justify-content: center; align-items: center; cursor: pointer;
+}
+#webMenu li:hover{
+    font-size: 20px; background-color: red; font-weight: bold; transition: all 1s;
+}
+#webMenu li a, #webMenu li a:hover { text-decoration: none; color: #fff; }
+
+
+/* 十九、选中字符串分享 */
+#divNineteen{ position: relative; }
+.wordShare { margin-left: 100px; width: 300px; height: auto; }
+.selectWord { position: absolute; width: 300px; height: auto; border: 1px dashed red; background-color: yellow; display: none; }
+.shareBtn { display: none; position: absolute; width: 120px; height: 30px; line-height: 30px; background-color: black; color: #fff; text-align: center; cursor: pointer; }
+
+
+/* 二十一、无限轮播 */
+#lunBo { position: relative; width:600px; height: 320px; border: 1px solid gray; overflow: hidden; }
+#lunBo #lunBoList {
+    position: absolute; top:10px; left: 0; width: auto; height: 300px; margin:0; padding:0;
+    white-space: nowrap; display: flex;
+}
+#lunBoList li{ list-style: none; width: 600px; height: 100%; margin:0;padding:0; }
+#lunBoList li img { width: 600px; height: 300px; object-fit: cover;}
+#lunBoIcon { position: absolute; bottom: 10px; right: 20px; display: flex; }
+#lunBoIcon li {
+    list-style: none; width: 20px; height: 20px; background-color: black; margin-left: 10px;
+    border-radius: 20px;
+}
+#lunBoIcon li.current { background-color: gold; }
+
+
+/* 22、css样式获取 */
+.cssBox{ height: 100px; line-height: 100px; background-color: green; border: 2px solid black;font-size: 20px; padding: 5px 10px; margin: 12px; }
+
+/* 23、函数封装测试 */
+.box23 {
+    position: absolute; left:0; top:0;width: 100px; height: 100px; background-color: green; text-align: center; border: 3px solid black;
+    display: flex; justify-content: center; align-items: center; flex-direction: column;
+}
+
+/* 24、联动效果 */
+#box24 {
+    width: 300px; height: 400px; position: absolute; top: 30px; left: 0;
+    background: url('../../img/star/15.jpg') no-repeat left top / cover;
+}
+#box24 #box24close {
+    display: inline-block; width: 50px; height: 50px; line-height: 50px;
+    position: absolute; right: 10px; top: 10px; border: 1px solid red;
+    cursor: pointer; text-align: center; font-size: 30px; font-weight: bold;
+}
+
+
+/* 25、网易云音乐 */
+#box25ul { margin:0;padding:0; position: relative; border: 1px solid gray; width: 908px; height: 40px; overflow: hidden; }
+#box25ul li {
+    list-style: none; float :left; background: url(../../img/other/music.png) no-repeat 0 0;
+    width: 100px; height: 40px; line-height: 40px; text-align: center; border-right: 1px dashed black;
+    cursor: pointer; position: relative;
+}
+#box25ul li:nth-of-type(9) { border-right: none; }
+#box25ul li a, #box25ul li a:hover {
+    text-decoration: none; color: green; display: inline-block; width: 100%; height: 100%;
+}
+#box25ul li .mask {
+    position: absolute; left: 0; top:40px; width: 100%; height: 100%; background-color: #999; opacity: 0.6; z-index: -1;
+}
+
+
+/* 26、网易轮播图 */
+#box26{ position: relative; overflow: hidden; width: 600px; height: 300px; cursor: pointer; }
+#box26main {
+    position: relative; height: 100%; width: auto; white-space: nowrap;
+}
+#box26main a { position: absolute;left:600px;top:0; display: inline-block; width: 600px; height: 300px; margin:0;padding:0; }
+#box26main a img { width: 100%; height: 100%; object-fit: cover; margin:0;padding:0;  }
+#box26arrow { position: absolute; width: 100%; height: 40px; top: 50%; margin-top: -20px; }
+#box26arrow span {
+    display: inline-block; width: 40px; height: 40px; color: #fff; font-size: 50px; font-weight: bold;
+    position: absolute; top: 50%; margin-top: -20px;
+}
+.box26leftArrow { left: 20px; }
+.box26rightArrow { right: 20px; }
+#box26pointer { position: absolute; right: 10px; bottom: 20px; height: 8px; }
+#box26pointer span { display: inline-block; width: 30px; height: 8px; background-color: gray; margin-left: 5px; }
+#box26pointer .current { background-color: #0c8ed9; }
+
+
+/* 27、旋转木马 */
+#box27 { position: relative; background-color: black; }
+#box27main { position: relative; width: 1200px; height: 400px; margin: 0 auto; }
+#box27main li {
+    position: absolute; list-style: none; width: 500px; height: 200px;
+}
+#box27main li:nth-of-type(1){
+    background: url(../../img/star/3.jpg) no-repeat left top / cover;
+}
+#box27main li:nth-of-type(2){
+    background: url(../../img/star/4.jpg) no-repeat left top / cover;
+}
+#box27main li:nth-of-type(3){
+    background: url(../../img/star/5.jpg) no-repeat left top / cover;
+}
+#box27main li:nth-of-type(4){
+    background: url(../../img/star/6.jpg) no-repeat left top / cover;
+}
+#box27main li:nth-last-child(1){
+    background: url(../../img/star/7.jpg) no-repeat left top / cover;
+}
+#box27arrow {
+    position: absolute; left: 0; top: 180px; font-size: 80px; font-weight: bold;
+    width: 1200px; z-index: 99; opacity: 0.2; cursor: pointer; color: red;
+}
+#box27arrow .box27left { position: absolute; left:300px; top: 0; }
+#box27arrow .box27right { position: absolute; right:220px; top: 0; }
+
+
+/* 28、闭包应用：左右移动 */
+#box28 { display: flex; width: 100%; height: 50px; justify-content: center; align-items: center; }
+#box28 span { width: 80px; height: 50px; background-color: black; color: #fff; font-size: 30px; line-height: 50px; margin-right: 20px; cursor: pointer; text-align: center; }

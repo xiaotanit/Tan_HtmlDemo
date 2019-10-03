@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8"/>
+    <title>Vue - 第二篇</title>
+    <script type="text/javascript" src="js/vue.js"></script>
+    <style type="text/css">
+        .title { color: red; font-weight: 800; font-size: 30px; line-height: 40px; }
+        .classItem > div { display: inline-block; margin: 10px; }
+        .classZero { color: gray; font-style:italic; }
+        .classOne { padding: 10px; font-weight: 800; border: 3px dashed red; color: blue; font-size: 20px; }
+        .classTwo { font-size: 30px; border: 5px solid green; box-shadow: 10px 10px 8px black; text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div id="app">
+        <div>1、Class和Style的绑定</div>
+        <div class="classItem">
+            <div class="classZero" :class="{classOne: classObj.isOK, 'classTwo': classObj.isNO}">纸上得来终觉浅，绝知此事要躬行。</div>
+            <div class="classZero" :class="{'classOne': classObj.isNo, 'classTwo': classObj.isOK}">宝剑锋从磨砺出，梅花香自苦寒来。</div>
+            <div class="classZero" :class="classObj2">书山有路勤为径，学海无涯苦作舟。</div>
+            <div :class="classObj3">天生我材必有用，千金散尽还复来。</div>
+            <div :class="[classObj3[0], classObj3[1]]">数风流人物，还看今朝。</div>
+            <div :style="{fontSize: styleObj.fontSize, border: styleObj['border-bottom']}">
+                但使龙城飞将在，不教胡马度阴山
+            </div>
+            <div :style="styleObj">粉骨碎身浑不怕，要留清白在人间。</div>
+            <div :style="[styleObj, styleObj2]">内联样式的数组语法</div>
+        </div>
+    </div>
+    <script type="text/javascript">
+        var vm = new Vue({
+            el: "#app",
+            data:{
+                classObj: { isOK: true, isNO: false }, //class对象语法
+                classObj2: { classOne: true, classTwo: true }, //class的对象语法2
+                classObj3: ['classOne', 'classTwo'],   //class的数组语法
+                styleObj: { fontSize: '50px', 'border-bottom': '8px dashed purple', color: 'red' }, //内联样式的对象语法
+                styleObj2: { borderLeft: '3px solid red', 'border-right':'5px solid green', fontStyle: 'italic' }, //内联样式的对象语法
+            },
+        });
+    </script>
+</body>
+</html>

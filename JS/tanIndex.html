@@ -1,0 +1,1407 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>测试DOM对象</title>
+    <link rel="stylesheet" type="text/css" href="./css/index.css"/>
+</head>
+<body>
+    <div id="container">
+        <div>
+            <div class="nav_div"><a href="#divOne">一、JS的内置对</a></div>
+            <div class="nav_div"><a href="#divTwo">二、js的window对象测试</a></div>
+            <div class="nav_div"><a href="#divThree">三、window之history对象</a></div>
+            <div class="nav_div"><a href="#divFour">四、window之location对象</a></div>
+            <div class="nav_div"><a href="#divFive">五、window之screen对象: 注意屏幕高度和浏览器高度的区别，还有文档页面的高度的区别</a></div>
+            <div class="nav_div"><a href="#divSix">六、限制文本框输入为数字，且最多输入2位小数</a></div>
+            <div class="nav_div"><a href="#divSeven">七、js操作transform</a></div>
+            <div class="nav_div"><a href="#divEight">八、Tab选项卡</a></div>
+            <div class="nav_div"><a href="#divNine">九、时钟器setInterval</a></div>
+            <div class="nav_div"><a href="#divTen">十、防止定时器重复累加</a></div>
+            <div class="nav_div"><a href="#divEleven">十一、仿淘宝轮播</a></div>
+            <div class="nav_div"><a href="#divTwelve">十二、监听鼠标移动（显示鼠标坐标变化）</a></div>
+            <div class="nav_div"><a href="#divThirteen">十三、放大镜效果(长宽不等图片磨片容易闪烁)</a></div>
+            <div class="nav_div"><a href="#divFourteen">十四、放大镜效果（二）（长宽不等图片也能放大）</a></div>
+            <div class="nav_div"><a href="#divFiveteen">十五、放大镜效果（三）（针对正方形图片）</a></div>
+            <div class="nav_div"><a href="#divSixteen">十六、进度条</a></div>
+            <div class="nav_div"><a href="#divSeventeen">十七、商品特效展示</a></div>
+            <div class="nav_div"><a href="#divEightteen">十八、菜单吸顶效果</a></div>
+            <div class="nav_div"><a href="#divNineteen">十九、选中文字分享</a></div>
+            <div class="nav_div"><a href="#divTwenty">二十、移动动画</a></div>
+            <div class="nav_div"><a href="#divTwentyOne">二十一、无限轮播</a></div>
+            <div class="nav_div"><a href="#divTwentyTwo">二十二、获取标签CSS属性</a></div>
+            <div class="nav_div"><a href="#divTwentyThree">二十三、函数封装实战</a></div>
+            <div class="nav_div"><a href="#divTwentyFour">二十四、联动效果</a></div>
+            <div class="nav_div"><a href="#divTwentyFive">二十五、网易云音乐</a></div>
+            <div class="nav_div"><a href="#divTwentySix">二十六、网易轮播图</a></div>
+            <div class="nav_div"><a href="#divTwentySeven">二十七、旋转木马</a></div>
+            <div class="nav_div"><a href="#divTwentyEight">二十八、闭包应用：左右移动</a></div>
+        </div>
+        <div class="super-item super-one" id="divOne">
+            <h1>一、JS的内置对象</h1>
+            <p class="pEle" id="pID1">第一个P标签</p>
+            <p class="pEle" id="pID2">第2个P标签哈哈</p>
+            <p class="pEle" name="pName" id="pID3">第3个P标签呵呵呵</p>
+            <p class="pEle" name="pName" data-name="属性值888">第四个P标签呼呼呼呼</p>
+            <p id="superP">
+                <button onclick="getById()">根据id获取标签</button>
+                <button onclick="getByClassName()">根据类名获取标签</button>
+                <button onclick="getByTagName()">根据标签名获取标签</button>
+                <button onclick="getEleAttribute()">获取标签属性</button>
+                <button onclick="createEle()">创建标签</button>
+                <button onclick="testNode()">节点测试node</button>
+                <button onclick="getOffset()">获取offset信息</button>
+            </p>
+            <div id="newDiv"></div>
+            <script type="text/javascript">
+                //根据id获取标签
+                function getById(){
+                    var ele = document.getElementById('pID1');
+
+                    alert('根据id获取的标签对象返回一个对象，文本内容是：'+ele.innerText);
+                }
+                //根据类名获取标签
+                function getByClassName(){
+                    var eles = document.getElementsByClassName('pEle');
+
+                    alert('根据类名返回的对象是一个数组：' + typeof(eles) + ", \n" +
+                            '该数组共有对象多少个：' + eles.length + ", \n" +
+                            '标签数组中第二个的文本内容为：' + (eles[1]).innerText);
+                }
+                //根据标签名获取标签
+                function getByTagName(){
+                    var eles = document.getElementsByTagName('p');
+
+                    alert('根据标签名获取的对象是一个数组，长度为：' + eles.length + ', \n' +
+                            '数组中第三个的文本为：' + (eles[2]).innerHTML);
+                }
+                //获取标签属性
+                function getEleAttribute(){
+                    //根据name属性来获取标签，返回也是一个对象
+                    var eles = document.getElementsByName('pName');
+                    var obj = eles[eles.length-1]; //获取最后一个标签
+                    var attr = obj.getAttribute('data-name'); //获取标签中data-name属性的值
+
+                    alert('根据name属性返回的对象也是一个数组，长度为：' + eles.length + ", \n" +
+                            '数组中最后一个对象的data-name属性值为：' + attr);
+
+                    alert('修改根据name属性获取的第一个元素的文本内容值，和最后一个的属性值');
+                    obj.setAttribute('data-name', 'How do you do !');
+                    (eles[0]).innerHTML = "<h1>倚天屠龙，号令群雄；良辰不出，谁与争锋？</h1>";
+                }
+                //创建标签
+                function createEle(){
+                    //1、创建一个tabl标签
+                    var table = document.createElement('table');
+                    var tr = document.createElement('tr');
+
+                    tr.innerHTML = '<th>名字</th><th>年龄</th><th>邮箱</th>';
+                    table.appendChild(tr); //添加子标签
+                    table.setAttribute('class', 'tableOne'); //设置class属性
+                    table.setAttribute('border', 1);
+                    table.setAttribute('cellspacing', 0); //设置边框空隙为0
+
+                    var tr2 = document.createElement('tr');
+                    tr2.innerHTML = '<td>王大锤</td><td>28</td><td>dachui@sina.com</td>';
+                    var tr3 = document.createElement('tr');
+                    tr3.innerHTML = '<td>罗小虎</td><td>32</td><td>xiaohu@163.com</td>';
+
+                    table.appendChild(tr2);
+                    table.insertBefore(tr3, tr2); //将tr3插入在tr2前面
+
+                    document.getElementById('newDiv').appendChild(table);
+
+                    alert('再添加一个按钮');
+                    var btn = document.createElement('button');
+                    btn.setAttribute('onclick', 'alert("点我点我，哈哈哈");');
+                    btn.setAttribute('value', '天地之始');
+                    btn.name = '万物之母'; //设置属性
+                    btn.value = '无为而治';  //会覆盖setAttribute属性
+                    btn.innerText = "点我点我";
+                    document.getElementById('superP').appendChild(btn);
+
+
+                    alert('table有几个子节点：' + table.childNodes.length + ", \n"+
+                            '第一个子元素的子标签是：' + (table.childNodes[0]).innerHTML);
+                }
+
+                //节点测试
+                function testNode(){
+                    var ele = document.getElementById('superP');
+
+                    var subNodes = ele.childNodes; //获取ele的所有子节点
+                    var parentNode = ele.parentNode; //获取父节点
+
+                    alert('id为superP的标签有子节点多少个：' + subNodes.length + ", \n" +
+                            '该标签的父节点文本：' + parentNode.innerText);
+
+                    console.log(ele.children);
+                }
+
+                //获取标签offset信息
+                function getOffset(){
+                    //获取文档标签的高度和宽度
+                    var doc = document.documentElement;
+                    var body = document.body;
+
+                    alert('documentElement标签的offsetWidth: ' + doc.offsetWidth + ", \n" +
+                            'offsetHeight: ' + doc.offsetHeight + ", \n" +
+                            'offsetTop: ' + doc.offsetTop + ", \n" +
+                            'offsetLeft: ' + doc.offsetLeft) ;
+
+                    alert('body标签的offsetWidth: ' + body.offsetWidth + ", \n" +
+                            'offsetHeight: ' + body.offsetHeight + ", \n" +
+                            'offsetTop: ' + body.offsetTop + ", \n" +
+                            'offsetLeft: ' + body.offsetLeft) ;
+                }
+            </script>
+        </div>
+        <div class="super-two">
+            <h3 id="divTwo">二、js的window对象测试</h3>
+            <p>
+                <button onclick="testBrowserInfo()">浏览器宽高</button>
+                <button onclick="windowOpen()">window.open直接打开</button>
+                <button onclick="windowOpen2()">window.open设置打开的参数</button>
+                <button onclick="windowClose()">window.close</button>
+            </p>
+            <hr/><br/>
+            <h3 id="time">计时器</h3><h3 id="time2"></h3>
+            <p>
+                <button onclick="startMyInterval()">调用setInterval</button>
+                <button onclick="stopMyInterval()">调用stopInterval</button>
+                <button onclick="startSetTimeout()">调用setTimeout</button>
+                <button onclick="stopSetTimeout()">调用stopTimeout</button>
+            </p>
+            <script type="text/javascript">
+                /*
+                 说明：window对象是BOM的核心，window对象指当前的浏览器窗口
+                 所有的JavaScript全局对象、函数以及变量均自动成为window对象的成员
+                 全局变量是window对象的属性， 全局函数是window对象的方法；
+                 HTML DOM的document也是window对象的属性之一
+
+                 window.innerHeight : 浏览器窗口的内部高度
+                 window.innerWidth : 浏览器窗口的内部宽度
+                 window.open() : 打开新窗口
+                 window.close() : 关闭当前窗口
+                 */
+                function testBrowserInfo(){
+                    alert('浏览器宽度：' + window.innerWidth + ", 高度：" + innerHeight);
+                }
+                //打开浏览器页面
+                function windowOpen(){
+                    window.open('tanJSOne.html');
+                    window.open('http://cnblogs.com/');
+                }
+                //打开页面添加参数
+                function windowOpen2(){
+                    window.open('tanJSOne.html', 'tempname', 'width=300, height=200, top=100, left=100, toolbar=no,menubar=no');
+//                window.open('tanJSOne.html', 'testOne', 'width=300, height=100, top=500, left=500, toolbar=no,menubar=no');
+                }
+                function windowClose(){
+                    if (window.confirm('确认要关闭页面吗？')){
+                        window.close();
+                    }
+                }
+
+                /*
+                 setInterval(func, time): 每隔time毫秒之后调用函数func
+                 setTimeout(func, time) : time毫秒之后调用函数func
+                 clearInterval(intervalName) : 清除setInterval计时器
+                 clearTimeout(timeoutName) : 清除setTimeout计时器
+                 */
+                var myInterval;
+                function startMyInterval(){
+
+                    if (myInterval) clearInterval(myInterval);
+
+                    //设置每秒钟执行一次testInterval函数
+                    myInterval = setInterval(testInterval, 1000);
+                }
+                function testInterval(){
+                    var obj = document.getElementById('time');
+
+                    var today = new Date();
+                    obj.innerText = (1900 + today.getYear()) + "-" + (today.getMonth()+1) + "-"
+                            + today.getDate()
+                            +' ' + today.getHours() + ":" + today.getMinutes() + ":" +
+                            today.getSeconds();
+                }
+                //停止调用myInterval
+                function stopMyInterval(){
+                    clearInterval(myInterval);
+                    myInterval = null;
+                }
+
+                //倒计时：多少毫秒之后执行方法
+                var myTimeout;
+                function startSetTimeout(){
+
+                    if (myTimeout) stopSetTimeout();
+
+                    myTimeout = setTimeout(testTimeout, 1000); //1秒之后执行这个方法
+                }
+                function testTimeout(){
+                    var obj = document.getElementById('time2');
+
+                    var today = new Date();
+                    obj.innerHTML = "<div style='color:red'>" + (1900 + today.getYear()) + "-" + (today.getMonth()+1) + "-"
+                            + today.getDate()
+                            +' ' + today.getHours() + ":" + today.getMinutes()
+                            + ":" + today.getSeconds() + "</div>";
+                    startSetTimeout(); //
+                }
+                function stopSetTimeout(){
+                    clearTimeout(myTimeout);
+                    myTimeout = null;
+                }
+            </script>
+        </div>
+        <div class="super-item super-three">_
+            <h3 id="divThree">三、window之history对象</h3>
+            <!--
+            history.back(); //返回到url是上一页
+            history.forward(); //跳转到url的下一页
+            history.go();  //返回到第几页：history.go(-1) == history.back() , history.go(-2) 返回到上上页
+            -->
+            <h2><a href="tanJSOne.html">跳转到tanJSOne.html页面</a></h2>
+        </div>
+        <div class="super-item super-four">
+            <h3 id="divFour">四、window之location对象</h3>
+            <button onclick="testLocation()">测试location对象</button>
+            <button onclick="location.href='tanJSOne.html';">跳转到tanJSOne.html页面去</button>
+            <button onclick="location.href='http://baidu.com';">跳转到百度页面去</button>
+            <button onclick="location.assign('http://baidu.com')">location.assign重新定义</button>
+            <h3 id="location"></h3>
+            <hr/><br/>
+            <h3 id="divFive">五、window之screen对象: 注意屏幕高度和浏览器高度的区别，还有文档页面的高度的区别</h3>
+            <button onclick="testScreen()">测试屏幕宽高</button>
+            <h3 id="screen"></h3>
+            <script type="text/javascript">
+
+                function testLocation(){
+                    var str = 'location.hostname: ' + location.hostname + ", \n" +
+                            'location.host: ' + location.host + ", \n" +
+                            'location.pathname: ' + location.pathname + ', \n' +
+                            'location.port: ' + location.port + ", \n" +
+                            'location.protocol: ' + location.protocol + ", \n" +
+                            'location.href: ' + location.href;
+                    document.getElementById('location').innerText = str;
+                }
+
+                function testScreen(){
+                    var str = 'screen.availWidth=' + screen.availWidth + ', \n' +
+                            'screen.availHeight=' + screen.availHeight + ', \n' +
+                            'screen.width=' + screen.width + ', \n' +
+                            'screen.height=' + screen.height + ', \n' +
+                            'document.body.offsetWidth=' + document.body.offsetWidth + ', \n' +
+                            'document.body.offsetHeight=' + document.body.offsetHeight + ', \n' +
+                            'document.body.clientWidth=' + document.body.clientWidth + ', \n' +
+                            'document.body.clientHeight=' + document.body.clientHeight + ', \n' +
+                            'document.body.scrollWidth=' + document.body.scrollWidth + ', \n' +
+                            'document.body.scrollHeight=' + document.body.scrollHeight + ', \n' +
+                            'innerWidth=' + innerWidth + ', innerHeight=' + innerHeight;
+
+                    document.getElementById('screen').innerText = str;
+                }
+            </script>
+        </div>
+        <div class="super-item super-six">
+            <div id="divSix">
+                <br/>
+                <h3>六、限制文本框输入为数字，且最多输入2位小数</h3>
+                <p><input type="number" oninput="inputText(this);"/></p>
+            </div>
+            <script type="text/javascript">
+                //监听文本框输入，限制其输入为数字，且最多只能输入2位小数
+                function inputText(obj){
+                    obj.value = checkInputText(obj.value);
+                }
+
+            </script>
+        </div>
+        <div class="super-item super-seven">
+            <div id="divSeven">
+                <h3>七、js操作transform样式</h3>
+                <p id="transform-p" style="width: 100px; height: 100px; background-color:yellow;line-height: 100px; text-align: center;margin-left: 500px;">测试DIV</p>
+                <button id="transrom-one">顺时针形变</button>
+                <button id="transrom-two">形变暂停</button>
+                <button id="transrom-three">逆时针形变</button>
+                <script type="text/javascript">
+
+                    var transformIndex = 0, transIntervalClock = null, transIntervalAntiClock = null;
+                    var sevenObj = document.getElementById('transform-p'); //目标对象
+
+                    document.getElementById('transrom-one').onclick = function(){
+                        transformPause();
+                        transIntervalClock = setInterval(transformClockwise, 1500)
+                    }
+                    document.getElementById('transrom-two').addEventListener('click', transformPause)
+                    document.getElementById('transrom-three').onclick = function(){
+                        transformPause();
+                        transIntervalAntiClock = setInterval(transformAntiClockwise, 1500)
+                    }
+
+                    //顺时针形变
+                    function transformClockwise(){
+                        transformIndex++;
+                        sevenObj.style.transform = 'translate('+(100*transformIndex)+'px, '+(-50*transformIndex)+'px) rotate('+(45*transformIndex)+'deg) scale('+(1+0.1*transformIndex)+')';
+                        console.log(sevenObj.style.transform +", " + transformIndex)
+                    }
+                    //暂停
+                    function transformPause(){
+                        clearInterval(transIntervalClock);
+                        clearInterval(transIntervalAntiClock);
+                        transIntervalClock = transIntervalAntiClock = null;
+                    }
+                    //逆时针形变
+                    function transformAntiClockwise(){
+                        console.log(obj.style.transform, ',,,', transformIndex)
+                        transformIndex--;
+                        sevenObj.style.transform = 'translate('+(100*transformIndex)+'px, '+(-50*transformIndex)+'px) rotate('+(45*transformIndex)+'deg) scale('+(1+0.1*transformIndex)+')';
+                    }
+                </script>
+            </div>
+        </div>
+        <div id="divEight" class="super-item super-eight">
+            <h3>八、Tab选项卡</h3>
+            <div class="tab-main">
+                <div class="tab-menu">
+                    <span class="span-hover">百度</span><span>淘宝</span><span>京东</span><span>天猫</span><span>苏联易购</span><span>家乐福</span><span>小米</span>
+                </div>
+                <div class="tab-list">
+                    <div class="tab-item">百度一下，你就知道</div>
+                    <div class="tab-item">淘淘淘，掏出好心情，淘出好风口；<br/>谜一样的你，值得拥有世界</div>
+                    <div class="tab-item">东哥一响，黄金万两<br/>皇帝轮流做，今年到我家</div>
+                    <div class="tab-item">天猫传奇，不是儿戏；走南闯北，和气生财；</div>
+                    <div class="tab-item">天下在我手，说走咱就走；苏联易购，让逛街不在陋</div>
+                    <div class="tab-item">家国天下，乐在其中，福星高照<br/>您的家乐福，为你养颜排毒<br/>您的家乐福，让你感觉特别酷</div>
+                    <div class="tab-item">小米小米，一心为你<br/>苦心孤诣，坚持到底<br/>全面出击，书写历史痕迹</div>
+                </div>
+            </div>
+            <script type="text/javascript">
+                // window.onload = function(){
+                    //初始化鼠标悬浮事件
+                    var mainEle = document.getElementsByClassName('tab-menu')[0];
+
+                    for (let i = 0; i <mainEle.childElementCount; i++){
+                        var obj = mainEle.children[i];
+                        obj.setAttribute('data-index', i); //设置索引
+
+                        obj.onmouseover = changeTabItem;
+                    }
+
+                    function changeTabItem(){
+                        console.log(this)
+                        //隐藏其他tab-item, 显示自己的tab-item
+                        var mainEle = document.getElementsByClassName('tab-menu')[0];
+                        var tabList = document.getElementsByClassName('tab-list')[0];
+
+                        var currentIndex = this.getAttribute('data-index');
+
+                        for (let i = 0; i < mainEle.childElementCount; i++){
+                            var obj = mainEle.children[i];
+                            var item = tabList.children[i];
+
+                            if (i == currentIndex){
+                                obj.setAttribute('class', 'span-hover');
+                                item.style.display = 'block';
+                            }
+                            else{
+                                obj.setAttribute('class', '');
+                                item.style.display = 'none';
+                            }
+                        }
+
+                        console.log(mainEle);
+                    }
+                // }
+            </script>
+        </div>
+        <div class="super-item super-nine">
+            <div id="divNine">
+                <h3>九、时钟器setInterval</h3>
+                <div class="clock-main">
+                    <img src="../img/other/hour.png" class="clock-hour"/>
+                    <img src="../img/other/minute.png" class="clock-minute"/>
+                    <img src="../img/other/second.png" class="clock-second"/>
+                </div>
+            </div>
+            <script type="text/javascript">
+
+                changeClock(); //首次调用
+                var clockInterval = setInterval(changeClock, 1000);
+                //时钟变化
+                function changeClock(){
+
+                    //获取时分秒
+                    let time = new Date(), hour = time.getHours(), minute = time.getMinutes(), second = time.getSeconds();
+
+                    //计算时分秒转过的角度
+                    let secondDeg = second*360/60, minuteDeg = minute*360/60 + secondDeg/60;
+                    let hourDeg = hour%12*30 + minuteDeg/360 * 30;
+
+                    var hourEle = document.getElementsByClassName('clock-hour')[0];
+                    var minuteEle = document.getElementsByClassName('clock-minute')[0];
+                    var secondEle = document.getElementsByClassName('clock-second')[0];
+
+                    hourEle.style.transform = 'rotate('+ hourDeg +'deg)';
+                    minuteEle.style.transform = 'rotate('+ minuteDeg +'deg)';
+                    secondEle.style.transform = 'rotate('+ secondDeg +'deg)';
+
+                    // console.log('hourDeg: ', hourDeg, ', minuteDeg: ', minuteDeg, ', secondDeg: ', secondDeg);
+                }
+            </script>
+        </div>
+        <div class="super-item super-ten">
+            <div id="divTen">
+                <h3>十、防止定时器累加</h3>
+                <div class="interval-main">
+                    <img src="../img/other/long.jpg" class="long-img"/>
+                </div>
+            </div>
+            <script type="text/javascript">
+                // window.onload= function(){
+
+                var tenBox = document.getElementsByClassName('interval-main')[0];
+                var tenImg = tenBox.getElementsByClassName('long-img')[0];
+                var tenInterval; //定时器
+
+                //鼠标悬浮，图片滚动
+                tenBox.onmouseover = function(){
+
+                    if (tenInterval){
+                        clearInterval(tenInterval);
+                    }
+
+                    tenInterval = setInterval(moveImg, 100);
+                }
+
+                //鼠标移开图片滚动停止
+                tenBox.onmouseout = function(){
+                    if (tenInterval){
+                        clearInterval(tenInterval);
+                    }
+                }
+
+                function moveImg(){
+
+                    var top = parseInt(tenImg.style.top); //获取之前的位置
+                    var imgHeight = tenImg.height;
+
+                    if (isNaN(top) || Math.abs(top) > imgHeight-300){
+                        top = 0;
+                    }
+                    top -= 10;
+                    tenImg.style.top = top + 'px';
+
+                    console.log('top: ' +top, ', height: ', imgHeight, ', scroolTop: ',
+                            tenImg.scrollTop, ', imgTop: ', tenImg.offsetTop)
+                }
+                // }
+            </script>
+        </div>
+        <div class="super-item super-eleven">
+            <div id="divEleven">
+                <h3>十一、仿淘宝轮播</h3>
+                <div class="auto-move">
+                    <ul class="move-left">
+                        <li data-id="0" class="selected-li">紫霞</li>
+                        <li data-id="2">青春</li>
+                        <li data-id="3">足球宝贝</li>
+                        <li data-id="4">王祖贤</li>
+                        <li data-id="5">邱淑贞</li>
+                        <li data-id="6">小马哥</li>
+                        <li data-id="7">甄子丹</li>
+                        <li data-id="8">李连杰</li>
+                    </ul>
+                    <div class="move-mid"><img src="../img/star/0.jpg"/></div>
+                    <ul class="move-left">
+                        <li data-id="9">成龙</li>
+                        <li data-id="10">关之琳</li>
+                        <li data-id="11">范冰冰</li>
+                        <li data-id="12">张曼玉</li>
+                        <li data-id="13">冰冰范</li>
+                        <li data-id="14">十三姨</li>
+                        <li data-id="15">刘德华</li>
+                        <li data-id="16">至尊宝</li>
+                    </ul>
+                </div>
+            </div>
+            <script type="text/javascript">
+                var moveBox = document.getElementsByClassName('auto-move')[0];
+                var lis = moveBox.getElementsByTagName('li');
+                var eleImg = (document.getElementsByClassName('move-mid')[0]).getElementsByTagName('img')[0];
+                var selLiIndex = 0;
+                var eleInterval = setInterval(changeLi, 1000); //1秒钟切换一张图片
+
+                //给每个li标签设置鼠标悬浮事件
+                for (let i = 0; i < lis.length; i++){
+
+                    lis[i].setAttribute('data-index', i);
+
+                    //鼠标悬浮，改变li标签样式
+                    lis[i].onmouseover = function(){
+                        clearInterval(eleInterval);
+                        let currentIndex = this.getAttribute('data-index');
+
+                        selLiIndex = currentIndex-1;
+                        changeLi(currentIndex);
+                    }
+                }
+
+                //设置鼠标移开ul标签，轮播继续
+                var uls = document.getElementsByClassName('move-left');
+                for (let i = 0; i < uls.length; i++){
+                    uls[i].onmouseout = function(){
+                        clearInterval(eleInterval);
+                        eleInterval = setInterval(changeLi, 1000); //1秒钟切换一张图片
+                    }
+                }
+
+                //改变li标签
+                function changeLi(currentIndex){
+                    selLiIndex++;
+
+                    for (let i = 0; i < lis.length; i++){
+                        var obj = lis[i];
+
+                        if (currentIndex&&i==currentIndex || i == selLiIndex){
+                            obj.setAttribute('class', 'selected-li');
+
+                            var imgId = obj.getAttribute('data-id');
+                            eleImg.setAttribute('src', '../img/star/' + imgId + '.jpg');
+                        }
+                        else{
+                            obj.setAttribute('class', '');
+                        }
+                    }
+
+                    if (selLiIndex >= lis.length-1){
+                        selLiIndex = -1;
+                    }
+                }
+
+
+                //传入图片地址，获取图片Base64数据
+                function getBase64ByImgUrl(url, callback){
+                    var canvas = document.createElement('canvas'),
+                            ctx = canvas.getContext('2d'),
+                            img = new Image;
+                    img.crossOrigin = 'Anonymous';
+
+                    img.onload = function(){
+                        canvas.height = img.height;
+                        canvas.width = img.width;
+                        ctx.drawImage(img,0,0);
+                        var dataURL = canvas.toDataURL('image/png');
+
+                        console.log('base64-dataUrl: ', dataURL);
+
+                        callback(dataURL);
+                        canvas = null;
+                    };
+                    img.src = url;
+                }
+
+                //将base64转换为文件流
+                function getFileByBase64(dataurl, filename) {
+                    var arr = dataurl.split(','), mime = arr[0].match(/:(.*?);/)[1],
+                            bstr = atob(arr[1]), n = bstr.length, u8arr = new Uint8Array(n);
+                    while(n--){
+                        u8arr[n] = bstr.charCodeAt(n);
+                    }
+                    return new File([u8arr], filename, {type:mime});
+                }
+
+
+                //测试
+//                var url = 'https://images2015.cnblogs.com/blog/454511/201601/454511-20160131134129224-636191193.png';
+//                getBase64ByImgUrl(url, function(dataURL){
+//
+//                    //传入base64数据和文件名字
+//                    var fileFlow = getFileByBase64(dataURL, 'imgName' + (new Date()).getTime());
+//                    console.log('fileFlow: ', fileFlow);
+//
+//                    //继续....
+//                })
+
+            </script>
+        </div>
+        <div id="divTwelve" style="clear: both;">
+            <h3>十二、监听鼠标坐标变化</h3>
+            <ol style="color: #666;">
+                <li>标签样式设置： <br/>
+                    子级标签width=560px, height=300px, border=10px, padding=20px; <br/>
+                    父级标签width=2000px, height=360px, border=2px, padding=10px; <br/>
+                    2000 = (560+20*2+10*2)*3 + 140 = 1860 + 140
+                </li>
+                <li style="float: left; padding: 10px; width: 460px; border: 1px dashed gray; ">鼠标事件属性
+                    <ul>
+                        <li>offsetX和offsetY: 鼠标距<span style="color:red;">标签</span>左边和顶部的距离，即鼠标在当前标签中的xy坐标（不包含边框，即以<span style="color:red;">填充区域</span>的左上角为原坐标）</li>
+                        <li>x和y: 鼠标在浏览器<span style="color:red;">可视区域</span>距离左边和顶部的间距</li>
+                        <li>clientX和clientY： 意义和x和y一样，表示浏览器<span style="color:red;">可视区域</span>距离左边和顶部的间距</li>
+                        <li>pageX和pageY: 浏览器<span style="color:red;">页面</span>中距离左边和顶部的间距，包括滚动条区域，即包含隐藏在滚动条前面的左边和顶部的空间</li>
+                        <li>screenX和screenY: 鼠标在<span style="color:red;">屏幕</span>中距离左边和顶部的间距</li>
+                    </ul>
+                </li>
+                <li style="float: left; margin-left: 30px; border: 1px dashed black; padding: 10px; width: 600px;">当前标签属性
+                    <ul>
+                        <li>
+                            offsetLeft和offsetTop: 标签在浏览器中距离<span style="color:red;">最近offsetParent标签(定位父级，即position不等于static)</span>的左边和顶部的间距<br/>
+                            1、元素自身有fixed定位，offsetParent的结果为null；<br/>
+                            2、元素自身无fixed定位，且父级元素都未经过定位，offsetParent的结果为body标签<br/>
+                            3、元素自身无fixed定位，且父级元素存在经过定位的元素，offsetParent的结果为离自身元素最近的经过定位的父级元素<br/>
+                            4、body元素的offsetParent是null
+                        </li>
+                        <li>offsetWidth和offsetHeight: <span style="color:red;">标签content+padding+border的宽度和高度（即内容+填充+边框）</span></li>
+                        <li>clientLeft和clientTop: <span style="color:red;">标签的左边边框和顶部边框的尺寸</span></li>
+                        <li>clientWidth和clientHeight: <span style="color:red;">标签content+padding的宽度和高度（即内容+填充）</span></li>
+                        <li>scrollLeft和scrollTop: 标签往左边或顶部<span style="color:red;">滚动</span>的距离（当有滚动条，且向左或向上有滚动距离时才有值）</li>
+                        <li>scrollWidth和scrollHeight: 表示当前元素的总宽度和总高度，<br/>
+                            包括溢出容器、当前不可见的部分，padding；不包括boder、margin以及水平滚动条和垂直滚动条的高度
+                        </li>
+                    </ul>
+                </li>
+            </ol>
+            <div style="clear:both;"></div>
+            <div class="super12">
+                <div>1</div><div>2</div>
+                <div class="super12_three" id="super12_three"><img src="../img/star/0.jpg"/></div>
+            </div>
+            <!-- 全局监听，鼠标坐标 -->
+            <div id="showInfo"><div id="showInfoMain" style="margin-top: 10px;"></div><div id="showInfoClose">X</div></div>
+            <script type="text/javascript">
+                var offsetSuper = document.getElementsByClassName('super12')[0];
+                var offsetEles = offsetSuper.children;
+                for (let i = 0; i < offsetEles.length; i++){
+
+                    if (i < 2){
+                        var ele = offsetEles[i];
+                        //设置鼠标移动监听事件
+                        ele.addEventListener('mousemove', testMousemoveEvent);
+                    }
+                }
+
+                //鼠标移动监听事件
+                function testMousemoveEvent(e){
+                    var e = e || window.event;
+                    var html = '鼠标信息: <br/> '+
+                        'offsetX: ' + e.offsetX + ", offsetY: " + e.offsetY + "<br/>"+
+                        'x: '+ e.x +', y: '+ e.y +'<br/>'+
+                        'clientX: ' + e.clientX +", clientY: " + e.clientY + '<br/>'+
+                        'pageX: ' + e.pageX + ', pageY: ' + e.pageY+"<br/>"+
+                        "screenX: " + e.screenX + ", screenY: " + e.screenY + "<br/>" +
+                        "当前标签信息：<br/>"+
+                        "offsetLeft: " + this.offsetLeft +", offsetTop: " + this.offsetTop +", offsetWidth: " + this.offsetWidth + ", offsetHeight: " +this.offsetHeight +"<br/>"+
+                        "clientLeft: " + this.clientLeft +", clientTop: " + this.clientTop +", clientWidth: " + this.clientWidth + ", clientHeight: " +this.clientHeight +"<br/>"+
+                        "scrollLeft: " + this.scrollLeft +", scrollTop: " + this.scrollTop +", scrollWidth: " + this.scrollWidth + ", scrollHeight: " +this.scrollHeight +"<br/>";
+                    this.innerHTML = html;
+
+                    console.log(this.offsetParent);
+                }
+
+
+                //给super12_three标签设置鼠标点击监听事件
+                document.getElementById('super12_three').addEventListener('mousedown', function(e){
+                    var e = e || window.event;
+                    var ele = this;
+                    var html = '鼠标信息: <br/> '+
+                        'offsetX: ' + e.offsetX + ", offsetY: " + e.offsetY + "<br/>"+
+                        'x: '+ e.x +', y: '+ e.y +'<br/>'+
+                        'clientX: ' + e.clientX +", clientY: " + e.clientY + '<br/>'+
+                        'pageX: ' + e.pageX + ', pageY: ' + e.pageY+"<br/>"+
+                        "screenX: " + e.screenX + ", screenY: " + e.screenY + "<br/>" +
+                        "当前标签信息：<br/>"+
+                        "offsetLeft: " + ele.offsetLeft +", offsetTop: " + ele.offsetTop +", offsetWidth: " + ele.offsetWidth + ", offsetHeight: " +ele.offsetHeight +"<br/>"+
+                        "clientLeft: " + ele.clientLeft +", clientTop: " + ele.clientTop +", clientWidth: " + ele.clientWidth + ", clientHeight: " +ele.clientHeight +"<br/>"+
+                        "scrollLeft: " + ele.scrollLeft +", scrollTop: " + ele.scrollTop +", scrollWidth: " + ele.scrollWidth + ", scrollHeight: " +ele.scrollHeight +"<br/><br/>";
+
+                    document.getElementById('showInfo').style.display = 'flex';
+                    document.getElementById('showInfoMain').innerHTML = html;
+
+                    var html2 = html.replace(/<br\/>/g, '\n');
+                    console.log(html2);
+                })
+
+                //隐藏标签事件
+                document.getElementById('showInfoClose').addEventListener('click', function(){
+                    document.getElementById('showInfo').style.display = 'none';
+                })
+
+            </script>
+        </div>
+        <div id="divThirteen" class="super-item">
+            <!-- 放大镜效果 -->
+            <h3>十三、放大镜效果：对于长宽不等的图片展示会有波动不准确，因为磨片覆盖在当前图片上，造成鼠标移动事件被阻挡</h3>
+            <div class= "magnifyGlass">
+                <div class="glassCurrent">
+                    <img src="../img/star/4.jpg"/>
+                    <span class="mask"><span class="cur_icon"></span></span>
+                </div>
+                <div class="glassList">
+                    <img src="../img/star/4.jpg"/>
+                    <img src="../img/star/17.jpg"/>
+                    <img src="../img/star/16.jpg"/>
+                    <img src="../img/star/20.jpg"/>
+                </div>
+                <div class="glassBig"><img src="../img/star/4.jpg"/><span class="big_icon"></span></div>
+            </div>
+            <script type="text/javascript">
+
+                var currentEle = document.getElementsByClassName('glassCurrent')[0]; //
+                var currentImg = currentEle.getElementsByTagName('img')[0];  //当前显示的图片
+                var mask = currentEle.getElementsByTagName('span')[0]; //磨片标签
+                var list = document.getElementsByClassName('glassList')[0].children;  //底部图片列表
+                var bigEle = document.getElementsByClassName('glassBig')[0];
+                var bigEleImg = bigEle.getElementsByTagName('img')[0];  //大图标签
+
+                //给图片列表设置单击事件
+                for (var i = 0; i < list.length; i++){
+                    list[i].addEventListener('mouseover', function(){
+                        var src = this.getAttribute('src');
+                        currentImg.setAttribute('src', src);
+                        bigEleImg.setAttribute('src', src);
+                    })
+                }
+
+                currentEle.onmouseover = function(e){
+                    //显示大图和磨片
+                    mask.style.display = 'block';
+                    bigEle.style.display = 'block';
+                }
+
+                //监听鼠标离开当前图片
+                currentEle.onmouseout = function(e){
+                    //隐藏大图和磨片
+                    mask.style.display = 'none';
+                    bigEle.style.display = 'none';
+                }
+
+                //监听鼠标在当前图片中移动 (前提当前图片都没有变形，都是等比缩放)
+                currentEle.onmousemove = function(e){
+                    var e = e || window.event;
+                    //设置磨片的坐标位置, mask磨片的中心为鼠标位置
+                    var maskW = mask.offsetWidth, maskH = mask.offsetHeight;
+                    var x = e.offsetX - maskW/2, y = e.offsetY - maskH/2;
+
+                    //如果磨片坐标过界，需要限制
+                    if (x <= 0){ //左边界限
+                        x = 0;
+                    }
+                    else if (x >= this.offsetWidth - maskW){ //右边界限
+                        x = this.offsetWidth - maskW;
+                    }
+
+                    if (y <= 0){  //顶部界限
+                        y = 0;
+                    }
+                    else if (y >= this.offsetHeight - maskH){ //底部界限
+                        y = this.offsetHeight - maskH;
+                    }
+
+                    //设置磨片坐标
+                    mask.style.left = x + 'px';
+                    mask.style.top = y + "px";
+
+
+                    //设置大图的移动位置
+                    var smallImgW = currentImg.offsetWidth,
+                            smallImgH = currentImg.offsetHeight; //当前图片的宽高
+                    var smallImgStartX = (currentEle.offsetWidth-smallImgW)/2,
+                            smallImgStartY = (currentEle.offsetHeight-smallImgH)/2; //当前图片的初始化坐标
+
+                    //磨片中心坐标位置
+                    var maskX = x + mask.offsetWidth * 0.5, maskY = y + mask.offsetHeight * 0.5;
+                    //找到当前图片对应的点 (当前图片对应的点在当前图片的位置)
+                    var curImgLeft = maskX-smallImgStartX, curImgTop = maskY - smallImgStartY;
+                    if (maskX < smallImgStartX){
+                        curImgLeft = 0;
+                    }
+                    else if (maskX > smallImgStartX + smallImgW){
+                        curImgLeft = smallImgW;
+                    }
+                    if (maskY < smallImgStartY){
+                        curImgTop = 0;
+                    }
+                    else if (maskY > smallImgStartY + smallImgH){
+                        curImgTop = smallImgH;
+                    }
+
+                    var bigImgW = bigEleImg.offsetWidth, bigImgH = bigEleImg.offsetHeight; //大图的宽高
+                    var bigImgStartX = (bigEle.offsetWidth - bigImgW)/2,
+                            bigImgStartY = (bigEle.offsetHeight-bigImgH)/2; //当前大图的初始化坐标
+                    //找到大图中对应的点位置：大图宽度/大图点 = 小图宽度/小图点  ==> 大图点 = 大图宽度*小图点/小图宽度
+                    var bigImgLeft = bigImgW*curImgLeft/smallImgW, bigImgTop = bigImgH*curImgTop/smallImgH;
+                    //计算大图的这个点到达大图中心的距离
+                    var moveW = bigImgW/2 - bigImgLeft, moveH = bigImgH/2 - bigImgTop;
+                    //计算大图的新坐标
+                    var bigImgNewX = bigImgStartX + moveW, bigImgNewY = bigImgStartY + moveH;
+
+                    bigEleImg.style.left = bigImgNewX + 'px';
+                    bigEleImg.style.top = bigImgNewY + 'px';
+
+                    console.log("e.offsetX: " + e.offsetX + ", e.offsetY: " + e.offsetY + ",\n"+
+                            "maskW: " +maskW+",maskH:"+maskH+",\n"+
+                            "x:"+x+",y:"+y+",\n"+
+                            "maskX: " + maskX+", maskY: " + maskY +",\n"+
+                            "smallImgW:"+smallImgW+",smallImgH:"+smallImgH+",\n"+
+                            "smallImgStartX: "+smallImgStartX+",smallImgStartY: "+smallImgStartY+",\n"+
+                            "curImgLeft: "+ + curImgLeft+",curImgTop: " + curImgTop+",\n"+
+                            "bigImgW: "+bigImgW+",bigImgH: "+bigImgH+",\n"+
+                            "bigImgStartX: " + bigImgStartX +", bigImgStartY: " + bigImgStartY + ", \n"+
+                            "bigImgLeft: " + bigImgLeft + ", bigImgTop:" + bigImgTop +", \n"+
+                            "bigImgNewX: " + bigImgNewX + ", bigImgNewY: " + bigImgNewY + "\n.......end.....\n"
+                    );
+                }
+
+                //阻止磨片冒泡事件，防止引起磨片位置变化时抖动
+                mask.onmousemove = function(e){
+                    e.stopImmediatePropagation();
+                }
+
+            </script>
+        </div>
+        <div id="divFourteen">
+            <h3>十四、放大镜效果二，当前图片设置为背景图片（如果磨片宽高小，效果更好，不遮挡鼠标移动事件）</h3>
+            <!-- 放大镜效果 -->
+            <div class= "glassContainer">
+                <div id="glassCur"><span id="glassMask"><span></span></span></div>
+                <div id="glassSmallList">
+                    <img src="../img/star/4.jpg"/>
+                    <img src="../img/star/16.jpg"/>
+                    <img src="../img/star/18.jpg"/>
+                    <img src="../img/star/20.jpg"/>
+                </div>
+                <div id="glassBigEle"><img src="../img/star/4.jpg"/><span id="glassBigIcon"></span></div>
+                <!-- 隐藏的div用来获取当前图片宽高 -->
+                <div id="glassHide"><img src="../img/star/4.jpg"/></div>
+            </div>
+            <script type="text/javascript">
+
+                var glassCur = document.getElementById('glassCur'); //
+                var glassImg = document.getElementById('glassHide').children[0];  //当前显示的图片
+                var glassMask = document.getElementById('glassMask'); //磨片标签
+                var glassSmallList = document.getElementById('glassSmallList').children;  //底部图片列表
+                var glassBigEle = document.getElementById('glassBigEle');
+                var glassBigImg = glassBigEle.children[0];  //大图标签
+
+                //给图片列表设置单击事件
+                for (var i = 0; i < glassSmallList.length; i++){
+                    glassSmallList[i].addEventListener('mouseover', function(){
+                        var src = this.getAttribute('src');
+                        glassImg.setAttribute('src', src);
+                        glassBigImg.setAttribute('src', src);
+                        glassCur.style.backgroundImage = 'url('+src+')';
+                    })
+                }
+
+                glassCur.onmouseover = function(e){
+                    //显示大图和磨片
+                    glassMask.style.display = 'block';
+                    glassBigEle.style.display = 'block';
+                }
+
+                //监听鼠标离开当前图片
+                glassCur.onmouseout = function(e){
+                    //隐藏大图和磨片
+                    glassMask.style.display = 'none';
+                    glassBigEle.style.display = 'none';
+                }
+
+                //监听鼠标在当前图片中移动 (前提当前图片都没有变形，都是等比缩放)
+                glassCur.onmousemove = function(e){
+
+                    var e = e || window.event;
+
+                    //设置磨片的坐标位置, mask磨片的中心为鼠标位置
+                    var maskW = glassMask.offsetWidth, maskH = glassMask.offsetHeight;
+                    var x = e.offsetX - maskW/2, y = e.offsetY - maskH/2;
+
+                    //如果磨片坐标过界，需要限制
+                    if (x <= 0){ //左边界限
+                        x = 0;
+                    }
+                    else if (x >= glassCur.offsetWidth - maskW){ //右边界限
+                        x = glassCur.offsetWidth - maskW;
+                    }
+
+                    if (y <= 0){  //顶部界限
+                        y = 0;
+                    }
+                    else if (y >= glassCur.offsetHeight - maskH){ //底部界限
+                        y = glassCur.offsetHeight - maskH;
+                    }
+
+                    //设置磨片坐标
+                    glassMask.style.left = x + 'px';
+                    glassMask.style.top = y + "px";
+
+
+                    //设置大图的移动位置
+                    var smallImgW = glassImg.offsetWidth,
+                            smallImgH = glassImg.offsetHeight; //当前图片的宽高
+                    var smallImgStartX = (glassCur.offsetWidth-smallImgW)/2,
+                            smallImgStartY = (glassCur.offsetHeight-smallImgH)/2; //当前图片的初始化坐标
+
+                    //磨片中心坐标位置
+                    var maskX = x + glassMask.offsetWidth * 0.5, maskY = y + glassMask.offsetHeight * 0.5;
+                    //找到当前图片对应的点 (当前图片对应的点在当前图片的位置)
+                    var curImgLeft = maskX-smallImgStartX, curImgTop = maskY - smallImgStartY;
+                    if (maskX < smallImgStartX){
+                        curImgLeft = 0;
+                    }
+                    else if (maskX > smallImgStartX + smallImgW){
+                        curImgLeft = smallImgW;
+                    }
+                    if (maskY < smallImgStartY){
+                        curImgTop = 0;
+                    }
+                    else if (maskY > smallImgStartY + smallImgH){
+                        curImgTop = smallImgH;
+                    }
+
+                    var bigImgW = glassBigImg.offsetWidth, bigImgH = glassBigImg.offsetHeight; //大图的宽高
+                    var bigImgStartX = (glassBigEle.offsetWidth - bigImgW)/2,
+                            bigImgStartY = (glassBigEle.offsetHeight-bigImgH)/2; //当前大图的初始化坐标
+                    //找到大图中对应的点位置：大图宽度/大图点 = 小图宽度/小图点  ==> 大图点 = 大图宽度*小图点/小图宽度
+                    var bigImgLeft = bigImgW*curImgLeft/smallImgW, bigImgTop = bigImgH*curImgTop/smallImgH;
+                    //计算大图的这个点到达大图中心的距离
+                    var moveW = bigImgW/2 - bigImgLeft, moveH = bigImgH/2 - bigImgTop;
+                    //计算大图的新坐标
+                    var bigImgNewX = bigImgStartX + moveW, bigImgNewY = bigImgStartY + moveH;
+
+                    glassBigImg.style.left = bigImgNewX + 'px';
+                    glassBigImg.style.top = bigImgNewY + 'px';
+
+                    console.log("e.offsetX: " + e.offsetX + ", e.offsetY: " + e.offsetY + ",\n"+
+                            "maskW: " +maskW+",maskH:"+maskH+",\n"+
+                            "x:"+x+",y:"+y+",\n"+
+                            "maskX: " + maskX+", maskY: " + maskY +",\n"+
+                            "smallImgW:"+smallImgW+",smallImgH:"+smallImgH+",\n"+
+                            "smallImgStartX: "+smallImgStartX+",smallImgStartY: "+smallImgStartY+",\n"+
+                            "curImgLeft: "+ + curImgLeft+",curImgTop: " + curImgTop+",\n"+
+                            "bigImgW: "+bigImgW+",bigImgH: "+bigImgH+",\n"+
+                            "bigImgStartX: " + bigImgStartX +", bigImgStartY: " + bigImgStartY + ", \n"+
+                            "bigImgLeft: " + bigImgLeft + ", bigImgTop:" + bigImgTop +", \n"+
+                            "bigImgNewX: " + bigImgNewX + ", bigImgNewY: " + bigImgNewY + "\n.......end.....\n"
+                    );
+                }
+
+                //阻止磨片冒泡事件，防止引起磨片位置变化时抖动
+                glassMask.onmousemove = function(e){
+                    e.stopImmediatePropagation();
+                }
+
+            </script>
+        </div>
+        <div id="divFiveteen" style="position: relative;">
+            <h3>十五、放大镜效果，针对正方形图片</h3>
+            <div class="rectContainer">
+                <div class="rectCur"><span class="rectMask"><span></span></span></div>
+                <div class="rectList">
+                    <img src="../img/temp/1.jpg"/>
+                    <img src="../img/temp/2.jpg"/>
+                    <img src="../img/temp/3.jpg"/>
+                    <img src="../img/temp/4.jpg"/>
+                </div>
+                <div class="rectBig"><img src="../img/temp/1.jpg"/><span class="rectBigIcon"></span></div>
+            </div>
+            <script type="text/javascript">
+                var rectCur = document.getElementsByClassName('rectCur')[0];
+                var rectMask = document.getElementsByClassName('rectMask')[0];
+                var rectList = document.getElementsByClassName('rectList')[0].children;
+                var rectBig = document.getElementsByClassName('rectBig')[0];
+                var rectBigImg = rectBig.children[0];
+
+                //给列表小图片添加鼠标悬浮事件
+                for (let i = 0; i < rectList.length; i++){
+                    rectList[i].onmouseover = function(){
+                        var src = this.getAttribute('src');
+                        rectCur.style.backgroundImage = 'url('+src+')';
+                        rectBigImg.src = src;
+                    }
+                }
+
+                rectCur.onmouseover = function(){
+                    rectMask.style.display = 'block';
+                    rectBig.style.display = 'block';
+                }
+                rectCur.onmouseout = function(){
+                    rectMask.style.display = 'none';
+                    rectBig.style.display = 'none';
+                }
+                rectCur.onmousemove = function(e){
+                    var e = e || window.event;
+                    var maskW = rectMask.offsetWidth, maskH = rectMask.offsetHeight, curW = rectCur.offsetWidth, curH = rectCur.offsetHeight;
+                    let x = e.offsetX - maskW*0.5, y = e.offsetY - maskH*0.5;
+                    if (x < 0){
+                        x = 0;
+                    }
+                    else if (x > curW - maskW){
+                        x = curW - maskW;
+                    }
+                    if (y < 0){
+                        y = 0;
+                    }
+                    else if (y > curH - maskH){
+                        y = curH - maskH;
+                    }
+                    rectMask.style.left = x + 'px';
+                    rectMask.style.top = y + 'px';
+
+                    //大图位置
+                    var pointX = x + maskW*0.5, pointY = y + maskH*0.5;  //磨片中心坐标位置
+                    let bigImgW = rectBigImg.offsetWidth, bigImgH = rectBigImg.offsetHeight;
+                    //大图的初始化位置坐标
+                    let bigImgStartX = (rectBig.offsetWidth - bigImgW)/2, bigImgStartY = (rectBig.offsetHeight - bigImgH)/2;
+                    //大图对应鼠标中心位置的点: 鼠标x/当前图片宽度 = 大图对应点x / 大图宽度  ==> 大图对应点x = 鼠标x * 大图宽度 / 当前图片宽度
+                    let bigPointX = pointX * bigImgW / curW, bigPointY = pointY * bigImgH / curH;
+                    //大图需要移动的距离
+                    let bigImgMoveX =  bigImgW/2 - bigPointX, bigImgMoveY = bigImgH/2 - bigPointY;
+                    //大图新的坐标
+                    let bigImgNewX = bigImgStartX + bigImgMoveX, bigImgNewY = bigImgStartY + bigImgMoveY;
+                    rectBigImg.style.left = bigImgNewX + 'px';
+                    rectBigImg.style.top = bigImgNewY + 'px';
+
+                    var html = ''+
+                    'e.offsetX: ' + e.offsetX+", e.offsetY: " +e.offsetY +",\n"+
+                    "curW: " + curW +", curH: " + curH+",\n"+
+                    "bigImgStartX: " +bigImgStartX+",bigImgStartY: " +bigImgStartX+",\n"+
+                    "bigImgW: " + bigImgW+", bigImgH: " +bigImgW+",\n"+
+                    "bigPointX: " +bigPointX+", bigPointY: " +bigPointY+",\n"+
+                    "bigImgNewX: " +bigImgNewX+", bigImgNewY: " +bigImgNewY+"\n.........\n";
+                    console.log(html);
+                }
+
+                rectMask.onmousemove = function(e){
+                    e.stopImmediatePropagation();
+                }
+            </script>
+
+            <!-- 鼠标移动监听 -->
+            <div>
+                <div id="redCircle" class="redCircle"><span class="redCircleMask"></span></div>
+                <script type="text/javascript">
+                    var redCircle = document.getElementById('redCircle');
+                    var redCircleMask = redCircle.getElementsByClassName('redCircleMask')[0];
+
+                    redCircle.onmousemove = function(e){
+                        var x = e.offsetX - redCircleMask.offsetWidth/2;
+                        var y = e.offsetY - redCircleMask.offsetHeight/2;
+
+                        redCircleMask.style.left = x + 'px';
+                        redCircleMask.style.top = y + 'px';
+
+                        console.log(e.offsetX+","+e.offsetY +"  ||  " +x+","+y);
+                    }
+
+                    redCircleMask.onmousemove = function(e){
+                        e.stopImmediatePropagation();
+                    }
+                </script>
+            </div>
+        </div>
+        <div id="divSixteen">
+            <h3>十六、进度条和滚动条效果展示</h3>
+            <div class="progressBar">
+                <div class="progressMain">
+                    <div class="progressItem"></div>
+                    <div class="progressMask"></div>
+                </div>
+                <div class="progressNum">0%</div>
+            </div>
+            <script type="text/javascript">
+
+                let progressMain = document.getElementsByClassName('progressMain')[0];
+                let progressItem = document.getElementsByClassName('progressItem')[0];
+                let progressMask = document.getElementsByClassName('progressMask')[0];
+                let progressNum = document.getElementsByClassName('progressNum')[0];
+
+                progressMask.onmousedown = function(e){
+
+                    var e = e || window.event;
+                    var startOffsetX = e.clientX - this.offsetLeft; //记录开始位置（定位父级距离页面左边间距+鼠标在progressMask标签上的初始坐标）
+
+                    document.onmousemove = function(e){
+                        var e = e || window.event;
+                        var x = e.clientX - startOffsetX;  //progressMask标签新定位坐标
+                        var maxX = progressMain.offsetWidth - progressMask.offsetWidth;
+                        //判断临界值
+                        if (x < 0){
+                            x = 0;
+                        }
+                        else if (x > maxX){
+                            x = maxX;
+                        }
+
+                        progressMask.style.left = x+'px';
+                        progressItem.style.width = (x + 10) + 'px';
+                        progressNum.innerHTML = parseInt(x*100/maxX) + '%';
+
+                    }
+
+                    document.onmouseout = function(){
+                        document.onmousemove = null;
+                    }
+                }
+                progressMask.onmouseup = function(){
+                    document.onmousemove = null;
+                }
+                progressMask.onmouseout = function(){
+                    document.onmousemove = null;
+                }
+            </script>
+        </div>
+        <div id="divSeventeen" style="margin-top: 30px;">
+            <div class="progressGoodsMain">
+                <div class="proGoodsList">
+                    <img src="../img/star/0.jpg"/><img src="../img/star/1.jpg"/><img src="../img/star/2.jpg"/><img src="../img/star/3.jpg"/>
+                    <img src="../img/star/4.jpg"/><img src="../img/star/5.jpg"/><img src="../img/star/6.jpg"/><img src="../img/star/7.jpg"/>
+                    <img src="../img/star/8.jpg"/><img src="../img/star/9.jpg"/><img src="../img/star/10.jpg"/><img src="../img/star/11.jpg"/>
+                    <img src="../img/star/12.jpg"/><img src="../img/star/13.jpg"/><img src="../img/star/14.jpg"/><img src="../img/star/15.jpg"/>
+                </div>
+                <div class="proGoodsBottom"><span class="proGoodsMask"></span></div>
+            </div>
+            <script type="text/javascript">
+                var progressGoodsMain = document.getElementsByClassName('progressGoodsMain')[0];
+                var proGoodsList = document.getElementsByClassName('proGoodsList')[0];
+                var proGoodsBottom = document.getElementsByClassName('proGoodsBottom')[0];
+                var proGoodsMask = proGoodsBottom.children[0];
+
+                proGoodsMask.onmousedown = function(e){
+                    var e = e || window.event;
+                    //记录初始值： 定位父级举例页面左边的举例+鼠标在proGoodsMask上的x坐标
+                    var startOffset = e.clientX - proGoodsMask.offsetLeft;
+                    var listW = proGoodsList.scrollWidth - proGoodsList.offsetWidth;
+
+                    console.log('listW: ', listW);
+
+                    document.onmousemove = function(e){
+                        var e = e || window.event;
+
+                        var newX = e.clientX - startOffset; //proGoodsMask新的left定位值
+                        //判断临界值
+                        var maxX = proGoodsBottom.offsetWidth - proGoodsMask.offsetWidth;
+                        if (newX <= 0){
+                            newX = 0;
+                        }
+                        else if (newX >= maxX){
+                            newX = maxX;
+                        }
+
+                        proGoodsMask.style.left = newX + 'px';
+
+                        //列表图片的进度计算
+                        var listX = listW * newX / maxX;
+                        proGoodsList.style.left = -listX + 'px';
+
+                        console.log('listW: ', proGoodsList.offsetWidth + ", scrollLeft: " +
+                                proGoodsList.scrollLeft + ", scrollW: " + proGoodsList.scrollWidth);
+                    }
+                    document.onmouseout = function(){
+                        document.onmousemove = null;
+                    }
+                }
+                proGoodsMask.onmouseup = function(){
+                    document.onmousemove = null;
+                }
+                proGoodsMask.onmouseout = function(){
+                    document.onmousemove = null;
+                }
+            </script>
+        </div>
+        <div style="margin-top: 20px;">
+            <h3>overflow=scroll样式滚动展示效果</h3>
+            <div class="goodsListTwo">
+                <img src="../img/star/0.jpg"/><img src="../img/star/1.jpg"/><img src="../img/star/2.jpg"/><img src="../img/star/3.jpg"/>
+                <img src="../img/star/4.jpg"/><img src="../img/star/5.jpg"/><img src="../img/star/6.jpg"/><img src="../img/star/7.jpg"/>
+                <img src="../img/star/8.jpg"/><img src="../img/star/9.jpg"/><img src="../img/star/10.jpg"/><img src="../img/star/11.jpg"/>
+                <img src="../img/star/12.jpg"/><img src="../img/star/13.jpg"/><img src="../img/star/14.jpg"/><img src="../img/star/15.jpg"/>
+            </div>
+        </div>
+        <div id="divEightteen">
+            <h3>十八、菜单顶部吸顶效果</h3>
+            <ul id="webMenu" style="width: 1200px; height: 50px;margin: 0 auto;display: flex;z-index:99;">
+                <li><a href="https://www.baidu.com/">百度</a></li>
+                <li><a href="https://www.qq.com/">腾讯</a></li>
+                <li><a href="https://www.jd.com/">京东</a></li>
+                <li><a href="https://www.tmall.com/">天猫</a></li>
+                <li><a href="https://www.taobao.com/">淘宝</a></li>
+                <li><a href="https://www.suning.com/">苏联易购</a></li>
+                <li><a href="https://www.gome.com.cn/">国美电器</a></li>
+                <li><a href="https://www.mi.com/">小米</a></li>
+                <li><a href="https://www.meizu.com/">魅族</a></li>
+                <li><a href="https://www.cnblogs.com/">博客园</a></li>
+                <li><a href="https://www.csdn.net/">CSDN</a></li>
+                <li><a href="https://www.jianshu.com/">简书</a></li>
+                <li><a href="https://juejin.im/">掘金</a></li>
+            </ul>
+        </div>
+        <div id="divNineteen">
+            <h3>十九、选中文字分享到新浪微博</h3>
+            <div class="wordShare">
+                朝为田舍郎，暮登天子堂；<br/>
+                将相本无种，男儿当自强。<br/>
+                男儿立志出乡关，学不成名誓不还；<br/>
+                埋骨何须桑梓地，人生无处不青山。<br/>
+                葡萄美酒夜光杯，欲饮琵琶马上催；<br/>
+                醉卧沙场君莫笑，古来征战几人回。
+            </div>
+            <div class="selectWord"></div>
+            <div class="shareBtn">分享到微博</div>
+        </div>
+        <div id="divTwenty" style="position: relative;">
+            <h3>二十、移动动画</h3>
+            <div><button id="moveBtnRight">向右移动</button>&nbsp;&nbsp;<button id="moveBtnLeft">向左移动</button></div>
+            <div id="moveContainer" style="width: 100px; height: 100px; position: absolute; top: 80px;background-color: green;"></div>
+        </div>
+        <div id="divTwentyOne" style="margin-top: 200px;">
+            <h3>二十一、无限轮播效果</h3>
+            <div id="lunBo">
+                <ul id="lunBoList">
+                    <li><img src="../img/star/8.jpg"/></li>
+                    <li><img src="../img/star/9.jpg"/></li>
+                    <li><img src="../img/star/10.jpg"/></li>
+                    <li><img src="../img/star/11.jpg"/></li>
+                </ul>
+                <ol id="lunBoIcon"></ol>
+            </div>
+        </div>
+        <div id="divTwentyTwo">
+            <h3>二十二、获取CSS属性: js标签对象通过style只能获取行内样式的值；而currentStyle和getComputedStyle可以获取行内行外样式的值</h3>
+            <div class="cssBox" id="box22" style="width: 200px; color: #fff; text-align: center;">点我获取信息</div>
+            <div id="showCssInfo" style="margin-left: 30px;"></div>
+        </div>
+        <div id="divTwentyThree">
+            <h3>23、在20移动动画和22获取标签属性的基础上，对功能函数进行封装</h3>
+            <div style="position: relative; margin-left: 20px;">
+                <div class="box23">
+                    <button id="box23btn1">点我走</button>
+                    <button id="box23btn2">点我重置</button>
+                </div>
+            </div>
+        </div>
+        <div id="divTwentyFour" style="position: relative;margin-top: 150px;">
+            <h3>24、联动效果</h3>
+            <div id="box24"><span id="box24close">X</span></div>
+        </div>
+        <div id="divTwentyFive" style="margin-top: 420px;">
+            <h3>25、网易云音乐</h3>
+            <div id="box25">
+                <ul id="box25ul">
+                    <li><a href="javascript:">京东</a><span class="mask"></span><audio controls="controls"><source src="../img/source/a1.mp3"/></audio></li>
+                    <li><a href="javascript:">天猫</a><span class="mask"></span><audio controls="controls"><source src="../img/source/a2.mp3"/></audio></li>
+                    <li><a href="javascript:">淘宝</a><span class="mask"></span><audio controls="controls"><source src="../img/source/a3.mp3"/></audio></li>
+                    <li><a href="javascript:">小米</a><span class="mask"></span><audio controls="controls"><source src="../img/source/a4.mp3"/></audio></li>
+                    <li><a href="javascript:">华为</a><span class="mask"></span><audio controls="controls"><source src="../img/source/a5.mp3"/></audio></li>
+                    <li><a href="javascript:">魅族</a><span class="mask"></span><audio controls="controls"><source src="../img/source/a6.mp3"/></audio></li>
+                    <li><a href="javascript:">百度</a><span class="mask"></span><audio controls="controls"><source src="../img/source/a7.mp3"/></audio></li>
+                    <li><a href="javascript:">腾讯</a><span class="mask"></span><audio controls="controls"><source src="../img/source/a8.mp3"/></audio></li>
+                    <li><a href="javascript:">拼多多</a><span class="mask"></span><audio controls="controls"><source src="../img/source/a9.mp3"/></audio></li>
+                </ul>
+            </div>
+        </div>
+        <div id="divTwentySix">
+            <h3>26、网易轮播图</h3>
+            <div id="box26">
+                <div id="box26main">
+                    <a href="https://www.cnblogs.com/" target="_blank"><img src="../img/star/4.jpg" alt="博客园"/></a>
+                    <a href="https://www.csdn.net/" target="_blank"><img src="../img/star/5.jpg" alt="CSDN"/></a>
+                    <a href="https://www.jianshu.com/" target="_blank"><img src="../img/star/6.jpg" alt="简书"/></a>
+                    <a href="https://juejin.im/" target="_blank"><img src="../img/star/7.jpg" alt="掘金"/></a>
+                    <a href="http://web.jobbole.com/" target="_blank"><img src="../img/star/8.jpg" alt="伯乐在线"/></a>
+                    <a href="https://www.imooc.com/" target="_blank"><img src="../img/star/9.jpg" alt="慕课网"/></a>
+                </div>
+                <div id="box26arrow">
+                    <span class="box26leftArrow"><</span>
+                    <span class="box26rightArrow">></span>
+                </div>
+                <div id="box26pointer"></div>
+            </div>
+        </div>
+        <div id="divTwentySeven">
+            <h3>27、旋转木马</h3>
+            <div id="box27">
+                <ul id="box27main">
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                    <li></li>
+                </ul>
+                <div id="box27arrow">
+                    <span class="box27left"><</span>
+                    <span class="box27right">></span>
+                </div>
+            </div>
+        </div>
+        <div id="divTwentyEight">
+            <h3>28、闭包应用：左右移动</h3>
+            <div id="box28"><span><<<</span><span>>>></span></div>
+            <script type="text/javascript">
+                var box28 = document.getElementById('box28');
+
+                //第一种方式
+                // var box28Left = 0, box28Right = 0, box28Speed = 50;
+                // (box28.children[0]).onmousedown = function(){
+                //     box28Left -= box28Speed;
+                //     console.log("this.", this);
+                //     this.style.marginLeft = box28Left+"px";
+                // };
+                // (box28.children[1]).onmousedown = function(){
+                //     box28Right += box28speed;
+                //     console.log(this);
+                //     this.style.marginLeft = box28Right + "px";
+                // };
+
+                //第二种方式：闭包函数
+                var boxMove = function(speed){
+                    var num = 0;  //变量num定义一次后，会一直保存在内存中（这个闭包范围中，即将全局变量私有化）
+                    return function(){
+                        num += speed;
+                        this.style.marginLeft = num + "px";
+                        console.log("num: "+num +", ", this);
+                    }
+                };
+                (box28.children[0]).onmousedown = boxMove(-50);
+                (box28.children[1]).onmousedown = boxMove(50);
+
+
+                //模拟页面滚动和缩放效果在节流应用上的闭包写法
+                //// 1、原来的写法
+                // var box28timer = null;
+                // window.onresize = function(){
+                //     clearTimeout(box28timer);
+                //     box28timer = setTimeout(function(){
+                //         console.log(document.documentElement.clientWidth);
+                //     }, 500)
+                // }
+                // window.onscroll = function(){
+                //     clearTimeout(box28timer);
+                //     box28timer = setTimeout(function(){
+                //         console.log(document.documentElement.scrollTop);
+                //     }, 500)
+                // }
+
+                // //2、闭包写法
+                // var box28TimerFunc = function(fn, delay){
+                //     var timer = null;
+                //     return function(){
+                //         clearTimeout(timer);
+                //         timer = setTimeout(fn, delay)
+                //     }
+                // }
+                // window.onscroll = box28TimerFunc(function(){
+                //     console.log(document.documentElement.clientWidth);
+                // }, 500)
+                // window.onresize = box28TimerFunc(function(){
+                //     console.log(document.documentElement.scrollTop);
+                // }, 500)
+
+            </script>
+        </div>
+    </div>
+    <!-- 脚本引用到最后 -->
+    <script src="js/index.js"></script>
+</body>
+</html>

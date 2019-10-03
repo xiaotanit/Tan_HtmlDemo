@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8">
+    <title>星星海特效：css动画</title>
+    <style>
+        /* 1、星星海特效样式 */
+        body, .container { background-color: black; width:100%;height:100%;position: relative;  }
+        .container .star-img {
+            cursor: pointer; position: absolute;
+            /* 设置动画：动画名称 动画执行时间 延迟时间 动画运行速度 执行次数(无限次) 执行效果(往返执行)  */
+            animation: imgAni 2s 0s linear infinite alternate;
+        }
+        /* 图片过渡动画 */
+        @keyframes imgAni {
+            from { opacity: 0.2; }
+            to { opacity: 1; }
+        }
+
+        /* 设置图片悬浮动画 */
+        .container .star-img:hover{
+            transform: scale(3, 3) rotate(180deg) !important;
+            transition: all 1s; /* 过渡效果连写 */
+        }
+
+
+        /* 2、照片墙效果样式 */
+        .container .photo {
+            width: 200px; position: absolute; cursor: pointer; z-index: 99; box-shadow: 0 0 10px yellow;
+            transition: all 1s; /* 设置过渡效果 */
+        }
+        .container .current-photo {
+            top: 50%!important; left: 50%!important;  z-index: 999;
+            transform: translate(-50%, -50%) scale(2, 2) rotate(0deg) !important;
+        }
+    </style>
+</head>
+<body>
+    <div class="container"></div>
+    <script type="text/javascript">
+        window.onload = function(){
+
+            //初始化星星
+            var container = document.getElementsByClassName('container')[0];
+            var screenW = document.documentElement.clientWidth, screenH = document.documentElement.clientHeight;
+            container.style.height = screenH + 'px';
+            console.log('screenW: ', screenW, ', screenH: ', screenH);
+
+            initStarInfo(); //星星海初始化
+            initPhotoWall(); //初始化照片墙
+
+            //1、星星海特效初始化标签
+            function initStarInfo(){
+                var starCount = 200;
+                    for (var i = 0; i < starCount; i++){
+                    var img = document.createElement('img');
+                    img.setAttribute('src', '../img/star/star.png');
+                    img.setAttribute('class', 'star-img'); //设置图片类名
+
+                    //设置图片的坐标位置
+                    img.style.left = parseInt(Math.random()*screenW) + 'px';
+                    img.style.top = parseInt(Math.random()*screenH) + 'px';
+
+                    //设置随机缩放
+                    var scale = Math.random()*0.8;
+                    img.style.transform = 'scale('+ scale +', '+ scale +')';
+
+                    //设置每个图片的动画延迟时间
+                    img.style.animationDelay = Math.random()*2 + 's';
+
+                    container.appendChild(img);
+                }
+            }
+
+            //2、照片墙标签初始化
+            function initPhotoWall(){
+                var imgCount = 15;
+                for (let i = 0; i < imgCount; i++){
+                    let img = document.createElement('img');
+                    img.setAttribute('src', '../img/star/' + i + '.jpg');
+                    img.setAttribute('class', 'photo');
+
+                    //设置照片的随机位置
+                    img.style.left = parseInt(50+Math.random()*(screenW-300)) + 'px';
+                    img.style.top = parseInt(50 + Math.random()*(screenH-300)) + 'px';
+
+                    //设置照片的随机旋转角度
+                    img.style.transform = 'rotate('+ parseInt(Math.random()*999999)%180 +'deg)';
+
+                    container.appendChild(img);
+
+                    //设置照片的点击事件
+                    img.addEventListener('click', function(){
+                        console.log(this);
+
+                        var imgs = container.getElementsByClassName('photo');
+                        console.log(imgs);
+
+                        for (let j = 0; j < imgs.length; j++){
+                            imgs[j].setAttribute('class', 'photo');
+                        }
+                        this.setAttribute('class', 'photo current-photo')
+                    })
+                }
+            }
+        }
+
+
+    </script>
+</body>
+</html>

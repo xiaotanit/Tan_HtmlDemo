@@ -2,69 +2,253 @@
 <html lang="cn">
 <head>
     <meta charset="UTF-8">
-    <title>CSS 浮动float和定位position属性测试</title>
+    <title>CSS 浮动float和定位position属性测试, 动画，背景颜色</title>
     <style type="text/css">
         /**
-        1、默认情况下，所有的网页标签都在标准流布局中，遵循规则：
-            标签排列从上到下，从左到右
-        2、脱离标准流的方法有：
-           1)、浮动：float属性，取值有left和right，即脱离标准流，浮动在父标签的最左边和最右边
-           2)、定位：position属性和left、right、top、bottom属性，position取值有：
-              static: 默认值，没有定位，元素出现在正常的流中
-              absolute: 生成绝对定位的元素，相对于static定位以外的第一个元素进行定位;
-                        元素的位置通过left、top、right、bottom属性进行规定
-              fixed: 生成绝对定位的元素，相对于浏览器窗口进行定位。
-                    元素的位置通过left、top、right、bottom属性进行规定
-              relative: 生成相对定位的元素, 相对于其正常位置进行定位.
-              inherit: 规定应该从父元素继承position属性的值
+        1、backgroound:
+          语法：background:bg-color bg-image position/bg-size bg-repeat bg-origin bg-clip bg-attachment initial|inherit;
+            举例：background: #00ff00 url('smiley.gif') no-repeat fixed center;
+            background-attachment: 默认值为scroll： 表示背景图片随页面的其余部分滚动
+                                    fixed: 背景图像是固定的
+            background-color: 默认transparent，表示透明，其他可设置颜色
+            background-image: 赋值格式：url('图片地址')
+            background-position: 图片坐标位置，取值有left/right/center、top/bottom/center、具体的px数量、百分比
+                    举例：background-position: left center;
+                        background-position: 30% 50%;
+                        background-position: 100px 500px;
+           background-repeat: 图像的平铺格式，取值有repeat、repeat-x、repeat-y、no-repeat, 对应的意思是：
+                                repeat：水平和垂直图像都重复；
+                                repeat-x： 图片水平方向重复;
+                                repeat-y: 图片垂直方向重复；
+                                no-repeat: 图片不重复
+          background-size: 指定背景图片大小，取值有：
+                 length: 设置背景图片高度和宽度,第一个值设置宽度,第二个值设置高度。如果只给出一个值，第二个值默认为自动;
+                        举例：background-size: 100px 200px; background-size: 100px; background-size: auto 300px;
+                 percentage: 百分比，第一个值设置宽度,第二个值设置高度。如果只给出一个，第二个默认设置为auto(自动），用法和length一样
+                 cover: 保持图片的纵横比并将图片缩放成将完全覆盖背景定位区域的最小大小：
+                        关键点：保持纵横比; 完全覆盖; 最小大小,可能背景图片显示不完整
+                        background-size: cover
+                 contain: 保持图片的纵横比并将图片缩放成适合背景定位区域的最大大小，
+                        关键点：保持纵横比; 图片全部显示; 适合背景，所以可能不会完全覆盖标签容器
+                        background-size: contain;
+
+        2、border: border-width，border-style和border-color
+               一次性设置：border: 5px solid red;
+               分开设置：border-style: solid; border-color:red; border-width: 5px;
+               border-bottom-color: red; border-bottom-style: solid; border-top-style: dashed;
+               border-top-left-radius: 设置边框圆角，可以是xxem, 也可以是xx%
+               border-style: 样式的值有：none(默认）/dotted / dashed虚线 / solid实线 / double双边框 / groove双线。。。
+               border-width: 值有thin细 / medium默认中等边框 / thick粗 / 具体的数字
+               border-color: 可以设置一到四的颜色 --> border-color: red yellow blue orange;
+               border-top: 5px solid red; border-right: 10px dashed yellow;
+
         */
 
-        h3 { margin: 0px; }
+        p { width: 80%; height: 50px; line-height: 50px; }
+        .pOne { border: 3px dashed red; }
+        .pTwo { border-top-width: 6px; border-bottom-style: solid; border-bottom-color: blue; }
+        .pThree { border-top-left-radius: 5em; border-bottom-left-radius: 2em; }
+        .pFour { border-width: 10px; border-style: solid dashed; border-color: red yellow blue purple; }
+        .pFive { border-top: 5px solid red; border-right: 3px dashed yellow; width: 30%;}
 
-        /** 1、标签的标准流布局 */
-        .divOne { background-color: yellow; height: 80px; }
-        .divOne div { background-color: orange; }
-        .divOne span { background-color: red; }
+
+        /** 第一个动画 */
+        #content {
+            display: inline-block;
+            margin-left: 20px;
+            width:100px;
+            height:100px;
+            background:red;
+            position:relative;
+            animation:moveOne 5s infinite;
+            -webkit-animation:moveOne 5s infinite; /* Safari and Chrome */
+        }
 
 
-        /** 2、标签的浮动float */
-        .divTwo { background-color: yellow; height: 260px; }
-        .divTwoLeft { float:left; background-color: orange; }
-        .divTwoNormal { background-color: yellowgreen; }
-        .divTwoClear { clear: both; background-color: lightgray; } /** 清除浮动 */
-        .divTwo span { background-color: red; margin: 10px; }
-        .spanTwoRight { float: right; }
+        @keyframes moveOne
+        {
+            from {top:0px;}
+            to {top:200px;}
+        }
 
+        @-webkit-keyframes moveOne /* Safari and Chrome */
+        {
+            from {top:0px;}
+            to {top:200px;}
+        }
+
+
+        /** 2、第二个动画 */
+        #divIDTwo{
+            display: inline-block;
+            margin-left: 20px;
+            width:100px;
+            height:100px;
+            background:greenyellow;
+            position:relative;
+            animation:moveTwo 5s infinite;
+            -webkit-animation:moveTwo 5s infinite; /* Safari and Chrome */
+        }
+
+        @keyframes moveTwo
+        {
+            0%   {top:0px;}
+            25%  {top:200px;}
+            75%  {top:50px}
+            100% {top:100px;}
+        }
+
+        @-webkit-keyframes moveTwo /* Safari and Chrome */
+        {
+            0%   {top:0px;}
+            25%  {top:200px;}
+            75%  {top:50px}
+            100% {top:100px;}
+        }
+
+        /* box-sizing样式属性测试
+        1、box-sizing属性用于更改用于计算元素宽度和高度的默认CSS框模型。
+
+        2、content-box是默认值，并为您提供默认的CSS框大小调整行为。
+        如果将元素的宽度设置为100像素，则元素的内容框将为100像素宽，并且任何边框或填充的宽度将添加到最终渲染的宽度。
+
+        3、border-box告诉浏览器为您指定的宽度和高度的值来计算任何边框和填充。
+        如果将元素的宽度设置为100像素，那么100像素将包括您添加的任何边框或填充，
+        并且内容框将缩小以吸收额外的宽度。这通常会使元素的大小更容易。
+
+        测试结果，box-sizing默认值为content-box， 然后元素width = 内容宽度
+        box-sizing属性值设置为border-box, 则元素width = 内容宽度+border宽度
+        */
+        #oneDiv>p { border: 1px solid red; margin: 10px; font-size:30px; }
+        .zeroP { width: 200px; height: 100px; border: 10px dashed red; background-color:yellow; }
+        .oneP { width: 200px; height: 100px; border: 10px dashed red; background-color: yellow; box-sizing: content-box; }
+        .twoP { width: 200px; height: 100px; border: 10px dashed red; background-color: yellow; box-sizing: border-box; }
+        /* 测试结果：box-sizing属性值默认为content-box */
+
+        /** 浮动 */
+        .container { border: 1px dashed red;}
+        .left { float:left; width: 20%; border: 1px solid black; box-sizing: border-box; }
+        .right { float:left; width: 80%; border: 1px dashed blue; box-sizing: border-box; }
+
+
+        .right ul { list-style: none; float:left; width:300px; height: 300px; border: 1px solid red; padding:5px; }
+        .right img { height: 100px; }
+        .right li { float: left; }
     </style>
 </head>
 <body>
-    <div class="content">
-        <h3>1、标签的标准流布局</h3>
-        <div class="divOne">
-            <div>div111</div>
-            <div>div222</div>
-            <span>span111</span>
-            <span>span222</span>
-        </div>
-        <hr/><br/>
-
-        <h3>2、float浮动：任何类型标签浮动后都变成了行内-块级标签</h3>
-        <div class="divTwo">
-            <div class="divTwoLeft">div111左浮动后变成了行内块级标签</div>
-            <div class="divTwoNormal">div222不浮动</div>
-            <div class="divTwoClear">div333清除浮动</div>
-            <div class="divTwoLeft" style="width: 40%;">div444左浮动，设置宽40%</div>
-            <div class="divTwoNormal">div555不浮动</div>
-            <div class="divTwoClear">div666清除浮动</div>
-            <div class="divTwoLeft" style="width: 40%;">div777左浮动，设置宽40%</div>
-            <div class="divTwoNormal" style="width: 30%;">div888不浮动，设置宽度30%</div>
-            <div class="divTwoClear">div999清除浮动</div>
-            <span class="spanTwoRight" style="width: 30%; height: 80px;">span111右浮动,变成了行内块级标签， 宽30%, 高80px;</span>
-            <span class="spanTwoRight">span222右浮动</span>
-            <span>span不浮动333</span>
-            <span>span不浮动444</span>
-        </div>
-        <hr/><br/>
+    <div>
+        <p class="pOne">一次性设置边框</p>
+        <p class="pOne pTwo">哈喽，World ! ^_^, 测试边狂border</p>
+        <p class="pOne pTwo pThree">设置圆角，天将降大任于斯人也，必将苦其心志</p>
+        <p class="pFour">&nbsp;&nbsp;&nbsp;p标签标签，劳其筋骨，饿其体肤，空乏其身，行佛乱其所为</p>
+        <p class="pFive">所以动心忍性，增益其所不能！</p>
     </div>
+
+    <p><strong>注意:</strong>  @keyframes 规则 不兼容 IE 9 以及更早版本的浏览器.</p>
+    <div id="content"></div>&nbsp;<div id="divIDTwo"></div>
+    <hr/>
+    <div id="oneDiv">
+        <p>nihao<span>你知道</span></p>
+        <p>halo<span>哈哈哈</span></p>
+        <p>三台阁<span>滴哈</span></p>
+    </div>
+    <p class="zeroP">哈哈哈</p>
+    <p class="oneP">哈哈哈</p>
+    <p class="twoP">哈哈哈</p>
+    <p class="threeP">哈哈哈</p>
+    <hr/>
+    <div class="container">
+        <div class="left">
+            <h1>演示js的瀑布流哈哈哈哈哈哈哈哈哈哈哈哈</h1>
+        </div>
+        <div class="right">
+            <ul>
+                <li>名字：王大锤</li>
+                <li><img src="" title="图片。。。" /></li>
+                <li>个性签名：金庸封笔古龙逝，世上唯有英雄志！</li>
+            </ul>
+        </div>
+        <div style="clear:both;">清除两边浮动</div>
+        <br/><hr/><br/>
+        <div>
+            <img src="../img/star/6.jpg" title="标题" style="float:left; width: 200px;"/>
+            来一段文字：道德
+            子曰：苟志于仁矣，无恶也。
+            君子无终食之间违仁，造次必于是，颠沛必于是。
+            仁远乎哉，我欲仁，斯仁至矣。
+            知者不惑，仁者不忧，勇者不惧。
+            有德者，必有言；有言者，不必有德；仁者，必有勇；勇者，不必有仁。
+            志士仁人，无求生以害仁，有杀身以成仁。
+            当仁不让于师。
+            务民之义，敬鬼神而远之，可谓知矣。
+            君子可欺也，不可罔也。
+            克己复礼为仁。
+            己所不欲，勿施于人。在邦无怨，在家无怨。
+            爱人，知人，举直错诸枉，能使枉者直。
+            居处恭，执事敬；与人忠，虽之夷狄，不可弃也。
+            克、伐、怨、欲不行焉，可以为仁矣。
+            工欲善其事，必先利其器；居是邦也，事其大夫之贤者，友其士之仁者。
+            孔子曰：能行五者于天下，为仁矣。请问之。曰。恭宽信敏惠。恭则不侮。宽则得众。信则人任焉。敏则有功。惠则足以使人。
+            修养
+            君子无所争。
+            内省不疚，夫何忧何惧。
+            子曰：君子成人之美。不成人之恶。小人反是。
+            君子和而不同，小人同而不和。
+            君子泰而不骄，小人骄而不泰。
+            修己以敬，修己以安人，修己以安百姓。
+            君子义以为质，礼以行之，孙以出之，信以成之，君子哉。
+            君子病无能焉，不病人之不己知也。
+            君子谋道不谋食，忧道不忧贫。
+            畏天命，畏大人，畏圣人之言。
+            孔子曰：君子有九思，视思明，听思聪，色思温，貌思恭，言思忠，事思敬，疑思问，忿思难，见得思义。
+            礼乐
+            兴于诗，立于礼，成于乐。
+            不学诗，无以言；不学礼，无以立。
+            子曰：诗三百，一言以蔽之，曰，思无邪。
+            子曰：恭而无礼，则劳；慎而无礼，则葸；勇而无礼，则乱；直而无礼，则绞；君子笃于亲，则民兴于仁；故旧不遗，则民不偷。
+            孔子谓季氏：八佾舞于庭，是可忍也，孰不可忍也。
+            子曰：上好礼，则民易使也。
+            子在齐闻韶，三月不知肉味。曰：“不图为乐之至于斯也。”
+            子曰：人而不仁，如礼何？人而不仁，如乐何？
+            政治
+            子曰：“道千乘之国，敬事而信。节用而爱人。使民以时。”
+            子曰：“为政以德，譬如北辰。居其所，而众星共之。”
+            临之以庄，则敬。孝慈，则忠。举善而教不能，则劝。
+            君使臣以礼。臣事君以忠。
+        </div>
+    </div>
+    <span>。。。。</span>
+    <script type="text/javascript">
+        var imgs = ['../img/star/0.jpg', '../img/star/6.jpg', '../img/star/7.jpg', '../img/star/8.jpg'];
+        var names = ['王大锤', '李寻欢', '罗小虎', '胡一刀', '侯希白', '令狐冲', '陆小凤', '楚留香'];
+        var signs = [
+            '金庸封笔古龙逝，世上唯有英雄志',
+            '飞雪连天射白鹿，笑书神侠倚碧鸳',
+            '惜秦皇汉武，略输文采；唐宗宋祖，稍逊风骚；一代天骄，成吉思汗，只识弯弓射大雕；俱往矣，数风流人物，还看今朝！',
+            '钟鼓馔玉不足贵，但愿长醉不复醒；古来神仙皆寂寞，惟有饮者留其名！',
+            '欲将轻骑逐，大雪满弓刀',
+            '葡萄美酒夜光杯，欲饮琵琶马上催；醉卧沙场君莫笑，古来征战几人回',
+            '作为一个男人，当你面对自己的敌人时，唯一的选择就是面对，这样至少你还有搏斗的机会；狭路相逢勇者胜'
+        ];
+
+        var html = "";
+        for (var i = 0; i < 20; i++){
+
+            var imgUrl = imgs[parseInt(Math.random() * 100)%imgs.length];
+            var name = names[parseInt(Math.random()*100)%names.length];
+            var sign = signs[parseInt(Math.random()*100)%signs.length];
+
+            html += "<ul> \
+                        <li><img src='" + imgUrl + "' title='图片咯' /></li>\
+                        <li>\
+                            <div>名字：" + name + "_" + i + "</div>\
+                            <div>个性签名：" + sign + "</div>\
+                        </li>\
+                    </ul>";
+        }
+
+        (document.getElementsByClassName("right")[0]).innerHTML = html;
+    </script>
 </body>
 </html>

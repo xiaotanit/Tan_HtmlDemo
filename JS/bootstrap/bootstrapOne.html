@@ -1,0 +1,540 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Bootstrap Test</title>
+    <meta name="viewport" content="width=device-width">
+    <link rel="stylesheet" type="text/css" href="./dist/css/bootstrap.css"/>
+    <style type="text/css">
+        /* 媒体查询应用 */
+        @media screen and (min-width:1200px) {
+            body{ background-color: rgba(0, 0, 0, .1); }
+        }
+        @media screen and (max-width: 1200px){
+            body { background-color: rgba(255, 0, 0, .1); }
+        }
+        @media screen and (max-width: 768px) {
+            body { background-color: rgba(0, 255, 255, .1); }
+        }
+
+        /* 1、栅格样式: col-md-4的宽度设置在媒体查询中，而col-xs-6的宽度是全局的，所以这两个配合使用 */
+        .main1 .row { margin-top: 10px; }
+        .main1 .row div[class*='col-md'],.main1 .row div[class*='col-xs'],.main1 .row div[class*='col-sm'] {
+            background-color: rgba(255,19,19,.2); padding: 6px 10px; border: 1px solid rgba(0, 0, 0, .6);
+        }
+
+        .tan-xs-6 { width: 50%; float:left; background-color: rgba(255,19,19,.2); padding: 6px 10px; border: 1px solid rgba(0, 0, 0, .6); }
+        @media (min-width: 992px) {
+            .tan-md-4 {
+                width: 33.33333333%; float: left; background-color: rgba(255,19,19,.2); padding: 6px 10px; border: 1px solid rgba(0, 0, 0, .6);
+            }
+        }
+
+        /* 2、文本对齐 */
+        #tanTwo > p { width: 360px; height: 50px; border: 1px dashed red; }
+
+    </style>
+</head>
+<body>
+
+    <div>
+        <div><a href="#tanOne">1、栅格样式</a></div>
+        <div><a href="#tanTwo">2、文本对齐和文字大小写</a></div>
+        <div><a href="#tanThree">3、表格</a></div>
+        <div><a href="#tanFour">4、表单</a></div>
+        <div><a href="#tanFive">5、按钮</a></div>
+    </div>
+    <div>
+        <div id="tanOne">
+            <h3>1、栅格样式:
+                <span style="font-size:12px;color:#666;">类container使用了媒体查询，左右有外边距；类container-fluid100%展示，为流式布局容器</span>
+            </h3>
+            <ul>
+                <li>超小屏幕 手机(phones - xs) (<768px), 类前缀.col-xs-</li>
+                <li>小屏幕 平板(tablets - sm) (≥768px), 类前缀.col-sm-</li>
+                <li>中等屏幕 桌面显示器(desktops - md) (≥992px), 类前缀.col-md-</li>
+                <li>大屏幕 大桌面显示器(larger desktops - lg) (≥1200px), 类前缀.col-lg-</li>
+                <li>栅格样式使用原理分析：
+                    <ol>
+                        <li>.col-xs-类样式全局，.col-sm-类样式写在最小宽度768px媒体查询里面，
+                            .col-md-类样式写在媒体最小宽度992px里面，.col-lg-类样式写在最小宽度1200px媒体查询中</li>
+                        <li>因此写样式的时候，同一个标签如果需要同时存在几个类标签，书写格式依次为：col-xs-* col-sm-* col-md-* col-lg-*</li>
+                        <li>这样写的好处就是当页面宽度大于1200px，起作用的是col-lg-*标签；页面大于992px，起作用的是col-md-*, 以此类推</li>
+                    </ol>
+                </li>
+            </ul>
+            <div class="container main1">
+                <div class="row">
+                    <div class="col-md-1">.col-md-1</div>
+                    <div class="col-md-1">.col-md-1</div>
+                    <div class="col-md-1">.col-md-1</div>
+                    <div class="col-md-1">.col-md-1</div>
+                    <div class="col-md-1">.col-md-1</div>
+                    <div class="col-md-1">.col-md-1</div>
+                    <div class="col-md-1">.col-md-1</div>
+                    <div class="col-md-1">.col-md-1</div>
+                    <div class="col-md-1">.col-md-1</div>
+                    <div class="col-md-1">.col-md-1</div>
+                    <div class="col-md-1">.col-md-1</div>
+                    <div class="col-md-1">.col-md-1</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-8">.col-md-8</div>
+                    <div class="col-md-4">.col-md-4</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">.col-md-4</div>
+                    <div class="col-md-4">.col-md-4</div>
+                    <div class="col-md-4">.col-md-4</div><div class="col-md-4">.col-md-4</div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">.col-md-6</div>
+                    <div class="col-md-6">.col-md-6</div>
+                </div>
+                <h3>Mixed: mobile and desktop </h3>
+                <div>如果不希望在小屏幕设备上所有列都堆叠在一起？那就使用针对超小屏幕和中等屏幕设备所定义的类吧，即 .col-xs-* 和 .col-md-*</div>
+                <p>The Bootstrap 3 grid system has four tiers of classes: xs (phones，extra small), sm (tablets), md (desktops), and lg (larger desktops). You can use nearly any combination of these classes to create more dynamic and flexible layouts.</p>
+                <p>Each tier of classes scales up, meaning if you plan on setting the same widths for xs and sm, you only need to specify xs.</p>
+                <div class="row">
+                    <div class="col-xs-12 col-md-8">.col-xs-12 .col-md-8</div>
+                    <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+                    <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+                    <div class="col-xs-6 col-md-4">.col-xs-6 .col-md-4</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6">.col-xs-6</div>
+                    <div class="col-xs-6">.col-xs-6</div>
+                </div>
+                <h3>Mixed: mobile, tablet, and desktop</h3>
+                <div class="row">
+                    <div class="col-xs-12 col-sm-6 col-lg-8">.col-xs-12 .col-sm-6 .col-lg-8</div>
+                    <div class="col-xs-6 col-lg-4">.col-xs-6 .col-lg-4</div>
+                </div>
+                <div class="row">
+                    <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+                    <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+                    <div class="col-xs-6 col-sm-4">.col-xs-6 .col-sm-4</div>
+                </div>
+                <h3>Offset, push, and pull resets</h3>
+                <p>Reset offsets, pushes, and pulls at specific breakpoints.</p>
+                <div class="row">
+                    <div class="col-sm-5 col-md-6">.col-sm-5 .col-md-6</div>
+                    <div class="col-sm-5 col-sm-offset-2 col-md-6 col-md-offset-0">.col-sm-5 .col-sm-offset-2 .col-md-6 .col-md-offset-0</div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-6 col-md-5 col-lg-6">.col-sm-6 .col-md-5 .col-lg-6</div>
+                    <div class="col-sm-6 col-md-5 col-md-offset-2 col-lg-6 col-lg-offset-0">.col-sm-6 .col-md-5 .col-md-offset-2 .col-lg-6 .col-lg-offset-0</div>
+                </div>
+
+            </div>
+        </div>
+        <div id="tanTwo">
+            <h3>2、文本对齐和文字大小写</h3>
+            <p class="text-left">Left aligned text. 类名.text-left</p>
+            <p class="text-center">Center aligned text. 类名.text-center</p>
+            <p class="text-right">Right aligned text. 类名.text-right</p>
+            <p class="text-justify">Justified text. 类名.text-justify asdfasfaasfassssssssssssabc</p>
+            <p class="text-nowrap">No wrap text. 类名.text-nowrap asdfasfaasfassssssssssssabc</p>
+            <p class="text-lowercase">Lowercased text. 类名.text-lowercase</p>
+            <p class="text-uppercase">Uppercased text. 类名.text-uppercase</p>
+            <p class="text-capitalize">Capitalized text. 类名.text-capitalize</p>
+            <dl class="dl-horizontal">排版dl
+                <dt>排版dt</dt>
+                <dd>排版dd，排版dd标签dd</dd>
+            </dl>
+           <div><var>y</var> = <var>m</var><var>x</var> + <var>b</var></div>
+            <samp>This text is meant to be treated as sample output from a computer program.</samp>
+        </div>
+        <div id="tanThree">
+            <h3>3、表格样式</h3>
+            <ul style="background-color: #fff;">
+                <li>
+                    <table class="table table-hover">
+                        <caption>3.1表格类名table： Optional table caption.</caption>
+                        <thead>
+                            <tr><th>#</th><th>First Name</th><th>Last Name</th><th>Username</th></tr>
+                        </thead>
+                        <tbody>
+                            <tr><th scope="row">1</th><td>Mark</td><td>Otto</td><td>@mdo</td></tr>
+                            <tr><th scope="row">2</th><td>Jacob</td><td>Thornton</td><td>@fat</td></tr>
+                            <tr><th scope="row">3</th><td>Larry</td><td>the Bird</td><td>@twitter</td></tr>
+                        </tbody>
+                    </table>
+                </li>
+                <li>
+                    <table class="table table-striped">
+                        <caption>3.2条纹状表格 类名table-striped</caption>
+                        <thead>
+                            <tr><th>#</th><th>First Name</th><th>Last Name</th><th>Username</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr><th scope="row">1</th><td>Mark</td><td>Otto</td><td>@mdo</td></tr>
+                        <tr><th scope="row">2</th><td>Jacob</td><td>Thornton</td><td>@fat</td></tr>
+                        <tr><th scope="row">3</th><td>Larry</td><td>the Bird</td><td>@twitter</td></tr>
+                        </tbody>
+                    </table>
+                </li>
+                <li>
+                    <table class="table table-hover table-bordered">
+                        <caption>3.3带边框表格 类名table-bordered, 另外表格还有其他几个样式：active/success/info/warning/danger</caption>
+                        <thead>
+                        <tr><th>#</th><th>First Name</th><th>Last Name</th><th>Username</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr><th scope="row">1</th><td>Mark</td><td>Otto</td><td>@mdo</td></tr>
+                        <tr class="warning"><th scope="row">2</th><td>Jacob</td><td>Thornton</td><td>@fat</td></tr>
+                        <tr class="danger"><th scope="row">3</th><td>Larry</td><td>the Bird</td><td>@twitter</td></tr>
+                        </tbody>
+                    </table>
+                </li>
+                <li>
+                    <table class="table table-hover table-condensed">
+                        <caption>3.4浓缩型表格 类名table-condensed 单元格内的填充减半</caption>
+                        <thead>
+                        <tr><th>#</th><th>First Name</th><th>Last Name</th><th>Username</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr class="success">
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr class="info">
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr class="active"><th scope="row">3</th><td>Larry</td><td>the Bird</td><td>@twitter</td></tr>
+                        <tr>
+                            <th class="active">.active类名</th>
+                            <td class="success">.success类名</td>
+                            <td class="info">.info类名</td>
+                            <td class="danger">.danger类名</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" class="warning">.warning类名</th>
+                            <td class="info">.info类名</td>
+                            <td class="active">.active类名</td>
+                            <td class="success">.success类名</td>
+                        </tr>
+                        </tbody>
+                    </table>
+                </li>
+                <li class="table-responsive">
+                    <table class="table">
+                        <caption>3.5响应式类名 类名table-responsive：将任何 .table 元素包裹在 .table-responsive 元素内，即可创建响应式表格，其会在小屏幕设备上（小于768px）水平滚动。
+                            当屏幕大于 768px 宽度时，水平滚动条消失。</caption>
+                        <thead>
+                        <tr><th>#</th><th>First Name</th><th>Last Name</th><th>Username</th></tr>
+                        </thead>
+                        <tbody>
+                        <tr><th scope="row">1</th><td>Mark</td><td>Otto</td><td>@mdo</td></tr>
+                        <tr><th scope="row">2</th><td>Jacob王大锤罗小虎</td><td>Thornton</td><td>@fat</td></tr>
+                        <tr><th scope="row">3</th><td>Larry</td><td>the Bird</td><td>@twitter</td></tr>
+                        </tbody>
+                    </table>
+                </li>
+            </ul>
+        </div>
+        <div id="tanFour">
+            <h3>4、表单</h3>
+            <form>
+                <div class="form-group">
+                    <label for="exampleInputEmail1">Email address</label>
+                    <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Email">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputPassword1">Password</label>
+                    <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                </div>
+                <div class="form-group">
+                    <label for="exampleInputFile">File input</label>
+                    <input type="file" id="exampleInputFile">
+                    <p class="help-block">Example block-level help text here.</p>
+                </div>
+                <div class="checkbox">
+                    <label>
+                        <input type="checkbox"> Check me out
+                    </label>
+                </div>
+                <button type="submit" class="btn btn-default">Submit</button>
+            </form>
+            <div>
+                <h4>4.2 内联表单</h4>
+                <form class="form-inline">
+                    <div class="form-group">
+                        <label for="exampleInputName2" class="sr-only">Name</label>
+                        <input type="text" class="form-control" id="exampleInputName2" placeholder="Jane Doe">
+                    </div>
+                    <div class="form-group">
+                        <label for="exampleInputEmail2">Email</label>
+                        <input type="email" class="form-control" id="exampleInputEmail2" placeholder="jane.doe@example.com">
+                    </div>
+                    <button type="submit" class="btn btn-default">Send invitation</button>
+                </form>
+            </div>
+            <div>
+                <h4>4.3 水平栅格的表单</h4>
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="inputEmail3" class="col-sm-2 control-label">Email</label>
+                        <div class="col-sm-10">
+                            <input type="email" class="form-control" id="inputEmail3" placeholder="Email">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="inputPassword3" class="col-sm-2 control-label">Password</label>
+                        <div class="col-sm-10">
+                            <input type="password" class="form-control" id="inputPassword3" placeholder="Password">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <div class="checkbox">
+                                <label>
+                                    <input type="checkbox"> Remember me
+                                </label>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <div class="col-sm-offset-2 col-sm-10">
+                            <button type="submit" class="btn btn-default">Sign in</button>
+                        </div>
+                    </div>
+                </form>
+
+                <h4>排列在一行</h4>
+                <div class="form-group">
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox1" value="option1"> 1
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox2" value="option2"> 2
+                    </label>
+                    <label class="checkbox-inline">
+                        <input type="checkbox" id="inlineCheckbox3" value="option3"> 3
+                    </label>
+
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio1" value="option1"> 1
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio2" value="option2"> 2
+                    </label>
+                    <label class="radio-inline">
+                        <input type="radio" name="inlineRadioOptions" id="inlineRadio3" value="option3"> 3
+                    </label>
+                </div>
+                <h4>下拉框，单选和多选</h4>
+                <div>
+                    <select class="form-control">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                    <select multiple class="form-control">
+                        <option>1</option>
+                        <option>2</option>
+                        <option>3</option>
+                        <option>4</option>
+                        <option>5</option>
+                    </select>
+                    <select>
+                        <option value="111">请选择</option>
+                        <option value="222">福田区</option>
+                        <option value="333">罗湖区</option>
+                        <option value="444" disabled="true">宝安区 (禁用)</option>
+                        <option value="555" readonly="true">南山区</option>
+                        <option value="666">盐田区</option>
+                        <option value="777" disabled style="color: #999;">光明区</option>
+                        <option value="888" readonly="false">龙岗区</option>
+                    </select>
+                </div>
+                <form>
+                    <h4>fieldset禁用状态，会将子标签表单标签都禁用掉</h4>
+                    <fieldset disabled>
+                        <div class="form-group">
+                            <label for="disabledTextInput">Disabled input</label>
+                            <input type="text" id="disabledTextInput" class="form-control" placeholder="Disabled input">
+                        </div>
+                        <div class="form-group">
+                            <label for="disabledSelect">Disabled select menu</label>
+                            <select id="disabledSelect" class="form-control">
+                                <option>Disabled select</option>
+                            </select>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox"> Can't check this
+                            </label>
+                        </div>
+                        <button type="submit" class="btn btn-primary">Submit</button>
+                    </fieldset>
+                </form>
+            </div>
+            <div>
+                <h4>4.4 表单校验状态</h4>
+                <form>
+                    <div class="form-group has-success">
+                        <label class="control-label" for="inputSuccess1">Input with success</label>
+                        <input type="text" class="form-control" id="inputSuccess1" aria-describedby="helpBlock2">
+                        <span id="helpBlock2" class="help-block">A block of help text that breaks onto a new line and may extend beyond one line.</span>
+                    </div>
+                    <div class="form-group has-warning">
+                        <label class="control-label" for="inputWarning1">Input with warning</label>
+                        <input type="text" class="form-control" id="inputWarning1">
+                    </div>
+                    <div class="form-group has-error">
+                        <label class="control-label" for="inputError1">Input with error</label>
+                        <input type="text" class="form-control" id="inputError1">
+                    </div>
+                    <div class="has-success">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="checkboxSuccess" value="option1">
+                                Checkbox with success
+                            </label>
+                        </div>
+                    </div>
+                    <div class="has-warning">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="checkboxWarning" value="option1">
+                                Checkbox with warning
+                            </label>
+                        </div>
+                    </div>
+                    <div class="has-error">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="checkboxError" value="option1">
+                                Checkbox with error
+                            </label>
+                        </div>
+                    </div>
+                </form>
+
+                <h4>4.5 添加额外的图标</h4>
+                <form>
+                    <div class="form-group has-success has-feedback">
+                        <label class="control-label" for="inputSuccess2">Input with success</label>
+                        <input type="text" class="form-control" id="inputSuccess2" aria-describedby="inputSuccess2Status">
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputSuccess2Status" class="sr-only">(success)</span>
+                    </div>
+                    <div class="form-group has-warning has-feedback">
+                        <label class="control-label" for="inputWarning2">Input with warning</label>
+                        <input type="text" class="form-control" id="inputWarning2" aria-describedby="inputWarning2Status">
+                        <span class="glyphicon glyphicon-warning-sign form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputWarning2Status" class="sr-only">(warning)</span>
+                    </div>
+                    <div class="form-group has-error has-feedback">
+                        <label class="control-label" for="inputError2">Input with error</label>
+                        <input type="text" class="form-control" id="inputError2" aria-describedby="inputError2Status">
+                        <span class="glyphicon glyphicon-remove form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputError2Status" class="sr-only">(error)</span>
+                    </div>
+                    <div class="form-group has-success has-feedback">
+                        <label class="control-label" for="inputGroupSuccess1">Input group with success</label>
+                        <div class="input-group">
+                            <span class="input-group-addon">@</span>
+                            <input type="text" class="form-control" id="inputGroupSuccess1" aria-describedby="inputGroupSuccess1Status">
+                        </div>
+                        <span class="glyphicon glyphicon-ok form-control-feedback" aria-hidden="true"></span>
+                        <span id="inputGroupSuccess1Status" class="sr-only">(success)</span>
+                    </div>
+                </form>
+            </div>
+        </div>
+        <div id="tanFive">
+            <h3>5、按钮</h3>
+            <div>
+                <div>为 &lt;a&gt;、&lt;button&gt; 或 &lt;input&gt; 元素添加按钮类（button class）即可使用 Bootstrap 提供的样式。</div>
+                <a class="btn btn-default" href="#" role="button">Link</a>
+                <button class="btn btn-default" type="submit">Button</button>
+                <input class="btn btn-default" type="button" value="Input">
+                <input class="btn btn-default" type="submit" value="Submit">
+                <span class="btn btn-default">span标签加btn类样式</span>
+                <a class="btn btn-default" href="#">a标签button</a>
+            </div>
+            <h4>5.1 预定义样式</h4>
+            <div>
+                <!-- Standard button -->
+                <button type="button" class="btn btn-default">（默认样式）Default</button>
+                <!-- Provides extra visual weight and identifies the primary action in a set of buttons -->
+                <button type="button" class="btn btn-primary">（首选项）Primary</button>
+                <!-- Indicates a successful or positive action -->
+                <button type="button" class="btn btn-success">（成功）Success</button>
+                <!-- Contextual button for informational alert messages -->
+                <button type="button" class="btn btn-info">（一般信息）Info</button>
+                <!-- Indicates caution should be taken with this action -->
+                <button type="button" class="btn btn-warning">（警告）Warning</button>
+                <!-- Indicates a dangerous or potentially negative action -->
+                <button type="button" class="btn btn-danger">（危险）Danger</button>
+                <!-- Deemphasize a button by making it look like a link while maintaining button behavior -->
+                <button type="button" class="btn btn-link">（链接）Link</button>
+            </div>
+            <h4>5.2 按钮不同尺寸/ 激活状态/禁用状态</h4>
+            <div>
+                <p>
+                    <button type="button" class="btn btn-primary btn-lg">（大按钮）Large button</button>
+                    <button type="button" class="btn btn-default btn-lg">（大按钮）Large button</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-primary">（默认尺寸）Default button</button>
+                    <button type="button" class="btn btn-default">（默认尺寸）Default button</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-primary btn-sm">（小按钮）Small button</button>
+                    <button type="button" class="btn btn-default btn-sm">（小按钮）Small button</button>
+                </p>
+                <p>
+                    <button type="button" class="btn btn-primary btn-xs">（超小尺寸）Extra small button</button>
+                    <button type="button" class="btn btn-default btn-xs">（超小尺寸）Extra small button</button>
+                </p>
+                <button type="button" class="btn btn-primary btn-lg btn-block">（块级元素）Block level button</button>
+                <button type="button" class="btn btn-default btn-lg btn-block">（块级元素）Block level button</button>
+                <p>
+                    <button type="button" class="btn btn-primary btn-lg active">Primary button active</button>
+                    <button type="button" class="btn btn-default btn-lg active">Button active</button>
+                    <a href="#" class="btn btn-primary btn-lg active" role="button">Primary link a激活状态</a>
+                    <a href="#" class="btn btn-default btn-lg active" role="button">Link a激活状态</a>
+                    <button type="button" class="btn btn-lg btn-primary" disabled="disabled">Primary 按钮禁用状态</button>
+                    <button type="button" class="btn btn-default btn-lg" disabled="disabled">Button禁用状态</button>
+                    <a href="#" class="btn btn-primary btn-lg disabled" role="button">Primary link</a>
+                    <a href="#" class="btn btn-default btn-lg disabled" role="button">Link</a>
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <form>
+
+    </form>
+
+    <div id="tan" ></div>
+
+    <script type="text/javascript">
+
+        var pageChange = function(e){
+            // console.log(e.currentTarget == window);
+            var str = "dpr: " + window.devicePixelRatio +  "<br/>" +
+                "window.innerWidth: " + window.innerWidth +", window.outerWidth: " + window.outerWidth + "<br/>"+
+                "doc.w: " + document.documentElement.clientWidth + ", doc.ow: " + document.documentElement.offsetWidth +"<br/>"+
+                "body.w: " + document.body.clientWidth + ", body.ow: " +document.body.offsetWidth+"<br/>"+
+                "screen.w: "+ window.screen.width + ", screen.h: "+window.screen.height;
+            document.getElementById('tan').innerHTML = str;
+        }
+        pageChange();
+        window.onresize = pageChange;
+    </script>
+</body>
+</html>
