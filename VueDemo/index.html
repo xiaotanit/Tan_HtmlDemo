@@ -42,7 +42,7 @@
                 <tan-second-component></tan-second-component>
                 <ul>
                     <!-- 从父级作用域传值给子组件 -->
-                    <tan-third-component v-for="item in arr" v-bind:superitem="item" v-bind:key="item.id"></tan-third-component>
+                    <tan-third-component v-for="item in arr" v-bind:superItem="item" v-bind:key="item.id"></tan-third-component>
                 </ul>
             </div>
             <ul>
@@ -93,7 +93,10 @@
         });
         //注册当前页面使用的组件，从父级作用域获取数据
         Vue.component('tan-third-component',{
-            props: ['superitem'], //这里注意，不能用驼峰式key, 驼峰式报错
+            //父级bind用驼峰，子组件用全小写;
+            //父级bind用全小写，子组件用全小写;
+            //父级bind用中杠线连接，子组件用驼峰式
+            props: ['superitem'],
             template: '<li>{{superitem.name}} --- {{superitem.book}}</li>'
         });
 

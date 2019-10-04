@@ -27,8 +27,74 @@
             <div :style="styleObj">粉骨碎身浑不怕，要留清白在人间。</div>
             <div :style="[styleObj, styleObj2]">内联样式的数组语法</div>
         </div>
+        <br/><hr/><br/>
+        <div>2、自定义组件</div>
+        <div>
+            <div class="classItem">
+                <tan-one-com v-bind:super-obj="myInfo"
+                             v-on:change-name="updateName" v-on:change-age="updateAge">
+                </tan-one-com>
+                <tan-one-com v-bind:super-obj="myInfo"
+                             v-on:change-name="updateName" v-on:change-age="updateAge">
+                </tan-one-com>
+            </div>
+            <div class="classItem">
+                <tan-two-com>
+                    <h3>男儿何不带吴钩，收取关山五十州；</h3>
+                    <h1>请君暂上凌烟阁，若个书生万户侯。</h1>
+                </tan-two-com>
+            </div>
+            <div class="classItem">
+                <button v-on:click="changeComponent">动态切换组件</button>
+                <component v-bind:is="comName"></component>
+            </div>
+        </div>
     </div>
     <script type="text/javascript">
+
+        //注册全局组件, 注册之后，每个Vue实例都可以使用
+        Vue.component('tan-one-com',{
+            //父级bind用驼峰，子组件用全小写;
+            //父级bind用全小写，子组件用全小写;
+            //父级bind用中杠线连接，子组件可用驼峰式
+            props: ['superObj'],  //接收来自父级传递过来的数据
+            data: function(){  //自定义属性，必须用函数。这是为了保证该组件在复用时，各组件实例数据互不影响
+                return {
+                    count: 1
+                };
+            },
+            methods: {
+                inputName: function(event){
+                    console.log(event.target.value);
+                    //通知父级，传递最新值给父级
+                    this.$emit('change-name', { value: event.target.value });
+                },
+                inputAge: function(age){
+                    //传递最新值给父级
+                    this.$emit('change-age', { value: age });
+                }
+            },
+            template: '<div>' +
+                        '<div><button v-on:click="count+=1">点我加一：{{count}}</button></div>' +
+                        '<div><input type="text" placeholder="请输入名字" v-model="superObj.name" v-on:input="inputName"/></div>' +
+                        '<div><input type="text" placeholder="请输入年龄" v-model="superObj.age" v-on:input="inputAge($event.target.value)"/></div>' +
+                        '<slot></slot>'+
+                      '</div>'
+        })
+
+        //注册全局组件，父级如何在子组件中插入自定义标签
+        Vue.component('tan-two-com', {
+            template: '<div style="border: 5px dashed green;">' +
+                        '<p>我是子组件，给父级开放一个入口，方便插入父级自定义标签，用slot标签来接收父级自定义标签</p>'+
+                        '<slot></slot>'+
+                        '<div>..........end.......</div>'+
+            '</div>'
+        })
+
+        Vue.component('tan-third-com', {
+            template: '<p style="border: 5px solid gray; ">哈哈, 我是tan-third-com组件</p>'
+        })
+
         var vm = new Vue({
             el: "#app",
             data:{
@@ -37,8 +103,24 @@
                 classObj3: ['classOne', 'classTwo'],   //class的数组语法
                 styleObj: { fontSize: '50px', 'border-bottom': '8px dashed purple', color: 'red' }, //内联样式的对象语法
                 styleObj2: { borderLeft: '3px solid red', 'border-right':'5px solid green', fontStyle: 'italic' }, //内联样式的对象语法
+                myInfo: { name: '', age: 18 },
+                comName: 'tan-third-com', //组件名字
             },
+            methods: {
+                updateName: function(event){
+                    this.myInfo.name = event.value;
+                },
+                updateAge: function(event){
+                    this.myInfo.age = event.value;
+                    console.log("event: ", event);
+                },
+                changeComponent: function(){ //动态切换组件名字
+                    this.comName = this.comName == 'tan-third-com' ? 'tan-two-com':'tan-third-com';
+                }
+            }
         });
+
+
     </script>
 </body>
 </html>
