@@ -4,12 +4,53 @@
     <meta charset="utf-8"/>
     <title>Vue - 第二篇</title>
     <script type="text/javascript" src="js/vue.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/velocity/1.2.3/velocity.min.js"></script>
     <style type="text/css">
         .title { color: red; font-weight: 800; font-size: 30px; line-height: 40px; }
         .classItem > div { display: inline-block; margin: 10px; }
         .classZero { color: gray; font-style:italic; }
         .classOne { padding: 10px; font-weight: 800; border: 3px dashed red; color: blue; font-size: 20px; }
         .classTwo { font-size: 30px; border: 5px solid green; box-shadow: 10px 10px 8px black; text-decoration: underline; }
+
+        /* 元素过渡，配合transition组件和该组件的name属性, 如果不设置name, 则前缀为v-, 如v-enter-active */
+        .fade-enter-active, .fade-leave-active { transition: opacity .5s; }
+        .fade-enter, .fade-leave-to /* .fade-leave-active below version 2.1.8 */ {
+            opacity: 0;
+        }
+        .trans-item { display: inline-block; text-align: center; padding: 5px; margin: 5px; border: 5px dashed black; }
+
+        /* 可以设置不同的进入和离开动画 */
+        /* 设置持续时间和动画函数 */
+        .slide-fade-enter-active {
+            transition: all .3s ease;
+        }
+        .slide-fade-leave-active {
+            transition: all .8s cubic-bezier(1.0, 0.5, 0.8, 1.0);
+        }
+        .slide-fade-enter, .slide-fade-leave-to
+            /* .slide-fade-leave-active for below version 2.1.8 */ {
+            transform: translateX(10px);
+            opacity: 0;
+        }
+
+        /* css动画 */
+        .bounce-enter-active {
+            animation: bounce-in .5s;
+        }
+        .bounce-leave-active {
+            animation: bounce-in .5s reverse;
+        }
+        @keyframes bounce-in {
+            0% {
+                transform: scale(0);
+            }
+            50% {
+                transform: scale(1.5);
+            }
+            100% {
+                transform: scale(1);
+            }
+        }
     </style>
 </head>
 <body>
@@ -38,7 +79,7 @@
                              v-on:change-name="updateName" v-on:change-age="updateAge">
                 </tan-one-com>
             </div>
-            <div class="classItem">
+            <div class="classItem" ref="parentDiv">
                 <tan-two-com>
                     <h3>男儿何不带吴钩，收取关山五十州；</h3>
                     <h1>请君暂上凌烟阁，若个书生万户侯。</h1>
@@ -49,20 +90,71 @@
                 <component v-bind:is="comName"></component>
             </div>
         </div>
+        <br/><hr/><br/>
+        <div>3、元素进入/离开 & 列表过渡</div>
+        <div class="classItem">
+            <div>
+                <button v-on:click="showHello = !showHello" style="height: 50px;">Toggle</button>
+                <transition name="fade">
+                    <div v-if="showHello" class="trans-item">hello</div>
+                </transition>
+            </div>
+            <div>
+                <button v-on:click="show2 = !show2" style="height: 50px;">CSS过渡</button>
+                <transition name="slide-fade">
+                    <div v-if="show2" class="trans-item">hello</div>
+                </transition>
+            </div>
+            <br/>
+            <div>
+                <button v-on:click="show3 = !show3" style="height: 50px;">CSS动画</button>
+                <transition name="bounce">
+                    <div v-if="show3">CSS 动画用法同 CSS 过渡，区别是在动画中 v-enter 类名在节点插入 DOM 后不会立即删除，而是在 animationend 事件触发时删除。</div>
+                </transition>
+            </div>
+            <br/>
+
+            <div>
+                <button @click="show4 = !show4">钩子函数+velocity结合过渡</button>
+                <transition
+                        v-on:before-enter="beforeEnter"
+                        v-on:enter="enter"
+                        v-on:leave="leave"
+                        v-bind:css="false">
+                    <div v-if="show4">JavaScript钩子函数过渡</div>
+                </transition>
+            </div>
+        </div>
+        <br/>
+        <div>4、自定义指令</div>
+        <div class="classItem">
+            <div v-my-custom-directive:foo.a.b="message"></div>
+        </div>
+        <br/><br/><br/><br/><br/><br/><br/><br/>
     </div>
     <script type="text/javascript">
 
+        /* 官方推荐的一些命名规则
+        1、组件名命名用kebab-case命名
+        2、父子级单向数据流：父级引用子组件时用kebab-case（短横线分隔法），子组件prop用驼峰式命名接收
+        2、子组件通知父级事件命名用kebab-case
+        */
         //注册全局组件, 注册之后，每个Vue实例都可以使用
         Vue.component('tan-one-com',{
             //父级bind用驼峰，子组件用全小写;
             //父级bind用全小写，子组件用全小写;
-            //父级bind用中杠线连接，子组件可用驼峰式
+            //父级bind用短横线连接，子组件用驼峰式
             props: ['superObj'],  //接收来自父级传递过来的数据
             data: function(){  //自定义属性，必须用函数。这是为了保证该组件在复用时，各组件实例数据互不影响
                 return {
                     count: 1
                 };
             },
+            // created(){
+            //     console.log("...........组件tan-one-com里面的created钩子")
+            //     console.log(this.$createElement)
+            //     console.log(".............end.........")
+            // },
             methods: {
                 inputName: function(event){
                     console.log(event.target.value);
@@ -95,6 +187,27 @@
             template: '<p style="border: 5px solid gray; ">哈哈, 我是tan-third-com组件</p>'
         })
 
+
+        //自定义指令 , 写在new Vue前面
+        Vue.directive('my-custom-directive', {
+            bind: function (el, binding, vnode) {
+
+                console.log(el);
+                console.log(binding);
+                console.log(vnode);
+                console.log(".......end.....")
+
+                var s = JSON.stringify
+                el.innerHTML =
+                        'name: '       + s(binding.name) + '<br>' +
+                        'value: '      + s(binding.value) + '<br>' +
+                        'expression: ' + s(binding.expression) + '<br>' +
+                        'argument: '   + s(binding.arg) + '<br>' +
+                        'modifiers: '  + s(binding.modifiers) + '<br>' +
+                        'vnode keys: ' + Object.keys(vnode).join(', ')
+            }
+        })
+
         var vm = new Vue({
             el: "#app",
             data:{
@@ -105,10 +218,16 @@
                 styleObj2: { borderLeft: '3px solid red', 'border-right':'5px solid green', fontStyle: 'italic' }, //内联样式的对象语法
                 myInfo: { name: '', age: 18 },
                 comName: 'tan-third-com', //组件名字
+                showHello: true,  //过渡元素展示
+                show2: true,  //css过渡
+                show3: true,  //css动画
+                show4: true,  //JavaScript钩子函数
+                message: "hello", //自定义指令
             },
             methods: {
                 updateName: function(event){
                     this.myInfo.name = event.value;
+
                 },
                 updateAge: function(event){
                     this.myInfo.age = event.value;
@@ -116,11 +235,158 @@
                 },
                 changeComponent: function(){ //动态切换组件名字
                     this.comName = this.comName == 'tan-third-com' ? 'tan-two-com':'tan-third-com';
+                },
+                beforeEnter: function (el) {
+                    el.style.opacity = 0
+                    el.style.transformOrigin = 'left'
+                },
+                enter: function (el, done) {
+                    Velocity(el, { opacity: 1, fontSize: '1.4em' }, { duration: 300 })
+                    Velocity(el, { fontSize: '1em' }, { complete: done })
+                },
+                leave: function (el, done) {
+                    Velocity(el, { translateX: '15px', rotateZ: '50deg' }, { duration: 600 })
+                    Velocity(el, { rotateZ: '100deg' }, { loop: 2 })
+                    Velocity(el, {
+                        rotateZ: '45deg',
+                        translateY: '30px',
+                        translateX: '30px',
+                        opacity: 0
+                    }, { complete: done })
                 }
             }
         });
 
+        //可复用性 & 组合： 混入
+        // 定义一个混入对象
+        var myMixin = {
+            created: function () {
+                this.hello()
+            },
+            methods: {
+                hello: function () {
+                    console.log('hello from mixin!')
+                }
+            }
+        }
 
+        // 定义一个使用混入对象的组件
+        var Component = Vue.extend({
+            mixins: [myMixin]
+        })
+
+        var component = new Component() // => "hello from mixin!"
+
+
+
+
+    </script>
+
+    <!-- app2 -->
+    <div id="app2">
+        <div>1、渲染函数</div>
+        <div>
+            <anchored-heading :level="1">
+                <div style="border: 3px dashed red; display: inline-block;">
+                    <span>{{defaultTexts}}</span>
+                    <span>哈喽</span>
+                    <input type="text" placeholder="点我输入"/>
+                </div>
+                <span>createElement深入数据对象</span>
+                <h3>h3标签</h3>
+            </anchored-heading>
+        </div>
+    </div>
+    <script type="text/javascript">
+
+        var getChildrenTextContent = function (children) {
+            return children.map(function (node) {
+                return node.children
+                    ? getChildrenTextContent(node.children)
+                    : node.text
+            }).join('')
+        }
+
+        Vue.component('anchored-heading', {
+            render: function (createElement) {
+
+                console.log("this.$slots.default: ", this.$slots.default);
+                /*  this.$slots.default, 插槽里每加一个标签，this.$slots.default里面就多一个undefined的VNode，
+                比如上面anchored-heading的slot里面直接子节点3个(div、span、h3), 则this.$slots.default数组里面的VNode为5个（3个+2个undefined VNode）
+                [
+                    { tag: 'div', children: Array(5) },
+                    { tag: undefined, children: undefined },
+                    { tag: 'span', children: Array(1) },
+                    { tag: undefined, children: undefined },
+                    { tag: 'h3', children: Array(1)}
+                ]
+                 */
+                // 创建 kebab-case 风格的 ID
+                var childrenStr = getChildrenTextContent(this.$slots.default);
+                var headingId = childrenStr
+                    .toLowerCase()
+                    .replace(/\W+/g, '-') //非字母、数字、下划线字符，全部替换成“-”，比如中文/标点符号全部换成“-”
+                    .replace(/(^-|-$)/g, '') //以“-”开头或结尾，替换为空
+
+                console.log("orialStr: ", childrenStr);
+                console.log("headingId: ", headingId);
+
+                var myVnode = createElement(
+                    'h' + this.level,
+                    [
+                        //这里有对三个参数使用的例子
+                        createElement('a', {
+                            attrs: {
+                                name: headingId,
+                                href: '#' + headingId,
+                                id: 'tantan'
+                            },
+                            // style: { //与`v-bind:style`的API相同，接受一个字符串、对象，或对象组成的数组
+                            //     color: 'red', fontSize: '16px', borderTop: '1px dashed black', textDecoration: 'underline'
+                            // },
+                            // domProps: { //设置DOM属性
+                            //     innerHTML: '<div class="sub-div">nihao</div>',
+                            //     // innerText: '王大锤',
+                            // },
+                            // on: {  //渲染函数事件
+                            //     click: function(){
+                            //         console.log("点我啦了。， 。。 ")
+                            //         alert("ni8你好")
+                            //     },
+                            //     focus: function(){
+                            //         console.log("....获取焦点。。。")
+                            //     },
+                            //     blur: function(){
+                            //         console.log(".....失去焦点。。。")
+                            //     },
+                            // },
+                        }, this.$slots.default)
+                    ]
+                )
+
+                console.log(".............最后createElement返回的数据是......")
+                console.log(myVnode)
+                console.log("............ok end.................")
+
+                return myVnode;
+            },
+            props: {
+                level: {
+                    type: Number,
+                    required: true
+                }
+            }
+        })
+
+        var vm2 = new Vue({
+            el: "#app2",
+            data: {
+                defaultTexts: ["王大锤", 666], //渲染函数子节点数组
+            },
+            methods: {
+
+            }
+        });
     </script>
 </body>
 </html>

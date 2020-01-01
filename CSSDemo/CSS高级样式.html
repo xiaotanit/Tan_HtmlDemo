@@ -1,0 +1,532 @@
+<!DOCTYPE html>
+<html lang="cn">
+<head>
+    <meta charset="UTF-8">
+    <title>CSS进阶练习</title>
+    <style>
+        /*
+        1、颜色渐变(直线梯队)语法：
+        <linear-gradient> = linear-gradient([ [ <angle> | to <side-or-corner> ] ,]? <color-stop>[, <color-stop>]+)
+        <side-or-corner> = [left | right] || [top | bottom]
+        <color-stop> = <color> [ <length> | <percentage> ]?
+
+        下述值用来表示渐变的方向，可以使用角度或者关键字来设置：
+        <angle>：用角度值指定渐变的方向（或角度）。
+        to left：设置渐变为从右到左。相当于: 270deg
+        to right：设置渐变从左到右。相当于: 90deg
+        to top：设置渐变从下到上。相当于: 0deg
+        to bottom：设置渐变从上到下。相当于: 180deg。这是默认值，等同于留空不写。
+        <color-stop> 用于指定渐变的起止颜色：
+        <color>：指定颜色。
+        <length>：用长度值指定起止色位置。不允许负值
+        <percentage>：用百分比指定起止色位置。
+
+        解说：background: linear-gradient(0deg, yellow, green)：
+        第二个默认从0%（底部）开始，第三个参数默认从100%（顶部）开始；
+         假设第一个参数偏转角度一直变化
+        0deg, yellow, green： 背景颜色从下到上yellow --> green
+        顺时针旋转，第一个参数角度一直增大，当为90deg, 左-->右；为180deg, 上-->下；为270deg, 右-->左；为360deg,
+
+        */
+        .box1 {
+            margin: 20px; width: 100px; height: 100px;
+            position: relative; background: #fff; border: 1px solid black;
+        }
+        .box1:before {
+            content: ''; z-index: -1;
+            position: absolute; width: 120px; height: 120px; top: -10px; left: -10px;
+            background-image: linear-gradient(90deg, yellow 30%, black 70%); border: 1px dashed red;
+        }
+        .box1:after{
+            content: ''; position: absolute; left: 50px; top: 50px; width: 100px;border-top: 1px solid gray; background-color: blue;
+        }
+
+        /* 背景颜色渐变测试 */
+        .box2 div { width: 200px; height: 200px; margin: 10px; border: 1px solid black; float: left; }
+        .test { background: linear-gradient(yellow, green); }
+        .test2 { background: linear-gradient(yellow, green 50%, gold); }
+        .test3 { background: linear-gradient(0deg, yellow 20%, green 50%, gold 80%); }
+        .test4 { background: linear-gradient(45deg, yellow, green 50%, gold); }
+        .test5 { background: linear-gradient(to top right, yellow, green 50%, gold); }
+        .test6 { background: linear-gradient(0deg, yellow, green); }
+        .test7 { background: linear-gradient(0deg, yellow 50%, green); }
+        .test8 { background-image: linear-gradient(-45deg, orange 0%, yellow 100%), linear-gradient( green, black); }
+
+
+        /* 3、当选按钮背景颜色变化 */
+        .grade_box { width: 300px; height: 40px; }
+        .grade_box div {
+            display: inline-block; height: 100%; width: 50%; line-height: 40px; text-align: center; background-color: #f4f4f4; color: #ff7800; border: 1px solid #ff7800; box-sizing: border-box; cursor: pointer;
+        }
+        .grade_box .grade_sel { background-color: #ff7800; color: #fff; }
+        .grade_box .grade_first { border-top-left-radius: 40px; border-bottom-left-radius: 40px; }
+        .grade_box .grade_second { border-top-right-radius: 40px; border-bottom-right-radius: 40px; }
+
+        /* 4、按钮背景颜色渐变 */
+        .bg_change_btn{
+            width: 200px; height: 50px; line-height: 50px; border-radius: 50px; margin-top: 30px; text-align: center;
+            background-image: linear-gradient(-45deg, orange 0%, yellow 100%), linear-gradient( green, black); cursor: pointer;
+        }
+
+        /* 5、视屏图标icon */
+        .video-icon { display: inline-block; width: 30px; height: 30px; border: 2px solid blue; border-radius: 30px; position: relative; cursor: pointer; }
+        .video-icon:after {
+            position: absolute; left: 12px; top: 7px; content: '';
+            border-width:8px 0 8px 10px; border-style:solid;
+            border-color:transparent transparent transparent blue;
+        }
+
+        /* 6、超出限制宽高后省略点展示
+            多行后显示省略点，只应用于-webkit内核； 移动端浏览器基本都是WebKit内核的，所以该样式适用于移动端
+        */
+        .text-box{
+            margin-top: 20px; width: 500px; height: 50px; border:1px dashed #999; color: #999; line-height: 25px;
+            overflow: hidden; text-overflow: ellipsis; display: -webkit-box;
+            -webkit-line-clamp: 2; /* 这个是行数 */
+            -webkit-box-orient: vertical; word-break:break-all;
+        }
+
+        /* 7、复选框 */
+        .div7 { margin-top: 30px; }
+        .myCheck{
+            display: inline-block; width: 14px; height: 14px; position: relative; cursor: pointer; border-radius: 2px;
+            border: 1px solid #ddd; background-color: #fff;
+        }
+        .myChecked { background-color: #2786e4; border: 1px solid #2786e4; }
+        .myChecked::before{
+            content: ''; position: absolute; left: 4px; top: 2px; width: 3px; height: 6px;
+            border-width: 0 2px 2px 0;
+            border-style: solid;
+            border-color: transparent #fff #fff transparent;
+            transform: rotate(30deg);
+        }
+
+        /* 8、样式动画 (循环省略号) */
+        .myDot { padding: 0 10px; margin: 20px; }
+        .myDot dot {
+            display: inline-block; height: 1em; line-height: 1; text-align: left;
+            vertical-align: -.25em; overflow: hidden;
+        }
+        .myDot dot::before{
+            display: block; content: '...\A..\A.'; white-space: pre-wrap; animation: dot 3s infinite step-start both;
+        }
+        @keyframes dot {
+            33% { transform: translateY(-2em); }
+            66% { transform: translateY(-1em); }
+        }
+        /* 左右双引号还有另外一种写法：content: open-quote; content: close-quote; */
+        .myDot::before { content: '8、动态动画加载："' }
+        .myDot::after { content: '  ^_^"' }
+
+        /* 9、三角形样式 */
+        .div9 { width: 500px; height: 80px; background-color: black; color: white; text-align: center; position: relative; margin-top: 10px; }
+        .div9::before{
+            position: absolute; top: 0; left: 50%; width: 0; height: 0;
+            margin-left: -5px; content: "";
+            border-top: 10px solid red;
+            border-right: 10px solid orange;
+            border-bottom: 10px solid yellow;
+            border-left: 10px solid green;
+        }
+        .div9::after{
+            position: absolute; bottom: 0; left: 50%; width: 0; height: 0;
+            margin-left: -5px; content: "";
+            border-right: 10px solid transparent;
+            border-bottom: 10px solid yellow;
+            border-left: 10px solid transparent;
+        }
+        /* 伪元素设置第一个字的样式 */
+        .div9::first-letter { font-size: 40px; font-weight: 600; color: red; }
+        /* 伪元素设置第一行的样式 */
+        .div9::first-line { color: yellow; }
+
+        /* 10、自定义上下左右尖角背景 */
+        .div10 { margin-top: 20px; border: 1px dashed red; line-height: 50px; position: relative; }
+        .div10::before {
+            content: ''; position: absolute; left: 200px; top: 18px; width: 11px; height: 11px;
+            border-width: 0 2px 2px 0;
+            border-style: solid;
+            border-color: transparent #999 #999 transparent;
+            transform: rotate(135deg);
+        }
+        .div10::after {
+            content: ''; position: absolute; left: 230px; top: 18px; width: 11px; height: 11px;
+            border-width: 0 2px 2px 0;
+            border-style: solid;
+            border-color: transparent #999 #999 transparent;
+            transform: rotate(-45deg);
+        }
+        .div10 .icon1 {
+            margin-left: 70px; width:8px; height:8px; display:inline-block; border-top: 2px solid #888; border-right: 2px solid #888;
+            transform: rotate(135deg); position:relative; top: -3px;
+        }
+        .div10 .icon2 {
+            margin-left: 10px; width:8px; height:8px; display:inline-block; border-top: 2px solid #888; border-right: 2px solid #888;
+            transform: rotate(-45deg); position:relative; top: 0px;
+        }
+        /*
+        1111、裁剪属性  clip: rect (top, right, bottom, left): top/left表示裁剪起始位置，right/bottom: 表示裁剪的结束位置
+        */
+
+        /* 11、交错动画 */
+        .div11 { border: 1px dashed red; }
+        .div11 .loading {
+            display: flex; height: 120px; justify-content: center; align-items: center; animation-delay: 1s; background-color: #222;
+        }
+        .div11 .loading .dot { position: relative; width: 40px; height: 40px; margin: 10px; border-radius: 50%; }
+        .div11 .loading .dot::before {
+             position: absolute; content: ""; width: 100%; height: 100%;
+             background: inherit; border-radius: inherit; animation: wave 2s ease-out infinite;
+         }
+        .div11 .loading .dot:nth-of-type(1) { background-color: #7ef9ff; }
+        .div11 .loading .dot:nth-of-type(1)::before { animation-delay: 0.2s; }
+        .div11 .loading .dot:nth-of-type(2) { background-color: #89cff0; }
+        .div11 .loading .dot:nth-of-type(2)::before { animation-delay: 0.4s; }
+        .div11 .loading .dot:nth-of-type(3) { background-color: #4682b4; }
+        .div11 .loading .dot:nth-of-type(3)::before { animation-delay: 0.6s; }
+        .div11 .loading .dot:nth-of-type(4) { background-color: #0f52ba; }
+        .div11 .loading .dot:nth-of-type(4)::before { animation-delay: 0.8s; }
+        .div11 .loading .dot:nth-of-type(5) { background-color: yellow; }
+        .div11 .loading .dot:nth-of-type(5)::before { animation-delay: 1.0s; }
+        @keyframes wave {
+            50%, 75% { transform: scale(2); }
+            80%, 100% { opacity: 0; }
+        }
+
+        /* 12、js分割动画 */
+        .div12 {
+            background-image: linear-gradient(rgba(16, 16, 16, 0.8), rgba(16, 16, 16, 0.8)), url(https://i.loli.net/2019/10/18/buDT4YS6zUMfHst.jpg);
+            background-size: cover;
+        }
+        .div12 .wordLandIn {
+            margin: 0 9em; font-size: 2em; font-weight: 600; min-height: 120px;
+            display: flex; flex-wrap: wrap; line-height: 1.8; color: white;
+            font-family: Lora, serif; white-space: pre;
+        }
+        .div12 .wordLandIn span { animation: wordLandIn 0.8s ease-out both; }
+        @keyframes wordLandIn {
+            from { opacity: 0; transform: translateY(-20%); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .div12 .reveal{
+            position: relative; height: 120px; background-color: #222; display: flex;  justify-content: center; align-items: center;
+            color: #6ee1f5; font-size: 2em; font-family: Raleway, sans-serif; letter-spacing: 3px;
+            text-transform: uppercase; white-space: pre;
+        }
+        .div12 .reveal span { opacity: 0; transform: scale(0); animation: wordFadeIn 2.4s forwards; }
+        .div12 .reveal::before, .div12 .reveal::after{
+            position: absolute; content: ""; top: 0; bottom: 0;
+            width: 2px; height: 100%; background: white; opacity: 0; transform: scale(0);
+        }
+        .div12 .reveal::before{ left: 50%; animation: wordSlideLeft 1.5s cubic-bezier(0.7, -0.6, 0.3, 1.5) forwards; }
+        .div12 .reveal::after{ right: 50%; animation: wordSlideRight 1.5s cubic-bezier(0.7, -0.6, 0.3, 1.5) forwards; }
+        @keyframes wordFadeIn {
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        @keyframes wordSlideLeft {
+            to { left: 10%; opacity: 1; transform: scale(0.9); }
+        }
+
+        @keyframes wordSlideRight {
+            to { right: 10%; opacity: 1; transform: scale(0.9); }
+        }
+
+        /* 13、伪类样式 */
+        .div13 { background-color: #222; color: #ffffff; padding: 30px; }
+        .div13 .btn{
+            --hue: 190;
+            --ease-in-duration: 0.25s;
+            --ease-out-duration: 0.65s;
+            --ease-out-delay: var(--ease-in-duration);
+            position: relative;
+            padding: 1rem 3rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: white;
+            text-decoration: none;
+            background-color: hsl(var(--hue), 100%, 41%);
+            border: 1px solid hsl(var(--hue), 100%, 41%);
+            outline: transparent;
+            overflow: hidden;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+            transition: 0.25s;
+        }
+        .div13 .btn:hover { background: hsl(var(--hue), 100%, 31%); }
+        .div13 .btn-primary { --hue: 171; }
+        .div13 .btn-ghost {
+            color: hsl(var(--hue), 100%, 41%);
+            background-color: transparent;
+            border-color: hsl(var(--hue), 100%, 41%);
+        }
+        .div13 .btn-ghost:hover { color: white; }
+        .div13 .btn-border-stroke{
+            border-color: hsla(var(--hue), 100%, 41%, 0.35);
+        }
+        .div13 .btn-border-stroke .btn-borders{
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .div13 .btn-border-stroke .btn-borders .border-top {
+            position: absolute;
+            top: 0;
+            width: 100%;
+            height: 1px;
+            background: hsl(var(--hue), 100%, 41%);
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+        .div13 .btn-border-stroke .btn-borders .border-right {
+            position: absolute;
+            right: 0;
+            width: 1px;
+            height: 100%;
+            background: hsl(var(--hue), 100%, 41%);
+            transform: scaleY(0);
+            transform-origin: bottom;
+        }
+        .div13 .btn-border-stroke .btn-borders .border-bottom {
+            position: absolute;
+            bottom: 0;
+            width: 100%;
+            height: 1px;
+            background: hsl(var(--hue), 100%, 41%);
+            transform: scaleX(0);
+            transform-origin: left;
+        }
+        .div13 .btn-border-stroke .btn-borders .border-left {
+            position: absolute;
+            left: 0;
+            width: 1px;
+            height: 100%;
+            background: hsl(var(--hue), 100%, 41%);
+            transform: scaleY(0);
+            transform-origin: bottom;
+        }
+        .div13 .btn-border-stroke .btn-borders .border-left {
+            transition: var(--ease-out-duration) var(--ease-out-delay)
+            cubic-bezier(0.2, 1, 0.2, 1);
+        }
+        .div13 .btn-border-stroke .btn-borders .border-bottom {
+            transition: var(--ease-out-duration) var(--ease-out-delay)
+            cubic-bezier(0.2, 1, 0.2, 1);
+        }
+        .div13 .btn-border-stroke .btn-borders .border-right {
+            transition: var(--ease-in-duration) cubic-bezier(1, 0, 0.8, 0);
+        }
+        .div13 .btn-border-stroke .btn-borders .border-top {
+            transition: var(--ease-in-duration) cubic-bezier(1, 0, 0.8, 0);
+        }
+        .div13 .btn-border-stroke:hover { color: hsl(var(--hue), 100%, 41%); background: transparent; }
+        .div13 .btn-border-stroke:hover .border-top,
+        .div13 .btn-border-stroke:hover .border-bottom { transform: scaleX(1); }
+        .div13 .btn-border-stroke:hover .border-left, .div13 .btn-border-stroke:hover .border-right { transform: scaleY(1); }
+        .div13 .btn-border-stroke:hover .border-left {
+            transition: var(--ease-in-duration) cubic-bezier(1, 0, 0.8, 0);
+        }
+        .div13 .btn-border-stroke:hover .border-bottom {
+            transition: var(--ease-in-duration) cubic-bezier(1, 0, 0.8, 0);
+        }
+        .div13 .btn-border-stroke:hover .border-right {
+            transition: var(--ease-out-duration) var(--ease-out-delay)
+            cubic-bezier(0.2, 1, 0.2, 1);
+        }
+        .div13 .btn-border-stroke:hover .border-top {
+            transition: var(--ease-out-duration) var(--ease-out-delay)
+            cubic-bezier(0.2, 1, 0.2, 1);
+        }
+        .div13 .btn-text-float-up::after {
+            position: absolute;
+            content: attr(data-text);
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            transform: translateY(35%);
+            transition: 0.25s ease-out;
+        }
+        .div13 .btn-text-float-up .btn-text {
+            display: block;
+            transition: 0.75s 0.1s cubic-bezier(0.2, 1, 0.2, 1);
+        }
+        .div13 .btn-text-float-up:hover .btn-text {
+            opacity: 0;
+            transform: translateY(-25%);
+            transition: 0.25s ease-out;
+        }
+        .div13 .btn-text-float-up:hover::after {
+             opacity: 1;
+             transform: translateY(0);
+             transition: 0.75s 0.1s cubic-bezier(0.2, 1, 0.2, 1);
+         }
+        /* 13 伪类样式第二个按钮 */
+        .div13 .btn2 {
+            --hue: 190;
+            position: relative;
+            padding: 1rem 3rem;
+            font-size: 1rem;
+            line-height: 1.5;
+            color: white;
+            text-decoration: none;
+            text-transform: uppercase;
+            background-color: hsl(var(--hue), 100%, 41%);
+            border: 1px solid hsl(var(--hue), 100%, 41%);
+            outline: transparent;
+            overflow: hidden;
+            cursor: pointer;
+            user-select: none;
+            white-space: nowrap;
+            transition: 0.25s;
+        }
+        .div13 .btn2:hover { background: hsl(var(--hue), 100%, 31%); }
+        .div13 .btn2-primary { --hue: 187; }
+        .div13 .btn2-ghost {
+            color: hsl(var(--hue), 100%, 41%);
+            background-color: transparent;
+            border-color: hsl(var(--hue), 100%, 41%);
+        }
+        .div13 .btn2-ghost:hover {  color: white; }
+        .div13 .btn2-shine { color: white; }
+        .div13 .btn2-shine::before {
+            position: absolute;
+            content: "";
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(120deg, transparent, hsla(var(--hue), 100%, 41%, 0.5), transparent);
+            transform: translateX(-100%);
+            transition: 0.6s;
+        }
+        .div13 .btn2-shine:hover {
+            background: transparent;
+            box-shadow: 0 0 20px 10px hsla(var(--hue), 100%, 41%, 0.5);
+        }
+        .div13 .btn2-shine:hover::before {
+            transform: translateX(100%);
+        }
+
+    </style>
+</head>
+<body>
+    <div>
+        <div class="box1"></div>
+        <div class="box2">
+            <div class="test">linear-gradient(yellow, green)</div>
+            <div class="test2">linear-gradient(yellow, green 50%, gold)</div>
+            <div class="test3">linear-gradient(0deg, yellow 20%, green 50%, gold 80%)</div>
+            <div class="test4">linear-gradient(45deg, yellow, green 50%, gold)</div>
+            <div class="test5">linear-gradient(to top right, yellow, green 50%, gold)</div>
+            <div class="test6">linear-gradient(0deg, yellow, green)</div>
+            <div class="test7">linear-gradient(0deg, yellow 50%, green)</div>
+            <div class="test8">background-image: linear-gradient(-45deg, orange 0%, yellow 100%), linear-gradient( green, black);</div>
+        </div>
+        <div style="clear:both;"></div>
+
+        <!-- 开关按钮切换 -->
+        <div class="grade_box"><div class="grade_first grade_sel">一级分类</div><div class="grade_second">二级分类</div></div>
+        <script type="text/javascript">
+            var gradeList = (document.getElementsByClassName('grade_box')[0]).children;
+
+            for (var i = 0; i < gradeList.length; i++){
+                var obj = gradeList[i];
+
+                obj.setAttribute('index', i);
+
+                obj.onclick = function(){
+                    var index = this.getAttribute('index');
+
+                    console.log(this);
+
+                    if (index == 0){
+                        gradeList[0].className = 'grade_first grade_sel';
+                        gradeList[1].className = 'grade_second';
+                    }
+                    else{
+                        gradeList[0].className = 'grade_first';
+                        gradeList[1].className = 'grade_second grade_sel';
+                    }
+                }
+            }
+        </script>
+        <!-- 4、按钮背景颜色渐变 -->
+        <div class="bg_change_btn">4、按钮背景颜色渐变</div>
+        <!-- 5、视频播放icon -->
+        <div style="margin-top: 10px;">5、视频图标：<span class="video-icon"></span></div>
+        <!-- 6、内容超出高度后以省略号展示 -->
+        <div class="text-box">6、宽度500px, 高度50px，超出高度后后缀...展示。这俩人是现今世上，手段最高明的摸金校尉，都有万夫不挡之勇，神鬼莫测之机，兼有云长之忠，翼德之猛，子龙之勇，孔明之智，那面古镜一定就是他们从云南掏出来的。</div>
+        <!-- 7、自定义复选框 -->
+        <div class="div7">7、自定义复选框&nbsp;&nbsp;&nbsp;
+            <span class="myCheck"></span>
+            &nbsp;&nbsp;&nbsp;
+            <span class="myCheck myChecked"></span>
+        </div>
+        <!-- 8、循环动画 -->
+        <div class="myDot"><dot></dot></div>
+        <!-- 9、三角形 -->
+        <div class="div9">9、利用伪元素before和after的边框来设置三角形图标。<br/>伪元素设置第一行/第一个字的样式</div>
+        <!-- 10、上下脚尖 -->
+        <div class="div10">10、自定义上下左右尖角：<span class="icon1"></span><span class="icon2"></span></div>
+        <!-- 11、交错动画 -->
+        <div class="div11">
+            <div class="title">11、交错动画</div>
+            <div class="loading">
+                <div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div><div class="dot"></div>
+            </div>
+        </div>
+        <!-- 12、用js分割文本-->
+        <div class="div12">
+            <div style="color: #ffffff;">12、js分割文本动画</div>
+            <p class="wordLandIn">Ano hi watashitachi mada shiranai no Fushigi no monogatari desu.</p>
+            <div class="reveal">sword art online</div>
+            <script type="text/javascript">
+                //第一个js分割动画
+                let landInText = document.querySelector(".wordLandIn");
+                let words = landInText.textContent.split("");
+                landInText.textContent = "";
+                words.forEach((letter, i) => {
+                    let span = document.createElement("span");
+                    span.textContent = letter;
+                    span.style.animationDelay = `${i * 0.05}s`;
+                    landInText.append(span);
+                });
+
+                //第二个js分割动画
+                let delay = 0.3, revealText = document.querySelector(".reveal");
+                let letters = revealText.textContent.split("");
+                revealText.textContent = "";
+                let middle = letters.filter(e => e !== " ").length / 2;
+                letters.forEach((letter, i) => {
+                    let span = document.createElement("span");
+                    span.textContent = letter;
+                    span.style.animationDelay = `${delay + Math.abs(i - middle) * 0.1}s`;
+                    revealText.append(span);
+                });
+            </script>
+        </div>
+        <!-- 13、伪类样式 -->
+        <div class="div13">
+            <div>13、伪类样式</div>
+            <button data-text="Start" class="btn btn-primary btn-ghost btn-border-stroke btn-text-float-up">
+                <div class="btn-borders">
+                    <div class="border-top"></div><div class="border-right"></div>
+                    <div class="border-bottom"></div><div class="border-left"></div>
+                </div>
+                <span class="btn-text">Start</span>
+            </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <button class="btn2 btn2-primary btn2-ghost btn2-shine"> hover me </button>
+        </div>
+
+    </div>
+</body>
+</html>
