@@ -13,33 +13,57 @@
             background-color: #fff; border: 2px dashed black;
             width: 1024px;
         }
-        #span {
+        #spanId {
             display: flex; width: 100px; height: 100px;
             justify-content: center; align-items: center;
             background-color: black; color: #fff; font-size: 30px;
         }
+
+        /* 语义化标签 */
+        nav { background-color: red; }
+        .nav { display: block; height: 40px; background-color: yellow; }
+
+        /* classList操作 */
+        .seven-bg-color{ background-color: yellow; border: 5px dashed red; }
+        .seven-font-color { color: red; font-size: 30px; }
     </style>
 </head>
 <body>
 <div class="container">
     <div>
+        <dl>
+            <dt>H5新特性</dt>
+            <dd><a href="#tanOne">1、拖拽本地数据(拖动和放下)</a></dd>
+            <dd><a href="#tanTwo">2、从本地磁盘拖放图片放置</a></dd>
+            <dd><a href="#tanThree">3、canvas绘制</a></dd>
+            <dd><a href="#tanFour">4、语义化标签</a></dd>
+            <dd><a href="#tanFive">5、多媒体标签video、audio</a></dd>
+            <dd><a href="#tanSix">6、新表单元素和属性</a></dd>
+            <dd><a href="#tanSeven">7、class操作和dataset</a></dd>
+            <dd><a href="#tanEight">8、文件读取FileReader</a></dd>
+            <dd><a href="#tanNine">9、网络状态，地理位置</a></dd>
+
+        </dl>
+    </div>
+
+    <div id="tanOne">
         <h3>1、html5新特性，拖放本地数据（类似图片之类的数据）拖放事件监听（拖动和放下）</h3>
         <div class="main" id="main1"></div><div id="main2" class="main"></div>
         <div style="clear: both;">
-            <img src="../img/star/8.jpg" width="300px" id="img"/>
-            <span id="span">不一样的烟火</span>
+            <img src="../img/star/8.jpg" width="300px" id="imgId"/>
+            <span id="spanId">不一样的烟火</span>
         </div>
 
         <script type="text/javascript">
             var main1 = document.getElementById('main1');
             var main2 = document.getElementById('main2');
-            var img = document.getElementById('img');
+            var img = document.getElementById('imgId');
             //结果验证：span标签拖动不了，只能拖动图片
-            var span = document.getElementById('span');
+            var spanId = document.getElementById('spanId');
 
             //1、拖动开始 设置数据setData
             img.ondragstart = dragStartObj;
-            span.ondragstart = dragStartObj;
+            spanId.ondragstart = dragStartObj;
 
             //2、设置拖放过程中阻止系统事件
             main1.ondragover = function(e){
@@ -88,8 +112,7 @@
             }
         </script>
     </div>
-
-    <div>
+    <div id="tanTwo">
         <h3 style="clear:both;">2、从本地磁盘拖放图片放置</h3>
         <div id="main3" class="main" style="height: 500px;width: 1024px;"></div>
 
@@ -139,82 +162,827 @@
             }
         </script>
     </div>
-
     <!-- canvas演示 -->
-    <div style="clear:both;">
+    <div id="tanThree" style="clear:both;">
         <br/>
-        <h3>3、canvas绘制</h3>
+        <h3>3、canvas三板斧: 落笔ctx.moveTo(x,y); 连线ctx.lineTo(x,y); 描边ctx.stroke()</h3>
         <div>
-            <canvas width="100px" height="100px" style="background-color: yellow;"></canvas>
-            <canvas id="canvasOne" style="width: 300px; height: 300px; border: 1px dashed red;"></canvas>
+            <canvas id="myCanvas" width="600px" height="300px" style="border: 2px solid gray;"></canvas>
             <div>
-                <button onclick="canvasRotate()">旋转</button>
-                <button onclick="canvasScaleSmall()">缩小</button>
-                <button onclick="canvasScaleBig()">放大</button>
+                <button onclick="canvasOne()">初始绘制</button><button onclick="canvasTwo()">开启新图层</button>
+                <button onclick="clearAllLayer()">图层清除</button>
+                <button onclick="canvasLineCap()">线帽查看</button>
+                <button onclick="canvasNoZero()">非零环绕</button>
+                <button onclick="canvasNoZero2()">非零环绕2</button>
+                <button onclick="canvasColorChange()">颜色渐变</button>
+                <button onclick="canvasColorChange2()">颜色渐变2</button>
+                <br/>
+                <button onclick="canvasDash()">虚线</button>
+                <button onclick="canvasRect()">矩形</button>
+                <button onclick="canvasAnimation()">动画矩形</button>
+                <button onclick="canvasText()">绘制文字</button>
+                <button onclick="canvasImage()">绘制图片</button>
+                <button onclick="canvasArc()">绘制圆弧</button>
+                <button onclick="canvasArc2()">绘制圆弧商任意一点</button>
+                <button onclick="canvasArcTo()">矩形圆角(圆弧)</button>
+                <br/>
+                <button onclick="canvasPattern()">重复指定的元素</button>
+                <button onclick="canvasQuadraticCurve()">二次(阶)贝塞尔曲线</button>
+                <button onclick="canvasBezierCurve()">三次(阶)贝塞尔曲线</button>
+                <button onclick="canvasImageData()">像素ImageData</button>
+                <button onclick="canvasRandomLine()">随机折线图</button>
+                <br/>
+                <button onclick="canvasTranslate()">偏移translate</button>
+                <button onclick="canvasRotate()">旋转rotate</button>
+                <button onclick="canvasZoom()">缩放scale</button>
+                <button onclick="canvasTransform()">转换transform</button>
             </div>
 
             <script type="text/javascript">
-                var canvas = document.getElementById('canvasOne');
-                var ctx = canvas.getContext('2d');
-                ctx.fillStyle = 'green'; //填充颜色
-                ctx.fillRect(200, 10, 20, 20); //绘制x、y、w、h
+                /* canvas绘制尝试，canvas使用三板斧：
+                ctx.moveTo(x, y) 落笔，从哪个坐标开始绘制
+                ctx.lineTo(x, y) 连线，绘制到哪里
+                ctx.stroke()     描边
+                * */
+                var canvasEle = document.getElementById('myCanvas');
+                var ctx  = canvasEle.getContext('2d'); //canvas上下文
+                ctx.moveTo(50, 50); //起始坐标50，50
+                ctx.lineTo(50, 200);
+                ctx.lineTo(200, 200);
+                ctx.lineTo(50, 50);
+                ctx.lineWidth = 2;
+                ctx.stroke();  //描边
+                //清除绘制的图层
+                function clearAllLayer(){
+                    ctx.setLineDash([10,0]) //绘制实线
+                    ctx.shadowColor = 'white';
+                    ctx.shadowOffsetX = 0;  //阴影x方向偏移（正数右偏移，负数左偏移）
+                    ctx.shadowOffsetY = 0; //阴影y方向偏移(正数往下偏移，负数往上偏移)
+                    ctx.shadowBlur = 0;  //阴影模糊级数
+                    ctx.clearRect(0, 0, canvasEle.width, canvasEle.height);
+                    ctx.beginPath();//开始新图层
+                    console.log('width: ', canvasEle.width, ", height: ", canvasEle.height);
+                }
+                //初尝试， 没有开启新的图层，则前面的图层也会跟着受影响
+                function canvasOne(){
+                    ctx.moveTo(250, 100);
+                    ctx.lineTo(250, 280);
+                    ctx.lineTo(500, 280);
+                    ctx.closePath();  //连线关闭，等效于 ctx.lineTo(250, 100)
+                    ctx.lineWidth = 5; //设置描边宽度
+                    ctx.strokeStyle = 'red'; //设置描边颜色
+                    ctx.stroke(); //描边
+                }
+                //开启新图层，绘制一个梯形
+                function canvasTwo(){
+                    ctx.beginPath();  //开启新图层
+                    ctx.moveTo(400, 20);
+                    ctx.lineTo(580, 20);
+                    ctx.lineTo(530, 220);
+                    ctx.lineTo(450, 220);
+                    ctx.closePath();
+                    ctx.lineWidth = 10;
+                    ctx.strokeStyle = 'green';
+                    ctx.lineJoin = 'bevel'; //线连接方式：round(圆滑) | bevel(斜角) | miter(默认，有菱角)
+                    ctx.lineCap = 'butt'; //线帽(线两端的结束方式)： butt(默认值） | round | square(直角，和butt差不多)
+                    ctx.stroke();
+                }
+                //绘制三条下一个，线帽，线连接方式查看
+                function canvasLineCap(){
+                    //先清除之前的所有图层
+                    clearAllLayer();
+                    ctx.lineWidth = 12;
+                    //第一条线
+                    ctx.moveTo(50, 100); //落笔
+                    ctx.lineTo(150, 150); //连线
+                    ctx.lineTo(50, 200); //连线
+                    ctx.lineCap = 'butt'; //线帽 默认
+                    ctx.lineJoin = 'miter'; //线连接  默认
+                    ctx.stroke();
+                    //第二条线，往后移50
+                    ctx.beginPath(); //开启新图层
+                    ctx.moveTo(100, 100); //落笔
+                    ctx.lineTo(200, 150);
+                    ctx.lineTo(100, 200);
+                    ctx.strokeStyle = 'purple';
+                    ctx.lineCap = 'round'; //线帽圆
+                    ctx.lineJoin = 'bevel'; //线连接  斜角
+                    ctx.stroke();
+                    //第三条线
+                    ctx.beginPath();
+                    ctx.moveTo(150, 100);
+                    ctx.lineTo(250, 150);
+                    ctx.lineTo(150, 200);
+                    ctx.lineCap = 'square'; //线帽直角
+                    ctx.lineJoin = 'round'; //线连接圆角
+                    ctx.strokeStyle = 'blue';
+                    ctx.stroke();
+                }
+                //非零环绕原则
+                function canvasNoZero(){
+                    clearAllLayer();
 
-                var rotateI = 1, scale = 1;
+                    //外层, 顺时针
+                    ctx.moveTo(200, 50);
+                    ctx.lineTo(400, 50);
+                    ctx.lineTo(400, 250);
+                    ctx.lineTo(200, 250);
+                    ctx.closePath();
+                    //内层，逆时针
+                    ctx.moveTo(250, 100);
+                    ctx.lineTo(250, 200);
+                    ctx.lineTo(350, 200);
+                    ctx.lineTo(350, 100);
+                    ctx.closePath();
+
+                    //描边
+                    // ctx.stroke();
+                    ctx.fillStyle = 'yellow';
+                    ctx.fill();
+                }
+                //非零环绕原则2
+                function canvasNoZero2(){
+                    clearAllLayer();
+                    ctx.beginPath();
+
+                    //外层， 顺时针
+                    ctx.moveTo(200, 50);
+                    ctx.lineTo(400, 50);
+                    ctx.lineTo(400, 250);
+                    ctx.lineTo(200, 250);
+                    ctx.closePath();
+                    //内层，逆时针
+                    ctx.moveTo(300, 70);
+                    ctx.lineTo(220, 120);
+                    ctx.lineTo(270, 120);
+                    ctx.lineTo(270, 230);
+                    ctx.lineTo(330, 230);
+                    ctx.lineTo(330, 120);
+                    ctx.lineTo(380, 120);
+                    ctx.closePath();
+
+                    ctx.fillStyle = 'gray';
+                    ctx.fill();
+                }
+                //颜色渐变
+                function canvasColorChange(){
+                    clearAllLayer(); //清理
+                    ctx.moveTo(100, 100); //落笔
+                    ctx.lineTo(500, 100); //连线
+                    ctx.lineWidth = 100; //
+                    //(x, y, x1, y1, r) : 开始坐标，和结束坐标, r=
+                    var grd = ctx.createLinearGradient(100, 100, 300, 200);
+                    //addColorStop(offse, color): 渐变的开始位置和结束位置介于0-1之间，0代表开始，1代表结束。中i就按可与i设置任何小数
+                    grd.addColorStop(0, 'black'); //设置渐变的开始颜色
+                    grd.addColorStop(0.8, "yellow"); //设置渐变的中间颜色
+                    grd.addColorStop(1, "red"); //设置渐变的结束颜色
+                    ctx.strokeStyle = grd; //设置颜色
+                    ctx.stroke();
+                }
+                //绘制 径向渐变  创建放射/环形的渐变
+                function canvasColorChange2(){
+                    clearAllLayer();
+                    console.log("..no...probrom..")
+                    /*
+                    (x0, y0, r0, x1, y1, r1):
+                    (x0, y0)渐变的开始圆(内圆)圆心的x,y坐标；r0=开始圆（内圆）的半径；
+                    (x1, y1)=渐变的结束圆（外圆）的x,y坐标；r1=结束圆（外圆）的半径
+                    * */
+                    var grd = ctx.createRadialGradient(300, 150, 30, 300, 150, 100);
+                    grd.addColorStop(0, 'red');
+                    grd.addColorStop(0.2, 'orange');
+                    grd.addColorStop(0.4, 'yellow')
+                    grd.addColorStop(0.5, 'green');
+                    grd.addColorStop(0.6, 'cyan');
+                    grd.addColorStop(0.7, 'blue');
+                    grd.addColorStop(0.8, 'purple');
+                    grd.addColorStop(0.9, 'pink');
+                    grd.addColorStop(1, 'white');
+                    ctx.fillStyle = grd;
+                    ctx.fillRect(0, 0, canvasEle.width, canvasEle.height);
+                }
+                //虚线
+                function canvasDash(){
+                    clearAllLayer();
+                    ctx.lineWidth = 2;
+                    ctx.strokeStyle = 'red';
+                    ctx.moveTo(100, 50);
+                    ctx.lineTo(400, 50);
+                    ctx.setLineDash([20, 20]); //线和空格一样大小
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.strokeStyle = 'black';
+                    ctx.moveTo(100, 100);
+                    ctx.lineTo(400, 100);
+                    ctx.setLineDash([10, 5]);  //线长度是空格的2倍
+                    ctx.stroke();
+
+                    ctx.beginPath()
+                    ctx.strokeStyle = 'green';
+                    ctx.moveTo(100, 150);
+                    ctx.lineTo(400, 150);
+                    //线10px, 空格5px, 线20px, 空格10px, 线5px, 空格20px; 循环反复
+                    ctx.setLineDash([10, 5, 20]);
+                    ctx.stroke();
+                }
+                //矩形
+                function canvasRect(){
+                    clearAllLayer();
+
+                    //描边矩形
+                    ctx.strokeStyle = 'red';
+                    ctx.strokeRect(50, 50, 200, 200); //开始坐标和宽高
+
+                    //填充矩形
+                    ctx.beginPath();
+                    ctx.fillStyle = 'red'
+                    ctx.fillRect(300, 50, 200, 200);
+                    // ctx.strokeRect(100, 100, 100, 100); //绘制空心矩形
+
+                    //上面一个是边框红色，里面白色的矩形；一个是全实心的矩形
+                    //清除效果
+                    ctx.clearRect(320, 50, 10, 200); //清除中间10px为白色
+                    ctx.clearRect(420, 50, 10, 200); //清除起始坐标和宽高
+                }
+                //动画矩形
+                let canvasAniInterval;
+                function canvasAnimation(){
+
+                    if (canvasAniInterval){
+                        clearInterval(canvasAniInterval);
+                        canvasAniInterval = undefined;
+                        return;
+                    }
+
+                    let boxWidth = canvasEle.width, rectW = 100, rectH = 200, left = 0;
+                    canvasAniInterval = setInterval(()=>{
+                        clearAllLayer(); //清除图层
+                        //重新绘制
+                        if (left + rectW >= boxWidth){
+                            left = 0;
+                        }
+                        ctx.fillRect(left, 50, rectW, rectH); //绘制一个实心矩形
+                        left += 1; //每次移动1px
+                    }, 10)
+                }
+                //绘制文本
+                function canvasText(){
+                    clearAllLayer();
+                    //绘制上下中间分割线
+                    ctx.moveTo(0, 150);
+                    ctx.lineTo(600, 150);
+                    ctx.stroke();
+                    ctx.beginPath();
+                    ctx.moveTo(300, 0);
+                    ctx.lineTo(300, 300);
+                    ctx.stroke();
+
+                    ctx.beginPath()
+                    //绘制文字
+                    ctx.font = '66px 华文行楷'; //设置文字大小，和css设置文字一样
+                    ctx.textAlign = 'center'; //设置文字的对齐样式
+                    ctx.textBaseline = 'middle'; //设置文字的上下对齐方式(top/middle/bottom)
+                    //设置带阴影的效果
+                    ctx.shadowColor = 'red';
+                    ctx.shadowOffsetX = 5;  //阴影x方向偏移（正数右偏移，负数左偏移）
+                    ctx.shadowOffsetY = 5; //阴影y方向偏移(正数往下偏移，负数往上偏移)
+                    ctx.shadowBlur = 10;  //阴影模糊级数
+
+                    ctx.strokeText('男儿何不带吴钩', 300, 150); //绘制空心文字
+                    // ctx.fillText('收取关山五十州', 300, 150); //实心文字中心位置
+                }
+                //绘制图片
+                function canvasImage(){
+                    clearAllLayer();
+
+                    //将图片绘制到画布的指定区域
+                    var img = document.createElement('img');
+                    img.src = '../img/star/0.jpg';
+                    img.onload = function(){
+                        var imgH = 280, imgW = img.width * imgH / img.height;
+                        var imgX = (600-imgW)/2;
+                        // ctx.drawImage(img, 0, 0);  //绘制坐标0，0，图片原始大小
+                        ctx.drawImage(img, imgX, 10, imgW, imgH); //图片绘制的起始坐标，和宽高
+                    }
+                }
+                //绘制圆和圆弧
+                function canvasArc(){
+                    clearAllLayer();
+                    console.log(Math.PI)
+                    //(x, y, r, sAngle, eAngle, x)圆中心坐标, r=圆半径， sAngle=起始角，eAngle=结束角，最后那个参数=false顺时针，=true逆时针
+                    ctx.arc(300, 150, 100, 0, 2*Math.PI); //默认顺时针， Math.PI==Π == 3.14
+                    // ctx.fill(); //实心圆
+                    ctx.stroke(); //空心圆
+                }
+                //绘制圆弧商任意一点
+                function canvasArc2(){
+                    clearAllLayer()
+
+                    //绘制中间线
+                    ctx.moveTo(300, 0);
+                    ctx.lineTo(300, 300);
+                    ctx.moveTo(0, 150);
+                    ctx.lineTo(600, 150);
+                    ctx.stroke();
+
+                    ctx.beginPath();
+                    ctx.arc(300, 150, 100, 0, 2*Math.PI);
+                    ctx.stroke();
+
+                    ctx.beginPath()
+                    var x = 300 + Math.cos(Math.PI/3)*100;
+                    var y = 150 + Math.sin(Math.PI/3)*100;
+                    ctx.arc(x, y, 10, 0, Math.PI*2);
+
+                    ctx.fillStyle = 'red'
+                    ctx.fill();
+                }
+                //矩形中带圆弧（圆角）
+                function canvasArcTo(){
+                    clearAllLayer()
+
+                    ctx.moveTo(20,20);             //创建一个起点
+                    ctx.lineTo(200,20);            // 创建一个水平线
+                    //arcTo(x1,y1,x2,y2,r) //圆弧起点的坐标，终点的坐标，半径
+                    ctx.arcTo(250,20, 250,70, 50);   // 创建一个弧
+                    ctx.lineTo(250,250);           // 继续垂直线
+                    ctx.stroke();                  //绘画
+                }
+                //重复指定的元素
+                var patternType = 1;
+                function canvasPattern(){
+                    clearAllLayer();
+
+                    var imgEle = document.createElement('img');
+                    imgEle.src = '../img/star/lamp.jpg';
+                    imgEle.onload = ()=>{
+                        var direction = 'repeat';
+                        if (patternType == 2){
+                            direction = 'repeat-x';
+                        }
+                        else if(patternType == 3){
+                            direction = 'repeat-y';
+                        }
+                        else if(patternType == 4){
+                            direction = 'no-repeat';
+                            patternType = 0;
+                        }
+                        patternType++;
+                        var pat = ctx.createPattern(imgEle, direction);
+                        ctx.fillStyle = pat;
+
+                        ctx.rect(0, 0, canvasEle.width, canvasEle.height);
+                        ctx.fill();
+                        //等效于
+                        // ctx.fillRect(0, 0, canvasEle.width, canvasEle.height);
+                    }
+                }
+                //绘制二次(阶)贝塞尔曲线
+                function canvasQuadraticCurve(){
+                    clearAllLayer()
+                    ctx.moveTo(20,20);
+                    //quadraticCurveTo(cpx, cpy, ex, ey) 控制点的xy坐标，和结束点的xy坐标
+                    ctx.quadraticCurveTo(20,280,500,20);
+                    ctx.setLineDash([10, 10]); //线和空格一样大小 , 绘制虚线
+                    ctx.strokeStyle = 'black';
+                    ctx.lineWidth=1;
+                    ctx.stroke();
+
+                    //绘制这几个点, 和线
+                    ctx.beginPath();
+                    ctx.arc(20, 20, 5, 0, Math.PI*2)
+                    ctx.fill()
+                    ctx.beginPath()
+                    ctx.arc(20, 280, 5,0, Math.PI*2)
+                    ctx.fill()
+                    ctx.beginPath()
+                    ctx.arc(500, 20, 5, 0, Math.PI*2)
+                    ctx.fill()
+                    ctx.beginPath()
+                    ctx.moveTo(20, 20)
+                    ctx.lineTo(20, 280)
+                    ctx.lineTo(500, 20)
+                    ctx.strokeStyle = 'red';
+                    ctx.setLineDash([10, 0]); //绘制实线
+                    ctx.stroke();
+                }
+                //绘制三次(阶)贝塞尔曲线
+                function canvasBezierCurve(){
+                    clearAllLayer()
+
+                    ctx.moveTo(20,20);
+                    //bezierCurveTo(cpx, cpy, cpx2, cpy2, x, y) 控制点1，控制点2的坐标，结束点的坐标
+                    ctx.bezierCurveTo(20,280,300,200,500,20);
+                    ctx.setLineDash([10, 10]); //线和空格一样大小 , 绘制虚线
+                    ctx.strokeStyle = 'black';
+                    ctx.lineWidth=1;
+                    ctx.stroke();
+
+                    //绘制其他点和连线
+                    ctx.beginPath();
+                    ctx.arc(20, 20, 5, 0, Math.PI*2);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(20, 280, 5, 0, Math.PI*2);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(300, 200, 5, 0, Math.PI*2);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.arc(500, 20, 5, 0, Math.PI*2);
+                    ctx.fill();
+                    ctx.beginPath();
+                    ctx.moveTo(20, 20);
+                    ctx.lineTo(20, 280);
+                    ctx.lineTo(300, 200);
+                    ctx.lineTo(500, 20);
+                    ctx.strokeStyle = 'red';
+                    ctx.setLineDash([10, 0]); //绘制实线
+                    ctx.stroke();
+                }
+                /*
+                translate(dx, dy)转换画布的用户坐标系统。dx, dy表示转换的量的X和Y大小
+                只要上下文没有变化, 那么每次执行translate(dx, dy)都是在上一次的基础上进行偏移:
+                比如第一次(0, 0), 执行translate(10, 10), 则画布起始坐标变成(10,10)
+                第二次执行translate(10,10), 则画布的起始坐标变成(20, 20)
+                 */
+                let moveLeft = 0, moveTop = 0;
+                function canvasTranslate(){
+                    clearAllLayer();
+
+                    let moveX = 40, moveY = 20;
+                    moveLeft += moveX, moveTop += moveY;
+
+                    if (moveLeft >= 600){
+                        moveLeft = 0;
+                        moveX = -600;
+                    }
+                    if (moveTop >= 300){
+                        moveTop = 0;
+                        moveY = -300;
+                    }
+
+                    ctx.translate(moveX, moveY);  //转换画布的用户坐标系统。
+                    ctx.fillRect(0, 0, 50, 50);
+                }
+                //旋转,
                 function canvasRotate(){
-                    rotateI++;
-                    ctx=canvas.getContext("2d");
-                    ctx.rotate(20*Math.PI/180);
-                    ctx.fillRect(200, 10, 30, 30);
-                    console.log("..旋转...")
-                }
-                function canvasScaleSmall(){
+                    clearAllLayer()
 
-                    ctx=canvas.getContext("2d");
-                    ctx.scale(scale*0.9, scale*0.9);
-                    ctx.fillRect(200, 10, 30, 30);
+                    ctx.rotate(Math.PI/18); //旋转90度，默认顺时针旋转
+                    ctx.fillRect(0, 0, 300, 1);
                 }
-                function canvasScaleBig(){
-                    ctx=canvas.getContext("2d");
-                    ctx.scale(scale*1.1, scale*1.1);
-                    ctx.fillRect(200, 10, 30, 30);
+                //缩放: scale/rotate/translate同理每次执行都是在上一次的基础上进行
+                function canvasZoom(){
+                    clearAllLayer()
+
+                    ctx.scale(0.5, 1);  //宽缩小成0.5， 高度不变
+                    ctx.arc(300, 150, 100, 0, 2*Math.PI);
+                    ctx.fill();
                 }
+                //transform 转换
+                function canvasTransform(){
+                    clearAllLayer()
+
+                    ctx.fillStyle="yellow";
+                    ctx.fillRect(0,0,100,20)
+                    ctx.transform(1.2,0.2,-0.2,1.2,30,10);
+                    ctx.fillStyle="red";
+                    ctx.fillRect(0,0,100,20);
+                    ctx.transform(1.2,0.2,-0.2,1.2,30,10);
+                    ctx.fillStyle="blue";
+                    ctx.fillRect(0,0,100,20);
+                }
+                //像素操作
+                function canvasImageData(){
+                    clearAllLayer()
+
+                    var imgData=ctx.createImageData(100,100);
+
+                    console.log("imgData.data.length: ", imgData.data.length, ", imgData.width: ", imgData.width, ", imgData.height: ", imgData.height)
+
+                    /*
+                    data 属性返回一个对象，该对象包含指定的 ImageData 对象的图像数据。
+                    对于 ImageData 对象中的每个像素，都存在着四方面的信息，即 RGBA 值：
+                    R - 红色（0-255）
+                    G - 绿色（0-255）
+                    B - 蓝色（0-255）
+                    A - alpha 通道（0-255; 0 是透明的，255 是完全可见的）
+                    * */
+                    for (var i=0;i<imgData.data.length;i+=4)
+                    {
+                        imgData.data[i+0]=255;
+                        imgData.data[i+1]=0;
+                        imgData.data[i+2]=0;
+                        imgData.data[i+3]=255;
+                    }
+                    ctx.putImageData(imgData,10,10);
+                }
+                //随机折线图
+                function canvasRandomLine(){
+                    clearAllLayer()
+
+                    var maxW = canvasEle.width, maxH = canvasEle.height, boxW = 20;
+                    var rowsCount = maxH/boxW, colsCount = maxW/boxW;
+                    var maxX = maxW%boxW==0? boxW*(colsCount-1):boxW*colsCount;
+                    var maxY = maxH%boxW==0 ? boxW*(rowsCount-1):boxW*rowsCount;
+
+                    canvasGrid(); //绘制底层格子图
+                    //绘制格子图
+                    canvasArrows(); //绘制箭头
+                    canvasOther(); //绘制其他随机线
+                    function canvasGrid(){
+                        ctx.beginPath();
+                        ctx.strokeStyle = '#999999';
+                        ctx.lineWidth = 0.5;
+
+                        console.log(rowsCount, ", ", colsCount)
+                        //行格子
+                        for (let i = 0; i < rowsCount; i++){
+                            ctx.moveTo(0, boxW*i)
+                            ctx.lineTo(maxW, boxW*i)
+                        }
+                        //列格子
+                        for (let i = 0; i < colsCount; i++){
+                            ctx.moveTo(boxW * i, 0);
+                            ctx.lineTo(boxW*i, maxH)
+                        }
+                        ctx.stroke()
+                    }
+                    //绘制箭头
+                    function canvasArrows(){
+                        ctx.beginPath();
+
+                        ctx.moveTo(boxW, boxW);
+                        ctx.lineTo(boxW, maxY);
+                        ctx.lineTo(maxX, maxY);
+                        ctx.strokeStyle = '#0000ff';
+                        ctx.stroke();
+
+                        //绘制两个箭头
+                        ctx.beginPath();
+                        ctx.moveTo(boxW, boxW);
+                        ctx.lineTo(boxW-5, boxW+10);
+                        ctx.lineTo(boxW+5, boxW+10);
+                        ctx.closePath();
+
+                        ctx.moveTo(maxX, maxY);
+                        ctx.lineTo(maxX-10, maxY-5);
+                        ctx.lineTo(maxX-10, maxY+5);
+                        ctx.closePath();
+
+                        ctx.fillStyle = '#0000ff';
+                        ctx.fill();
+                    }
+                    //绘制随机线
+                    function canvasOther(){
+                        ctx.beginPath();
+                        var count = (Math.random() * 1000) % 10 + 3; //随机数
+                        var pointsArr = [];
+                        //坐标控制在boxW--maxX, boxW--maxY
+                        for (let i = 0; i < count; i++){
+                            var tempX = (Math.random() * 9999) % (maxX-boxW) + boxW;
+                            var tempY = (Math.random()*9999) % (maxY-boxW) + boxW;
+                            pointsArr.push({ x: tempX, y: tempY });
+                            if (i==0){
+                                ctx.moveTo(tempX, tempY)
+                            }
+                            else{
+                                ctx.lineTo(tempX, tempY);
+                            }
+                        }
+                        ctx.strokeStyle = 'red';
+                        ctx.stroke();
+
+                        //绘制矩形红点
+                        ctx.beginPath();
+                        ctx.fillStyle = 'red'
+                        for (let i = 0; i < count; i++){
+                            var tempObj = pointsArr[i];
+                            ctx.fillRect(tempObj.x-5, tempObj.y-5, 10, 10);
+                        }
+                    }
+                }
+
             </script>
         </div>
     </div>
+    <div id="tanFour">
+        <h3>语义化标签</h3>
+        <div>为什么需要语义化：1、顾名思义，便于阅读，易修改，易维护；2、搜索引擎友好，便于SEO；3、面向未来的HTML， 浏览器在未来可能提供更丰富的支持。</div>
+        <ul>
+            由于语义化标签是html5新特性，在一些老版浏览器支持不友好，如何兼容老版浏览器：有三个解决方法
+            <li>脚本通过document.createElement('xxx')创建标签，并且在样式中设置该标签display为block</li>
+            <li>第一种方式对于每一个语义化标签都需要设置css， 不大方便。因此第二种方式是引入一个第三方已经写好的语义化标签js。</li>
+            <li>第三种方式（最佳解决方案）：在第二种方式的基础上，加上一个<!--[if lte IE 8]><![endif]-->判断，设置只有IE8及以下浏览器才加载这个js, 优化性能。</li>
+        </ul>
+        <!-- 第一种兼容解决方案, 脚本创建语义化标签，设置样式display为block -->
+        <!--<script type="text/javascript">-->
+        <!--document.createElement('nav');-->
+        <!--</script>-->
+        <!-- 第二种解决方案：引入第三方脚本 -->
+        <!--<script type="text/javascript" src="./js/html5shiv.min.js"></script>-->
+        <!-- 第三种解决方案：只有在ie8及以下才加载第三方脚本，优化性能，终极解决方案 -->
+        <!--[if lte IE 8]>
+            <script type="text/javascript" src="./js/html5shiv.min.js"></script>
+        <![endif]-->
+        <nav class="nav">语义化标签1</nav>
+        <nav>语义化标签2</nav>
+        <nav class="nav">语义化标签3</nav>
+    </div>
+    <div id="tanFive">
+        <h3>5、多媒体标签video、audio</h3>
+        <dl>
+            <dt>常用属性解释：</dt>
+            <dd>controls: 显示控制栏(如播放，声音，暂停等键)</dd>
+            <dd>autoplay: 自动播放(不过部分浏览器为了用户体验，该属性设置一般无效；如果想有效需要再加muted属性关闭声音才能自动播放)</dd>
+            <dd>loop: 循环播放</dd>
+        </dl>
+        <video width="300" height="150" controls autoplay loop>
+            <source src="../img/file/jia.mp4"/>
+            <source src="../img/file/jia.ogg"/>
+            <source src="../img/file/jia.WebM"/>
+        </video>
+        <audio controls loop>
+            <source src="../img/file/Friendships.ogg" />
+            <source src="../img/file/Friendships.mp3" />
+            <source src="../img/file/Friendships.wav" />
+        </audio>
+    </div>
+    <div id="tanSix">
+        <h3>6、新表单元素及属性</h3>
+        <dl>
+            <dt>input标签新增加的类型</dt>
+            <dd>email: 只能输入邮箱</dd>
+            <dd>url：必须输入网址</dd>
+            <dd>number: 只能输入数字</dd>
+            <dd>range: 滑动范围</dd>
+            <dd>color: 取色器</dd>
+            <dd>date: 输入年月日时间</dd>
+            <dd>month: 输入年月</dd>
+            <dd>week: 输入年周</dd>
+            <dd>time: 输入小时和分种</dd>
 
-    <h3>location和localSessiong存储</h3>
-    <div>
-        <input type="text" id="localText"/><button onclick="localSave()">localStorage存储</button>
-        <br/>
-        <input type="text" id="sessionText"/><button onclick="sessionSave()">sessionStorage存储</button>
+            <dt>表单form属性</dt>
+            <dd>autocomplete=on | off : 自动完成。默认为on, 就是文本框双击会出现之前输入过的内容，如不许需要这个效果，请设置autocomplete="off"</dd>
+            <dd>novalidate=true | false ： 是否关闭校验。设置后比如email或required等表单元素和必填项不会再校验</dd>
+
+            <dt>其他表单元素属性</dt>
+            <dd>autofocus: 自动获取焦点</dd>
+            <dd>form: 不再form表单内的标签，提交的内容也想跟着form表单提交，可以通过这个属性实现</dd>
+            <dd>list: 文本框列表选择</dd>
+            <dd>multiple: 下拉列表多个选择</dd>
+            <dd>placeholder: 占位符，提示信息</dd>
+            <dd>required: 必填项，用这个这个属性，说明这个文本框必须填写内容</dd>
+        </dl>
+        <form action="serve.php" id="form-ele" autocomplete="off" method="get">
+            <input type="submit" value="提交"/>
+            <input type="text" autofocus placeholder="自动获取焦点"/><br/>
+            <input type="text" list="list-ele" placeholder="请从列表中选择"/>
+            <datalist id="list-ele">
+                <option value="1111"></option>
+                <option value="2222"></option>
+                <option value="3333"></option>
+            </datalist>
+            <br/>
+            <select multiple name="name-select">
+                <option value="1">惜秦皇汉武，略输文采；</option>
+                <option value="2">唐宗宋祖，稍逊风骚；</option>
+                <option value="3">一代天骄，成吉思汗，只识弯弓射大雕；</option>
+                <option value="4">俱往矣，数风流人物，还看今朝。</option>
+            </select>
+            <input type="text" required placeholder="属性required必填项" name="name-required"/>
+        </form>
+        <input type="text" form="form-ele" name="input-name-2" placeholder="表单外元素提交的内容也跟着表单走"/>
+    </div>
+    <div id="tanSeven">
+        <h3>7、class操作和dataset</h3>
+        <button onclick="changeBackgroundColor()">背景颜色</button>
+        <button onclick="changeFontColor()">字体大小和颜色</button>
+        <button onclick="setDataSet(this)" data-test-name="王大锤">设置dataset数据</button>
         <script type="text/javascript">
-
-            //localStorage存储： 永远存储，没有时间限制
-            function localSave(){
-                localStorage['localText'] = document.getElementById('localText').value;
-            }
-            //sessionStorage存储
-            function sessionSave(){
-                sessionStorage['sessionText'] = document.getElementById('sessionText').value;
-            }
-
-            //初始化数据
-            window.onload = function(){
-
-                var localText = localStorage['localText'];
-
-                if (localText){
-                    document.getElementById('localText').value = localText;
+            var sevenEle = document.querySelector("#tanSeven");
+            //背景颜色变化
+            function changeBackgroundColor(){
+                //如果sevenEle类名中包含seven-bg-color， 则移除该类名
+                if (sevenEle.classList.contains('seven-bg-color')){
+                    sevenEle.classList.remove('seven-bg-color')
                 }
-
-                var sessionText = sessionStorage['sessionText'];
-                if (sessionText){
-                    document.getElementById('sessionText').value = sessionText;
+                else{
+                    //没有则添加该类名
+                    sevenEle.classList.add('seven-bg-color')
                 }
+            }
+            //字体大小和颜色
+            function changeFontColor(){
+                //类名切换，没有则添加，有就移除, toggle相当于集成了add和remove功能
+                sevenEle.classList.toggle('seven-font-color');
+            }
+
+            //数据集设置
+            function setDataSet(obj){
+                var name = obj.dataset['testName'];
+                console.log("name: ", name);
+
+                //设置dataset
+                obj.dataset.testIndex = 99;
+                obj.dataset.sign = '恰似猛虎卧荒丘，潜伏爪牙忍受！';
             }
         </script>
     </div>
+    <div id="tanEight">
+        <h3>8、文件读取FileReader</h3>
+        <input type="file" onchange="selectFile(this)"/>
+        <script type="text/javascript">
+            //读取文件
+            var fileReader = new FileReader();
 
+            function selectFile(obj){
+                if (obj.files.length > 0){
+                    var file = obj.files[0];
+                    console.log(file.type);
+                    console.log(file.name);
+                    /*
+                    readAsArrayBuffer(blob: Blob): void;  //都城字节数组
+                    readAsBinaryString(blob: Blob): void; //读取成原始二进制格式，2012年7月12已被废除
+                    readAsDataURL(blob: Blob): void;   //读取成base64字符串
+                    readAsText(blob: Blob, label?: string): void;  //读取成文本
+                    * */
+                    fileReader.readAsText(file); //读取成文本内容
+                    // fileReader.readAsDataURL(file); //读取成base64字符串
+                    // fileReader.readAsBinaryString(file); //读取成二进制
+                    console.log("会不会马上有结果：", fileReader.result); //返回空
+                }
+            }
+
+            fileReader.onloadstart = (res)=>{
+                console.log("...onloadstart..ok: ", res)
+                console.log("onloadstart: ", fileReader.result)
+            }
+            //一直到onload才有结果
+            fileReader.onload = (res)=>{
+                console.log('...onload..ok: ', res)
+                console.log("onload: ", fileReader.result)
+            }
+            fileReader.onloadend = (res)=>{
+                console.log("...onloadend..ok: ", res);
+                console.log("onloadend: ", fileReader.result)
+            }
+
+
+
+        </script>
+    </div>
+    <div id="tanNine">
+        <h3>9、网络状态，地理位置</h3>
+        <div>
+            <button onclick="getNetworkStatus()">网络状态</button>
+            <button onclick="startGetPosition()">开始定位</button>
+        </div>
+        <script type="text/javascript">
+            //读取网络状态
+            function getNetworkStatus(){
+                alert("网络状态："+window.navigator.onLine);
+            }
+
+            //即时监听， 当网络从断网 到 联网状态会自动调用这个方法
+            window.ononline = function(){
+                alert("联网了")
+            }
+            //即时监听，当网络从联网到断网时会自动调用这个方法
+            window.onoffline = function(){
+                alert("断网了。。。")
+            }
+
+            //开始定位
+            function startGetPosition(){
+
+                //这个方法只会调用一次，调用过后，就算刷新页面也不会再调用
+                // window.navigator.geolocation.getCurrentPosition((res)=>{
+                //     console.log("...获取经纬度成功：", res);
+                // }, (err)=>{
+                //     console.log("获取经纬度失败：", err)
+                // })
+
+                try{
+                    window.navigator.geolocation.watchPosition(positionSuccess, positionFail);
+                }
+                catch(e){
+                    console.log("...异常：", e.message);
+                }
+            }
+
+            function positionSuccess(msg, position){
+                console.log("...positionSuccess...: ", msg)
+                console.log(position);
+            }
+            function positionFail(msg){
+                console.log("...positionFail...", msg);
+            }
+
+        </script>
+    </div>
 </div>
 <div id="info" style="clear:both;"></div>
 </body>
