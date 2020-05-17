@@ -2,10 +2,24 @@
 <html lang="cn">
 <head>
     <meta charset="UTF-8">
-    <title>过渡动画 </title>
+    <title>过渡transition</title>
     <style type="text/css">
+        /*
+        设置过渡元素效果transition, Safari需要前缀-webkit-, css3过渡是元素从一种样式逐渐改变为另一种的效果
+        要实现这一点，必须规定两项内容： 规定你希望吧效果添加到哪个css属性上；规定效果的时长
+        transition-property: none|all|property;  设置css需要过渡的属性的名称，none表示没有属性会获得过渡效果，all表示所有属性获得过渡效果，
+            property表示定义应用过渡效果的css属性名称列表，列表以逗号分隔。
+        transition-duration: 0; 定义过渡效果花费的时间，默认为0
+        transition-timing-function: ease|linear|ease-in|ease-out|ease-in-out; 定义过渡运行速度，默认ease开始和结束慢速，中间加快，linear表示匀速
+        transition-delay: 0s; 延迟时间
 
-        /** 过渡效果 */
+        过渡连写格式transition: 过渡属性 过渡时长 运动速度 延迟时间;
+        过渡连写注意点
+        1和分开写一样, 如果想给多个属性添加过渡效果也是用逗号隔开即可
+        2连写的时可以省略后面的两个参数, 因为只要编写了前面的两个参数就已经满足了过渡的三要素
+        3如果多个属性运动的速度/延迟的时间/持续时间都一样, 那么可以简写为 transition:all 0s;
+        transition: transform 1s;  transition: width 1s,height 2s;   transition: all 3s;
+         */
         .durationClass {
             height: 50px;
             width: 100px;
@@ -17,28 +31,19 @@
             /* 延迟动画时间 */
             /*transition-delay: 2s;*/
         }
-        .durationClass:hover{
-            width: 300px;
-            background-color: purple;
-        }
+        .durationClass:hover{ width: 300px; background-color: purple; }
 
         /* 过渡动画其他元素 */
-        .testUL {
-            padding: 10px 0px;
-            background-color:yellow;
-            width:760px;
-            height: 200px;
-        }
+        .testUL { padding: 10px 0px; background-color:yellow; width:590px; height: 200px; }
         .testUL li {
-            width: 60px;
-            height: 30px;
-            background-color: blue;
+            width: 90px; height: 30px; line-height: 30px; text-align: center; color: #ffffff; font-size: 14px;
+            background-color: green;
             margin: 10px 0px;
             list-style: none;
             transition-property: margin-left;
             transition-duration: 5s;
         }
-        .testUL:hover li { margin-left: 700px; }
+        .testUL:hover li { margin-left: 500px; }
         .testUL li:nth-child(1) { transition-timing-function: linear; }
         .testUL li:nth-child(2) { transition-timing-function: ease; }
         .testUL li:nth-child(3) { transition-timing-function: ease-in;}
@@ -48,8 +53,7 @@
         /* 元素动画变大 */
         .divToBig {
             float:left;
-            background-color: red;
-            width: 100px; height: 50px;
+            background-color: red; width: 100px; height: 50px;
             transition-property: width, height, background-color;
             transition-duration: 5s, 5s, 10s;
         }
@@ -64,7 +68,7 @@
         }
         .divFour:hover { width: 500px; height: 300px; background-color:green; }
 
-        /* 元素过渡的另一种简写方法 */
+        /* 元素过渡的另一种简写方法，针对所有的属性，且所有属性过渡时长相同 */
         .divFive {
             float:left; margin-left: 10px;
             background-color: gray;
@@ -72,7 +76,6 @@
             transition: all 5s;
         }
         .divFive:hover { width: 500px; height: 300px; background-color:orangered; }
-
 
         /* 字体变大，高度变高 */
         .divSix {
@@ -86,80 +89,47 @@
         .divSix span { transition: all 10s; }
         .divSix:hover span { margin: 0 12px; font-size: 80px; color:blue; }
 
-
-        /* 手风琴效果 */
+        /* 手风琴效果 480/6=80 480-300 = 180/5=36 */
         .imgUL{
-            width: 960px;
-            height: 300px;
-            border: 1px solid black;
-            margin: 20px 0px;
-            list-style: none;
-            padding:0px;
-            overflow: hidden;
+            width: 480px; height: 168px; border: 1px solid black;
+            margin: 20px 0px; list-style: none; padding:0px; overflow: hidden;
         }
-        .imgUL li { float:left; height: 300px; width: 160px; padding:0px; transition: all 0.5s; }
-        .imgUL:hover li{ width: 60px; }
-        .imgUL li:hover { width: 660px; }
+        .imgUL li { float:left; height: 100%; width: 80px; padding:0px; transition: all 0.5s; }
+        .imgUL li img { width: 300px; }
+        .imgUL:hover li{ width: 36px; }
+        .imgUL li:hover { width: 300px; }
     </style>
 </head>
 <body>
 
-    <h2>过渡元素三要素：</h2>
-    <p>
-        1、过渡效果一定要有属性发生变化，哪个属性需要过渡；<br/>
-        2、过渡效果一定要有过渡时间;<br/>
-    </p>
-    <div class="durationClass"></div>
-    <br/><hr/><br/>
+    <h2>过渡元素注意要点：</h2>
+    <div>1、过渡效果一定要有属性发生变化，哪个属性需要过渡</div>
+    <div>2、过渡效果一定要有过渡时间</div>
+    <div class="durationClass"></div><br/><hr/><br/>
     <ul class="testUL">
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-        <li></li>
-    </ul>
-    <br/><hr/><br/>
+        <li>linear</li><li>ease</li><li>ease-in</li><li>ease-out</li><li>ease-in-out</li>
+    </ul><br/><hr/><br/>
 
-    <!--
-1.过渡连写格式
-transition: 过渡属性 过渡时长 运动速度 延迟时间;
-
-2.过渡连写注意点
-2.1和分开写一样, 如果想给多个属性添加过渡效果也是用逗号隔开即可
-2.2连写的时可以省略后面的两个参数, 因为只要编写了前面的两个参数就已经满足了过渡的三要素
-2.3如果多个属性运动的速度/延迟的时间/持续时间都一样, 那么可以简写为
-transition:all 0s;
--->
     <div>
         <div class="divToBig">div</div>
         <div class="divFour"></div>
         <div class="divFive"></div>
         <div style="clear:both;"></div>
         <div class="divSix">
-            <span>H</span>
-            <span>e</span>
-            <span>l</span>
-            <span>l</span>
-            <span>o</span>
-            <span>, </span>
-            <span>w</span>
-            <span>o</span>
-            <span>r</span>
-            <span>l</span>
-            <span>d</span>
-        </div>
-        <br/><hr/><br/>
+            <span>H</span><span>e</span><span>l</span><span>l</span><span>o</span><span>, </span>
+            <span>w</span><span>o</span><span>r</span><span>l</span><span>d</span>
+        </div><br/><hr/><br/>
     </div>
 
     <div>
-        <h1>手风琴效果</h1>
+        <h3>手风琴效果</h3>
         <ul class="imgUL">
             <li><img src="../img/star/0.jpg" /></li>
             <li><img src="../img/star/2.jpg" /></li>
-            <li><img src="../img/star/3.jpg" /></li>
-            <li><img src="../img/star/4.jpg" /></li>
-            <li><img src="../img/star/5.jpg" /></li>
-            <li><img src="../img/star/6.jpg" /></li>
+            <li><img src="../img/star/8.jpg" /></li>
+            <li><img src="../img/star/14.jpg" /></li>
+            <li><img src="../img/star/19.jpg" /></li>
+            <li><img src="../img/star/21.jpg" /></li>
         </ul>
     </div>
 

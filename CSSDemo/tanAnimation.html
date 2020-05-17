@@ -20,14 +20,22 @@
             to { margin-left: 300px; }
         }
 
-        /* 3、动画animation的其他属性 */
+        /* 3、动画animation的其他属性，语法：animation: name duration timing-function delay iteration-count direction */
         .divThree { width: 100px; height: 50px; background-color: green;
             animation-name:threeAnim;
             animation-duration: 2s;
             animation-delay: 2s; /* 设置延迟时间 */
+            /* animation-iteration-count：动画迭代次数：n | infinite --> n次或无限次 */
             animation-iteration-count: 3; /* 设置动画执行次数, 设置infinite为无限次  */
+            /* animation-timing-function：动画的速度曲线：
+            linear匀速/
+            ease默认(低速开始，然后加快，在结束前变慢)
+            ease-in: 动画以低速开始
+            ease-out: 动画以低速结束
+            ease-in-out: 动画以低速开始和结束
+            */
             animation-timing-function: ease-out; /* 设置速度 */
-            /*告诉系统是否需要执行往返动画
+            /* animation-direction 告诉系统是否需要执行往返动画
             取值:
             normal, 默认的取值, 执行完一次之后回到起点继续执行下一次
             alternate, 往返动画, 执行完一次之后往回执行下一次
@@ -68,7 +76,7 @@
             margin: 10px auto;
             animation-name: fiveAnim;
             animation-duration: 5s;
-            animation-delay: 2s;
+            animation-delay: 1s;
             /*
             动画状态：
             1.等待状态
@@ -78,15 +86,15 @@
             animation-fill-mode作用:
             指定动画等待状态和结束状态的样式
             取值:
-            none: 不做任何改变
+            none: 不改变默认行为(动画结束时保持最后一帧状态)
             forwards: 让元素结束状态保持动画最后一帧的样式
-            backwards: 让元素等待状态的时候显示动画第一帧的样式
+            backwards: 动画结束时显示动画第一帧的状态
             both: 让元素等待状态显示动画第一帧的样式, 让元素结束状态保持动画最后一帧的样式
             */
-
-            /*animation-fill-mode: backwards;*/ /* backwards要配合延迟才能看出效果 */
-            /*animation-fill-mode: forwards;*/
-            animation-fill-mode: both;
+            /*backwards要配合延迟才能看出效果*/
+            /*animation-fill-mode: backwards;*/
+            animation-fill-mode: forwards;
+            /*animation-fill-mode: both;*/
         }
         .divFive:hover { animation-play-state: paused; }
         @keyframes fiveAnim {
@@ -97,7 +105,7 @@
             100% { transform: rotate(240deg); }
         }
 
-        /* 6、动画的连写：animation: 动画名称 动画时间 动画速度 延迟时间 执行次数 */
+        /* 6、动画的连写：animation: 动画名称 动画时间 动画速度 延迟时间 执行次数 是否交替往返 */
         .divSix { width:50px; height: 50px; position: relative; border: 10px solid red;
             animation: sixAnim 5s linear 2s 3;
         }
@@ -108,7 +116,6 @@
             75% { left: 250px; top: 100px; }
             100% { left: 0px; top: 0px; }
         }
-
 
         /* 7、云层移动演示 */
         .ulSeven {

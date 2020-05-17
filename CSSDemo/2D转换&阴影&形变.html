@@ -66,7 +66,7 @@
             形变中心点设置：transform-origin:
             第一个参数水平方向，第二个方向竖直方向
             有三种取值形式：百分比, 具体像素，左右
-            transform-origin: 50% 50%； //默认形变中心店就是50% 50%
+            transform-origin: 50% 50%； //默认形变中心点就是50% 50%
             transform-origin: 100px 100px;
             transform-origin: center top;
             */
@@ -89,29 +89,27 @@
         /* 3、形变3D翻转：X/Y/Z轴 */
         /* 形变翻转：x轴、y轴、z轴，默认以z轴翻转： rotateZ */
         .testULFour li{
-            float: left; margin: 10px;
-            border: 1px dashed red;
-            width: 320px;
-            height: 194px;
+            float: left; margin: 20px; border: 1px dashed red; width: 160px; height: 97px;
             background-color: yellowgreen;
-
             /* 透视：近大远小
             注意点：透视属性必须加在要显示透视效果的元素的父元素上
              */
             perspective: 500px;
         }
-        .testULFour li img { height: 194px; transition: transform 1s; /* 设置过渡元素 */ }
 
-        .testULFour li:nth-child(2) { transform: rotateZ(60deg); /* 默认就是围绕z轴旋转 */ }
+        .testULFour li img { height: 100%; transition: transform 1s; /* 设置过渡元素 */ }
+
+        .testULFour li:nth-child(2) img { transform: rotateZ(60deg); /* 默认就是围绕z轴旋转 */ }
         .testULFour li:nth-child(3) img { transform: rotateX(60deg); /* 设置围绕X轴旋转 */}
         .testULFour li:nth-of-type(4) img{ transform: rotateY(60deg);/* 设置围绕Y轴旋转 */ }
 
+        .testULFour li:nth-child(2):hover img { transform: rotateZ(0deg); }
         .testULFour li:nth-child(3):hover img { transform: rotateX(0deg); }
         .testULFour li:nth-child(4):hover img { transform: rotateY(0deg); }
 
-        .testULFour li:nth-of-type(5) img { transform-origin: left bottom; }
+        .testULFour li:nth-of-type(5) img { transform-origin: left bottom; } /* 改变形变默认中心点为左和底部 */
         .testULFour li:nth-of-type(5):hover img { transform: rotateX(60deg); }
-        .testULFour li:nth-child(6) img { transform-origin:left top; }
+        .testULFour li:nth-child(6) img { transform-origin:left top; } /* 改变默认形变中心点为左和顶部 */
         .testULFour li:nth-child(6):hover img { transform: rotateY(60deg);  }
 
         /* 4、照片墙 */
@@ -125,7 +123,14 @@
         .testULFour li:nth-child(7):hover, .testULFour li:nth-child(8):hover {
             transform: none;
         }
-
+        /* 过渡效果全演示 */
+        .testULFour .css3-transition {
+            width: 100px; height: 60px; line-height: 60px; background-color: green; color: #ffffff; text-align: center; margin-top: 50px;
+            transition: all 2s; /* 设置所有css过渡 */
+        }
+        .testULFour .css3-transition:hover {
+            background-color: yellow; color: red; font-weight: bold; border-radius: 50%; transform: rotateZ(720deg) scale(2); /* 旋转3圈，放大2倍 */
+        }
 
         /*  5、盒子阴影和文字阴影 */
         .testDivFive div { margin: 10px 20px; float:left;
@@ -192,19 +197,21 @@
         <ul class="testULTwo"><li></li><li></li><li></li></ul>
         <ul class="testULThree"><li></li><li></li><li></li></ul>
         <div style="clear:both;"></div>
-    </div>
-    <hr/><hr/><hr/>
+    </div><br/><br/><hr/><br/><br/>
     <div>
-        <ul class="testULFour">形变3D变化
+        <h3>&nbsp;&nbsp;&nbsp;形变之3D变化和过渡效果(transform--3d--transition)</h3>
+        <ul class="testULFour">
             <li><img src="../img/star/6.jpg"/></li>
             <li><img src="../img/star/6.jpg" title="Z轴旋转60度"/></li>
             <li><img src="../img/star/6.jpg" title="X轴转60度"/></li>
             <li><img src="../img/star/6.jpg" title="Y轴转60度"/></li>
-            <li><img src="../img/star/6.jpg" title="中心左、底"/></li>
-            <li><img src="../img/star/6.jpg" title="中心左、顶"/></li>
+            <li><img src="../img/star/6.jpg" title="形变中心改成左&底"/></li>
+            <li><img src="../img/star/6.jpg" title="形变中心改成左&顶"/></li>
             <!-- 照片墙 -->
-            <li><img src="../img/star/6.jpg"/></li>
-            <li><img src="../img/star/6.jpg"/></li>
+            <li><img src="../img/star/6.jpg" title="过渡效果形变：照片墙"/></li>
+            <li><img src="../img/star/6.jpg" title="过渡效果形变：照片墙"/></li>
+            <!-- 过渡效果演示 -->
+            <li class="css3-transition">CSS3过渡</li>
         </ul>
         <div style="clear:both;"></div>
     </div>

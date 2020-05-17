@@ -23,7 +23,6 @@
             transition: all 1s; /* 过渡效果连写 */
         }
 
-
         /* 2、照片墙效果样式 */
         .container .photo {
             width: 200px; position: absolute; cursor: pointer; z-index: 99; box-shadow: 0 0 10px yellow;
@@ -39,7 +38,6 @@
     <div class="container"></div>
     <script type="text/javascript">
         window.onload = function(){
-
             //初始化星星
             var container = document.getElementsByClassName('container')[0];
             var screenW = document.documentElement.clientWidth, screenH = document.documentElement.clientHeight;
@@ -52,7 +50,7 @@
             //1、星星海特效初始化标签
             function initStarInfo(){
                 var starCount = 200;
-                    for (var i = 0; i < starCount; i++){
+                for (var i = 0; i < starCount; i++){
                     var img = document.createElement('img');
                     img.setAttribute('src', '../img/star/star.png');
                     img.setAttribute('class', 'star-img'); //设置图片类名
@@ -104,8 +102,6 @@
                 }
             }
         }
-
-
     </script>
 </body>
 </html>
