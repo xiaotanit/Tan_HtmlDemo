@@ -12,7 +12,7 @@
             transition: transform 10s; background-color: yellow;
             position: relative;
             perspective: 100px;
-            /* 在父级元素设置3d属性 */
+            /* 在父级元素设置3d属性，表示子元素保留其3D位置 */
             transform-style: preserve-3d;
         }
         .subDivOne {
@@ -112,17 +112,17 @@
             text-align: center;
         }
         .ulFive li:nth-of-type(1) {
-            background: url('../img/star/0.jpg') no-repeat left top / cover;
+            background: url('../img/star/0.jpg') no-repeat center / cover;
             transform: translateZ(100px) scale(2, 1);
         }
         .ulFive li:nth-of-type(2) {
-            background: url('../img/star/1.jpg') no-repeat left top / cover;
+            background: url('../img/star/1.jpg') no-repeat center / cover;
             transform: rotateX(-180deg) translateZ(100px) scale(2, 1); }
         .ulFive li:nth-of-type(3) {
-            background: url('../img/star/2.jpg') no-repeat left top / cover;
+            background: url('../img/star/2.jpg') no-repeat center / cover;
             transform: rotateX(90deg) translateZ(100px) scale(2, 1);}
         .ulFive li:nth-of-type(4) {
-            background: url('../img/star/3.jpg') no-repeat left top / cover;
+            background: url('../img/star/3.jpg') no-repeat center / cover;
             transform: rotateX(-90deg) translateZ(100px) scale(2, 1); }
 
         @keyframes sport {

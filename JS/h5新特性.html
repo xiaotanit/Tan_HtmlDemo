@@ -35,6 +35,24 @@
             background-image: url("../img/star/22.jpg"); background-size: 100px;
             background-repeat: no-repeat;
         }
+		/* border-image测试，border-width是关键，是否虚线实现还是border-color不重要 */
+		.border-image-ele, .border-image-ele2{
+			display: inline-block; padding: 5px 10px; border: 10px dashed black; margin: 10px;
+		}
+		.border-image-ele{ border-image: url(../img/star/border.png) 30 30 round; }
+		.border-image-ele2 { border-image: url(../img/star/border.png) 30 30 stretch;}
+		/* box-shadow: h-shadow v-shadow blur spread color inset; 
+		h-shadow: 水平阴影位置，必需；
+		v-shadow: 垂直阴影位置，必需；
+		blur: 模糊距离，可选
+		spread: 阴影的尺寸，可选
+		color: 阴影颜色，可选
+		inset: 将外部阴影outset改成内部阴影，可选
+		*/
+		#tanTen .box-shadow-ele { 
+			display: inline-block; height: 30px; line-height: 30px; padding: 5px; border: 1px dashed black;
+			box-shadow: 10px 10px 10px 1px red;
+		}
 
         /*   dd:*-child(n): 要满足1个条件：dd元素一定是父级的第n个元素 (n从1开始)
             dd:*-of-type(n): 父级元素中的第n个dd标签
@@ -121,6 +139,32 @@
         .nav-menu::before { content: '写在开头的话' }
         .nav-menu::after{ content: '写在结尾的话' }
 
+		
+		/* CSS3 -- 多列测试 column-count:将文本分成几列；column-gap每列之间相差多少 */
+		.column-count-ele {
+			-moz-column-count:3; 	/* Firefox */
+			-webkit-column-count:3; /* Safari 和 Chrome */
+			column-count:3; border: 1px dashed red;
+			
+			-moz-column-gap:40px;		/* Firefox */
+			-webkit-column-gap:40px;	/* Safari 和 Chrome */
+			column-gap:40px;
+			
+			/* 规定列之间的宽度、样式颜色column-rule-width, column-rule-style, column-rule-color */
+			-moz-column-rule:3px outset #ff0000;	/* Firefox */
+			-webkit-column-rule:3px outset #ff0000;	/* Safari and Chrome */
+			column-rule:3px outset #ff0000;
+			
+			/* 规定列的宽度 */
+		<!-- 	column-width:100px;
+			-moz-column-width:100px; /* Firefox */
+			-webkit-column-width:100px; /* Safari 和 Chrome */ -->
+			
+			<!-- 简写形式，规定列之间的宽度和数量 -->
+			columns:100px 3;
+			-moz-columns:100px 3; /* Firefox */
+			-webkit-columns:100px 3; /* Safari 和 Chrome */
+		}
     </style>
 </head>
 <body>
@@ -894,7 +938,7 @@
             <dd>autoplay: 自动播放(不过部分浏览器为了用户体验，该属性设置一般无效；如果想有效需要再加muted属性关闭声音才能自动播放)</dd>
             <dd>loop: 循环播放</dd>
         </dl>
-        <video width="300" height="150" controls autoplay loop>
+        <video width="300" height="150" controls loop>
             <source src="../img/file/jia.mp4"/>
             <source src="../img/file/jia.ogg"/>
             <source src="../img/file/jia.WebM"/>
@@ -1088,6 +1132,11 @@
             <button onclick="cssClick(8)">bg-size-contain</button>
             <button onclick="cssClick(9)">bg-size-auto 100%</button>
             <button onclick="cssClick(10)">bg-size-100% auto</button>
+			<div>
+				<div class='border-image-ele'>border-image测试round铺满</div>
+				<div class='border-image-ele2'>border-image测试stretch拉伸</div>
+				<div class='box-shadow-ele'>box-shadow</div>
+			</div>
             <button onclick="cssGradientColor(1)">颜色渐变yellow-green-to-right</button>
             <button onclick="cssGradientColor(2)">颜色渐变to-bottom</button>
             <button onclick="cssGradientColor(3)">颜色渐变to-left</button>
@@ -1100,6 +1149,9 @@
             <button onclick="cssGradientColor(10)">颜色渐变135deg</button>
             <button onclick="cssGradientColor(11)">颜色渐变225deg</button>
             <button onclick="cssRadialColor(1)">径向改变</button>
+            <div class="border-image-ele">border-image样式属性测试, 图片铺满整个边框round</div>
+            <div class="border-image-ele2">border-image样式属性测试, 图片被拉伸以填充该区域，stretch</div>
+			
             <div id="transform-box" style="width: 100px; height: 100px; border: 5px dashed black; text-align:center; line-height:50px;">斗转<br/>星移</div>
             <button onclick="cssTransform(1)">位移</button><button onclick="cssTransform(2)">旋转</button>
             <button onclick="cssTransform(3)">放大</button><button onclick="cssTransform(4)">缩小</button>
@@ -1107,6 +1159,7 @@
             <button onclick="cssTransform(7)">3D放大</button><button onclick="cssTransform(8)">3D缩小</button>
             <button onclick="cssTransform(9)">3D倾斜</button><button onclick="cssTransform(10)">3D平面转立体</button>
         </div>
+		<div class='column-count-ele'>column-count多列测试：朝闻道，夕死可矣！临危而不惧，途穷而志存；苦难能自理，责任揽自身。怨恨能德报，美丑辩分明；名利甘居后，为理愿驰骋。仁厚纳知己，开明扩胸襟。当机能立断，遇乱能慎行。忍辱能负重，坚忍能守恒。临弱可落泪，对恶敢拼争。功高不自傲，事后常反省。举止终如一，立言必有行。</div>
         <script type="text/javascript">
             /* 背景样式
             背景图片的定位区域：默认为padding-box, 从标签填充位置开始；border-box从边款开始；content-box从内容区域开始

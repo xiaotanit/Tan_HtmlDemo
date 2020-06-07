@@ -189,6 +189,28 @@
         .ulSix > li li:nth-child(3) { transition-delay: 600ms; }
         .ulSix > li li:nth-child(4) { transition-delay: 400ms; }
         .ulSix > li li:nth-child(5) { transition-delay: 200ms; }
+
+        /* 演示文本效果 */
+        .divSeven .seven-text-overflow li {
+            width: 300px; overflow: hidden; white-space: nowrap; border: 0.5px dashed red;
+        }
+        .divSeven .seven-text-overflow li:first-of-type { text-overflow: clip; }
+        .divSeven .seven-text-overflow li:nth-of-type(2) { text-overflow: ellipsis; }
+        .divSeven .seven-text-shadow { border: 1px dashed red; text-shadow: 10px 10px 2px green; }
+        /* 目前主流浏览器都不支持text-wrap属性 */
+        .divSeven .seven-text-wrap .ul-text-wrap li { width: 400px; border: 0.5px dashed gray; }
+        .ul-text-wrap .li-wrap { text-wrap: normal; }
+        .ul-text-wrap .li-wrap2 { text-wrap: none; }
+        /* 目前主流浏览器都支持的换行属性word-break 规定非中日韩文本的换行规则 */
+        .divSeven .ul-word-break li { width: 400px; border: 1px solid red; margin: 5px; }
+        .ul-word-break .li-word-break { word-break: normal; }
+        .ul-word-break .li-word-break2 { word-break: break-all; }
+        .ul-word-break .li-word-break3 { word-break: keep-all; }
+        /* word-wrap: 允许长的不可分割的单词进行分割并换行到下一行 */
+        .ul-word-wrap li { width: 400px; border: 1px dashed blue; margin: 5px; }
+        .ul-word-wrap li:nth-of-type(1) { word-wrap: normal; }
+        .ul-word-wrap li:nth-of-type(2) { word-wrap: break-word; }
+        /* 因此设置字符串换行的设置应是：word-break: break-all;  word-wrap: break-word; */
     </style>
 </head>
 <body>
@@ -199,7 +221,7 @@
         <div style="clear:both;"></div>
     </div><br/><br/><hr/><br/><br/>
     <div>
-        <h3>&nbsp;&nbsp;&nbsp;形变之3D变化和过渡效果(transform--3d--transition)</h3>
+        <h3>形变之3D变化和过渡效果(transform--3d--transition)</h3>
         <ul class="testULFour">
             <li><img src="../img/star/6.jpg"/></li>
             <li><img src="../img/star/6.jpg" title="Z轴旋转60度"/></li>
@@ -260,6 +282,39 @@
             焚我残躯，熊熊烈火；生亦何欢，死亦何苦？去恶为善，唯光明故；喜乐哀愁，皆归尘土；怜我世人，忧患实多；怜我世人，忧患实多！
             Hello, World !
         </div>
+    </div>
+    <div class="divSeven">
+        <h3>CSS3文本效果</h3>
+        <div>
+            <div>text-overflow: clip | ellipsis; clip=修剪文本；ellipsis=省略号代表被修剪的文本；</div>
+            <ul class="seven-text-overflow">
+                <li>text-overflow: clip; 男儿何不带吴钩，收取关山五十州。</li>
+                <li>text-overflow: ellipsis; 男儿何不带吴钩，收取关山五十州。</li>
+            </ul>
+        </div>
+        <div>
+            <div class="seven-text-shadow">text-shadow: h-shadow v-shadow blur color; 水平阴影（必需）；垂直阴影（必需）；距离；颜色</div>
+            <div class="seven-text-wrap">
+                <div>text-wrap: normal | none | unrestricted | suppress</div>
+                <ul class="ul-text-wrap">
+                    <li class="li-wrap">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</li>
+                    <li class="li-wrap2">aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</li>
+                </ul>
+                <div>word-break: normal | break-all | keep-all</div>
+                <ul class="ul-word-break">
+                    <li class="li-word-break">word-break: normal;默认换行规则 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbb</li>
+                    <li class="li-word-break2">word-break: break-all;允许在单词内换行 aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaab</li>
+                    <li class="li-word-break3">word-break: keep-all;只能在半角空格或连字符串处换行aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa</li>
+                </ul>
+                <div>word-wrap: normal | break-word; </div>
+                <ul class="ul-word-wrap">
+                    <li>word-wrap: normal只在允许的断字点换行- - -aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbbbbb</li>
+                    <li>word-wrap: break-word在长单词或url地址内部进行换行- - -aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaabbbbbbbbbbbbbbbbbbbbbbbbb</li>
+                </ul>
+            </div>
+        </div>
+
+
     </div>
 </body>
 </html>
